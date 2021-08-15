@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Collision Detection: GJK &amp; EPA / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="../../css/article.css" />
+	<link rel="stylesheet" href="../../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../../katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="../../">Benjamin R. Bray</a></li>
+				<li><a href="../../blog">WRITING</a></li>
+				<li><a href="../../projects">PROJECTS</a></li>
+				<li><a href="../../resources">RESOURCES</a></li>
+				<li><a href="../../resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main role="main">
+		<div id="pre-content">
+    <!-- Banner -->
+    
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">Collision Detection: GJK &amp; EPA</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted in Articles on March 18, 2020 / Updated March 18, 2020
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                <a href="../../tags/geometry.html" class="tag">geometry</a> <a href="../../tags/linear-algebra.html" class="tag">linear-algebra</a> <a href="../../tags/game-dev.html" class="tag">game-dev</a> <a href="../../tags/graphics.html" class="tag">graphics</a>
+                <a href="../../tools/typescript.html" class="tool">typescript</a>
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            
+            <!-- GitHub URL -->
+            
+            <!-- PDF URL -->
+            
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        <div class="toc"><h2>Table of Contents</h2>
+<ul>
+<li><a href="#one">one</a>
+<ul>
+<li><a href="#two">two</a>
+<ul>
+<li><a href="#three">three</a></li>
+</ul></li>
+<li><a href="#two-1">two</a></li>
+<li><a href="#references">References</a></li>
+</ul></li>
+</ul>
+</div>
+<p>The Gilbert–Johnson–Keerthi distance algorithm is a method of determining the minimum distance between two convex sets. Unlike many other distance algorithms, it does not require that the geometry data be stored in any specific format, but instead relies solely on a support function to iteratively generate closer simplices to the correct answer using the configuration space obstacle (CSO) of two convex shapes, more commonly known as the Minkowski difference.</p>
+<h1 id="one">one</h1>
+<h2 id="two">two</h2>
+<h3 id="three">three</h3>
+<h2 id="two-1">two</h2>
+<div class="container">
+<p>paragraph</p>
+</div>
+<p>This is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>a</mi><mi>t</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">math</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">ma</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span></span></span></span></p>
+<p><span class="citation" data-cites="meijer1991functional">(Meijer, Fokkinga, and Paterson 1991)</span></p>
+<p><span class="citation" data-cites="riehl2017:category">(Riehl 2017)</span></p>
+<p><span class="citation" data-cites="notitle_doi">(DOI 2015)</span> <span class="citation" data-cites="notitle_pmid">(PMID 2016)</span> <span class="citation" data-cites="notitle_url">(URL 2017)</span></p>
+<p><span class="citation" data-cites="shortdoi">(ShortDOI 2017)</span></p>
+<p><span class="citation" data-cites="booknotitle">(Author 2015)</span></p>
+<h2 class="unnumbered" id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-booknotitle" class="csl-entry" role="doc-biblioentry">
+Author, Book. 2015. In. Book Publisher<a href="https://doi.org/12345">. https://doi.org/12345</a>.
+</div>
+<div id="ref-notitle_doi" class="csl-entry" role="doc-biblioentry">
+DOI, Sally. 2015<a href="https://doi.org/12345">. https://doi.org/12345</a>.
+</div>
+<div id="ref-meijer1991functional" class="csl-entry" role="doc-biblioentry">
+Meijer, Erik, Maarten Fokkinga, and Ross Paterson. 1991. <span>“Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire.”</span> In <em>Conference on Functional Programming Languages and Computer Architecture</em>, 124–44. Springer<a href="https://www.google.com">. https://www.google.com</a>.
+</div>
+<div id="ref-notitle_pmid" class="csl-entry" role="doc-biblioentry">
+PMID, John. 2016<a href="https://ignore.this/">. https://ignore.this/</a>.
+</div>
+<div id="ref-riehl2017:category" class="csl-entry" role="doc-biblioentry">
+Riehl, Emily. 2017. <em>Category Theory in Context</em>. Courier Dover Publications<a href="https://store.doverpublications.com/048680903x.html">. https://store.doverpublications.com/048680903x.html</a>.
+</div>
+<div id="ref-shortdoi" class="csl-entry" role="doc-biblioentry">
+ShortDOI, Tom. 2017<a href="https://doi.org/abcde">. https://doi.org/abcde</a>.
+</div>
+<div id="ref-notitle_url" class="csl-entry" role="doc-biblioentry">
+URL, Arthur. 2017<a href="https://ignore.this/">. https://ignore.this/</a>.
+</div>
+</div>
+
+    </section>
+</article>
+</div>
+
+	</main>
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated August 15, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+Title: Blog
+Template: blog

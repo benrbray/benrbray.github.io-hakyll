@@ -1,0 +1,7 @@
+$for(posts)$
+    <div class="post-box $if(unpublished)$unpublished$endif$">
+        <a class="post-title" href="$url$">$title$</a>
+        <span class="post-date">$date$</span>
+        $if(summary)$$summary$$else$No summary.$endif$
+    </div>
+$endfor$

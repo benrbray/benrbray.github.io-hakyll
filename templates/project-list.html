@@ -1,0 +1,15 @@
+<div class="project-container">
+$for(projects)$
+	<a class="project-box $if(unpublished)$ unpublished$endif$$if(priority)$ priority-$priority$$endif$"
+		href="$url$">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt="" src="$thumb_url$" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>$title$</p>
+		</div>
+	</a>
+$endfor$
+</div>

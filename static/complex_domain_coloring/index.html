@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Complex Domain Coloring</title>
+	<link rel="stylesheet" href="style.css">
+	
+	<!-- ComplexJS -->
+	<script type="text/javascript" src="lib/complex.min.js"></script>
+	
+	<!-- Demolicious -->
+	<script src="lib/demolicious.js"></script>
+	
+	<!-- Demo Files -->
+	<script src="main.js"></script>
+</head>
+
+<body>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<h1>Complex Domain Coloring</h1>
+		<!-- Main Content Column -->
+		<div class="main-wrap">
+			<div class="main-col" id="container">
+				<div class="canvas-wrap">
+					<canvas id="target" width=500, height=500></canvas>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Sidebar -->
+		<div class="side-wrap">
+		<div class="side-col">
+			<!-- Image Select -->
+			<select id="image-select"></select>
+			<canvas id="source" width=500, height=500></canvas>
+			<hr>
+			
+			<!-- Function Input -->
+			<div class="input-group">
+				<label for="fn">f(z)=</label><input type="text" name="fn" id="fn" style="font-family: monospace">
+			</div>
+			<hr>
+			
+			<!-- Checkboxes -->
+			<div class="checkbox">
+				<input type="checkbox" id="repeat-flag">Repeat Texture
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="fade-flag">Fade Texture
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" id="blerp-flag">Bilinear Interpolation
+			</div>
+			<hr>
+			
+			<!-- Action Buttons -->
+			<button id="compute-button">Compute!</button>
+			<button id="recurse-button">Recurse!</button>
+			<hr>
+			
+			<!-- Attribution -->
+			<div class="note">Uses <a href="https://github.com/patrickroberts/complex-js">Complex-JS</a> for parsing.</div>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

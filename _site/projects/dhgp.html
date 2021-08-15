@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Digital Humanities &amp; German&nbsp;Periodicals / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/article.css" />
+	<link rel="stylesheet" href="../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="../">Benjamin R. Bray</a></li>
+				<li><a href="../blog">WRITING</a></li>
+				<li><a href="../projects">PROJECTS</a></li>
+				<li><a href="../resources">RESOURCES</a></li>
+				<li><a href="../resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main role="main">
+		<div id="pre-content">
+    <!-- Banner -->
+    
+    <section class="page-banner">
+        <img src="../images/thumbnails/deutsche-rundschau_long.png" />
+        
+        <div class="banner-comment">Image <a href="https://twitter.com/FontaneArchiv/status/999271012591177728">@FontaneArchiv</a></div>
+        
+    </section>
+    
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">Digital Humanities &amp; German&nbsp;Periodicals</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted  on December  1, 2016 / Updated December  1, 2016
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                
+                
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            
+            <!-- GitHub URL -->
+            
+            <!-- PDF URL -->
+            
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        <h1 id="overview">Overview</h1>
+<p>As an undergraduate research assistant, I spent three years as the primary developer for an NLP-driven web application built to assist a humanities professor (<a href="https://lsa.umich.edu/german/people/faculty/pmcisaac.html">Dr. Peter McIsaac</a>, University of Michigan) with his research on 19th-century German literature. The application allowed him to run statistical topic models (<a href="http://jmlr.org/papers/volume3/blei03a/blei03a.pdf">LDA</a>, <a href="http://proceedings.mlr.press/v15/wang11a/wang11a.pdf">HDP</a>, <a href="https://mimno.infosci.cornell.edu/info6150/readings/dynamic_topic_models.pdf">DTM</a>, etc.) on a large corpus of text and displayed helpful visualizations of the results. The application was built using <strong>Python</strong> / <strong>Flask</strong> / <strong>Bootstrap</strong> and also supported toponym detection and full-text search. We used <a href="https://radimrehurek.com/gensim/"><code>gensim</code></a> for topic modeling.</p>
+<p>Using the web application I built, my supervisor was able to effectively detect cultural and historical trends in a large corpus of previously unstudied documents<span class="aside">This is a cheeky remark!</span>. Our efforts led to a number of publications in humanities journals and conferences, including <a href="http://www.jstor.org/stable/10.7722/j.ctt5vj848.11">[McIsaac 2014]</a>:</p>
+<blockquote class="citation">
+McIsaac, Peter M. <a href="http://www.jstor.org/stable/10.7722/j.ctt5vj848.11">“Rethinking Nonfiction: Distant Reading the Nineteenth-Century Science-Literature Divide.”</a> <i>Distant Readings: Topologies of German Culture in the Long Nineteenth Century</i>, edited by Matt Erlin and Lynne Tatlock, ed., Boydell and Brewer, 2014, pp. 185–208.
+</blockquote>
+<h2 id="motivation">Motivation</h2>
+<p>Our analysis focused on a corpus of widely-circulated periodicals, published in Germany during the 19th-century around the time of the administrative <a href="https://en.wikipedia.org/wiki/Unification_of_Germany">unification</a> of Germany in 1871. Through <a href="https://www.hathitrust.org/">HathiTrust</a> and partnerships with university libraries, we obtained digital scans of the following periodicals:</p>
+<ul>
+<li><em>Deutsche Rundschau</em> (1874-1964)</li>
+<li><em>Westermann’s Illustrirte Monatshefte</em> (1856-1987)</li>
+<li><em>Die Gartenlaube</em> (1853-1944)</li>
+</ul>
+<p>These periodicals, published weekly or monthly, were among Germany’s most widely-read print material in the latter half of the nineteenth century, and served as precursors <span class="aside">This is a longer remark that provides more detail about something in the main article.</span>to the modern magazine. Scholars have long recognized the cultural significance of these publications (c.f. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=yGHo-Alkp84C&amp;oi=fnd&amp;pg=PR9&amp;dq=belgum+2002+popularizing+the+nation+Audience,+Representation,+and+the+Production+of+Identity+in+Die+Gartenlaube&amp;ots=VFwEvxdUUS&amp;sig=kF6W0ktdb6BOcD1TY7Rdwtf_tsc#v=onepage&amp;q&amp;f=false">[Belgum 2002]</a>), but their enormous volume had so far precluded comprehensive study.</p>
+<figure>
+<div class="img-gallery horizontal">
+<p><img src="../images/dhgp/westermanns-cover.jpg"> <img src="../images/dhgp/gartenlaube.jpg"></p>
+</div>
+<figcaption>
+Cover of <cite>Westermann’s Monatshefte</cite> and front page of <cite>Die Gartenlaube</cite>. Courtesy of HathiTrust.
+</figcaption>
+</figure>
+<p>Using statistical methods, including <a href="http://journalofdigitalhumanities.org/2-1/topic-modeling-a-basic-introduction-by-megan-r-brett/">topic models</a>, we aimed to study the development of a German national identity following the 1848 revolutions, through the 1871 unification, and leading up to the world wars of the twentieth century. This approach is commonly referred to as <strong>digital humanities</strong> or <strong>distant reading</strong> (in contrast to <a href="https://en.wikipedia.org/wiki/Close_reading">close reading</a>).</p>
+<h2 id="preprocessing">Preprocessing</h2>
+<p>Initially, we only had access to digital scans of books printed in a difficult-to-read blackletter font. In order to convert our scanned images to text, I used <a href="https://github.com/tesseract-ocr">Google Tesseract</a> to train a custom optical character recognition (OCR) model specialized to fonts from our corpus. Tesseract performed quite well, but our scans exhibited a number of characteristics that introduced errors into the OCR process:</p>
+<ul>
+<li>Poor scan quality (causing speckles, erosion, dilation, etc.)</li>
+<li>Orthographic differences from modern German, including ligatures and the <a href="https://en.wikipedia.org/wiki/Long_s">long s</a></li>
+<li>Inconsistent layouts (floating images, multiple columns per page, etc.)</li>
+<li>Blackletter fonts which are difficult to read, even for humans</li>
+<li>The use of fonts such as Antiqua for dates and foreign words</li>
+<li>Headers, footers, page numbers, illustrations, and hyphenation</li>
+</ul>
+<p>The examples below highlight some of the challenges we faced during the OCR phase.</p>
+<figure role="group">
+<div class="img-gallery large">
+<figure class="img-col-2">
+<img src="../images/dhgp/deutsche-rundschau-wikipedia.jpg">
+<figcaption>
+From <cite>Deutsche Rundschau</cite>, courtesy of <a href="https://www.hathitrust.org/">HathiTrust</a>.
+</figcaption>
+</figure>
+<figure>
+<img src="../images/dhgp/fraktur-antiqua-wiki.jpg">
+<figcaption>
+Wikipedia, <a href="https://en.wikipedia.org/wiki/Antiqua%E2%80%93Fraktur_dispute">Antiqua-Fraktur Dispute</a>
+</figcaption>
+</figure>
+<figure>
+<img src="../images/dhgp/gartenlaube-1.jpg">
+<figcaption>
+From <cite>Die Gartenlaube</cite>, courtesy of <a href="https://www.hathitrust.org/">HathiTrust</a>.
+</figcaption>
+</figure>
+</div>
+</figure>
+<p>As a result, significant pre- and post-processing of OCR results was necessary. We combined a number of approaches in order to reduce the error rate to an acceptable level:</p>
+<ul>
+<li>I used <a href="https://processing.org/">Processing</a> to remove noise and other scanning artifacts from our images.</li>
+<li>I wrote code to automatically remove running headers, text decorations, and page numbers.</li>
+<li>Through manual inspection of a small number of documents, we compiled a list of common OCR mistakes. I developed scripts to automatically propagate these corrections across the entire corpus.</li>
+<li>I experimented with several custom OCR-correction schemes to correct as many mistakes as possible and highlight ambiguities. Our most successful approach used a <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden Markov Model</a> to correct sequences of word fragments. Words were segmented using <a href="https://www.sciencedirect.com/science/article/pii/0020027174900448">Letter Successor Entropy</a>.</li>
+</ul>
+<p>With these improvements, we found that our digitized texts were good enough for the type of exploratory analysis we had in mind. By evaluating our OCR pipeline on a synthetic dataset of “fake” scans with known text and a configurable amount of noise (speckles, erosion, dilation, etc.), we found that our OCR correction efforts improved accuracy from around 80% to 95% or higher.</p>
+<h2 id="topic-modeling">Topic Modeling</h2>
+<p>In natural language processing, <b>topic modeling</b> is a form of statistical analysis used to help index and explore large collections of text documents. The output of a topic model typically includes:</p>
+<ul>
+<li>A list of <b>topics</b>, each represened by a list of related words. Each word may also have an associated weight, indicating how strongly a word relates to this topic. For example:
+<ul>
+<li>(Topic 1) <i>sport, team, coach, ball, coach, team, race, bat, run, swim…</i></li>
+<li>(Topic 2) <i>country, government, official, governor, tax, approve, law…</i></li>
+<li>(Topic 3) <i>train, bus, passenger, traffic, bicycle, pedestrian…</i></li>
+</ul></li>
+<li>A <b>topic probability vector</b> for each document, representing the importance of each topic to this document. For example, a document about the Olympics may be 70% sports, 20% government, and 10% transportation.</li>
+</ul>
+<p>The most popular topic model is <a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">Latent Dirichlet Allocation (LDA)</a>, which is succinctly described by the following probabilistic graphical model. There are <span class="math inline"><em>T</em></span> topics, <span class="math inline"><em>M</em></span> documents, <span class="math inline"><em>N</em></span> words per document, and <span class="math inline"><em>V</em></span> words in the vocabulary.</p>
+<figure>
+<div class="img-gallery horizontal" style="align-items: center">
+<!-- Graphical Model -->
+<img src="../images/dhgp/pgm-lda.png"> <!-- Distributions -->
+<div style="font-size: 0.8em">
+<p><span class="math display">$$\begin{aligned}
+\text{hyperparameters}  &amp;&amp;&amp; \alpha \in \mathbb{R}^{T}, \eta \in \mathbb{R}^{V}\\
+\text{topics}           &amp;&amp; \beta_t \mid \eta &amp; \stackrel{iid}{\sim} \mathrm{Dirichlet}(\eta)          \\
+\text{topic mixtures}   &amp;&amp; \theta_m \mid \alpha  &amp;\stackrel{iid}{\sim} \mathrm{Dirichlet}(\alpha)           \\
+\text{topic indicators} &amp;&amp; z_{mn} \mid \theta_m  &amp;\stackrel{iid}{\sim} \mathrm{Categorical}(\theta_m)       \\
+\text{word indicators}  &amp;&amp; w_{mn} \mid z_{mn}    &amp;\stackrel{iid}{\sim} \mathrm{Categorical}(\beta_{z_{mn}})
+\end{aligned}$$</span></p>
+</div>
+</div>
+</figure>
+<p>Each topic <span class="math inline"><em>t</em></span> is represented by a probability distribution <span class="math inline"><em>β</em><sub><em>t</em></sub></span> over the vocabulary, indicating how likely each word is to appear under topic <span class="math inline"><em>t</em></span>. LDA posits that documents are written using the following <b>generative process</b>:</p>
+<ol type="1">
+<li>For each document <span class="math inline"><em>d</em><sub><em>m</em></sub></span>,</li>
+<li>Decide in what proportions <span class="math inline"><em>θ</em><sub><em>m</em></sub> = (<em>θ</em><sub><em>m</em>1</sub>,…,<em>θ</em><sub><em>m</em><em>t</em></sub>)</span> each topic will appear.</li>
+<li>To choose each each word <span class="math inline"><em>w</em><sub><em>m</em><em>n</em></sub></span>, 1. According to <span class="math inline"><em>θ</em><sub><em>m</em></sub></span>, randomly decide which topic to use for this word. 2. Randomly sample a word according to the chosen topic.</li>
+</ol>
+<p>Of course, this is not how humans actually write. LDA represents documents as <b>bags-of-words</b>, ignoring word order and sentence structure. When topic models are used to index or explore large corpora, as was our goal, this is an acceptable compromise. Given a collection of documents, LDA attempts to “invert” the generative process by computing a <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">maximum likelihood estimate</a> of the topics <span class="math inline"><em>β</em><sub><em>t</em></sub></span> and topic mixtures <span class="math inline"><em>θ</em><sub><em>m</em></sub></span>. These estimates are typically computed using <b>variational expectation-maximziation</b>.</p>
+<h2 id="dhgp-browser">DHGP Browser</h2>
+<p>Using <strong>Python / Flask / Bootstrap</strong>, I built a web application enabling humanities researchers to train, visualize, and save topic models. Features:</p>
+<ul>
+<li>Support for several popular topic models:
+<ul>
+<li>Online Latent Dirichlet Allocation (via <code>gensim</code>)</li>
+<li>Online Hierarchical Dirichlet Process (via <code>gensim</code>)</li>
+<li>Dynamic Topic Models (custom implementation based <a href="https://mimno.infosci.cornell.edu/info6150/readings/dynamic_topic_models.pdf">[Blei 2006]</a>)</li>
+</ul></li>
+<li><a href="https://en.wikipedia.org/wiki/Toponym_resolution">Toponym Resolution</a> for identifying and mapping place names mentioned in our texts</li>
+<li>Full-text / metadata search using <a href="www.elastic.co">ElasticSearch</a></li>
+<li>Support for any corpus with metadata saved in JSON format.</li>
+</ul>
+<p>I no longer have access to the most up-to-date version of <code>dhgp-browser</code>, but here are some screenshots from mid-2015:</p>
+<figure>
+<div class="img-gallery col-2">
+<figure>
+<img src="../images/dhgp/dhgp-browser-3.png">
+<figcaption>
+Topic View
+</figcaption>
+</figure>
+<figure>
+<img src="../images/dhgp/dhgp-browser-2.png">
+<figcaption>
+Topic Listing
+</figcaption>
+</figure>
+<figure>
+<img src="../images/dhgp/dhgp-browser-1.png">
+<figcaption>
+Corpus View
+</figcaption>
+</figure>
+<figure>
+<img src="../images/dhgp/dhgp-browser-4.png">
+<figcaption>
+Document Graph
+</figcaption>
+</figure>
+</div>
+</figure>
+<h1 id="miscellaneous">Miscellaneous</h1>
+<h2 id="urop-symposium-poster">UROP Symposium Poster</h2>
+<p>The poster below summarizes the progress made during my first year on the project, which I initially joined through the <a href="https://lsa.umich.edu/urop">UROP Program</a> at UM. After my first year, I was hired to continue working on the project as an undergraduate research assistant.</p>
+<p><a href="../static/dhgp/dhgp_urop-poster_benrbray.pdf"> <img src="../images/dhgp/dhgp-poster.png" /> </a></p>
+<h1 id="references">References</h1>
+<ul>
+<li><strong>[McIsaac 2014]</strong> McIsaac, Peter M. <a href="http://www.jstor.org/stable/10.7722/j.ctt5vj848.11">“Rethinking Nonfiction: Distant Reading the Nineteenth-Century Science-Literature Divide.”</a> <em>Distant Readings: Topologies of German Culture in the Long Nineteenth Century</em>, edited by Matt Erlin and Lynne Tatlock, ed., Boydell and Brewer, 2014, pp. 185–208.</li>
+<li><strong>[Belgum 2002]</strong> Belgum, Kirsten. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=yGHo-Alkp84C&amp;oi=fnd&amp;pg=PR9&amp;dq=belgum+2002+popularizing+the+nation+Audience,+Representation,+and+the+Production+of+Identity+in+Die+Gartenlaube&amp;ots=VFwEvxdUUS&amp;sig=kF6W0ktdb6BOcD1TY7Rdwtf_tsc#v=onepage&amp;q&amp;f=false">Popularizing the Nation: Audience, Representation, and the Production of Identity in Die Gartenlaube</a>, 1853-1900. U of Nebraska Press, 1998.</li>
+</ul>
+    </section>
+</article>
+</div>
+
+	</main>
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated August 15, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

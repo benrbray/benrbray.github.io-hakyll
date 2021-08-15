@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="diff.js"></script>
+	<script type="text/javascript">
+	var diffElem;
+	var beforeInput;
+	var afterInput;
+	
+	window.onload = function(){ 
+		mainInit()
+		diffElem = document.getElementById("diff-result");
+		beforeInput = document.getElementById("text-before");
+		afterInput = document.getElementById("text-after");
+	};
+	
+	function clearDiffElem(){
+		while (diffElem.firstChild) diffElem.removeChild(diffElem.firstChild);
+	}
+	
+	function showDiff(before, after){
+		// get user input
+		var beforeText = beforeInput.value;
+		var afterText = afterInput.value;
+		
+		clearDiffElem();
+		
+		// compute string diff (diff.js) and display the result
+		var diff = diffArray(beforeText.split("\n"), afterText.split("\n"));
+		diff.forEach(function(edit){
+			// check edit type
+			var editType = edit[0];
+			var editClass = (editType==0)?"":(editType>0?"removed":"added");
+			// create element on page for this change
+			var lineElem = document.createElement("div");
+			lineElem.innerText = edit[1]; 
+			lineElem.className = "line " + editClass;
+			diffElem.appendChild(lineElem);
+		});
+	}
+	
+	function dummyText(){
+		beforeInput.value = "This part of the\ndocument has stayed the\nsame from version to\nversion.  It shouldn't\nbe shown if it doesn't\nchange.  Otherwise, that\nwould not be helping to\ncompress the size of the\nchanges.\n \nThis paragraph contains\ntext that is outdated.\nIt will be deleted in the\nnear future.\n \nIt is important to spell\ncheck this dokument. On\nthe other hand, a\nmisspelled word isn't\nthe end of the world.\nNothing in the rest of\nthis paragraph needs to\nbe changed. Things can\nbe added after it.";
+		afterInput.value = "This is an important\nnotice! It should\ntherefore be located at\nthe beginning of this\ndocument!\n \nThis part of the\ndocument has stayed the\nsame from version to\nversion.  It shouldn't\nbe shown if it doesn't\nchange.  Otherwise, that\nwould not be helping to\ncompress anything.\n \nIt is important to spell\ncheck this document. On\nthe other hand, a\nmisspelled word isn't\nthe end of the world.\nNothing in the rest of\nthis paragraph needs to\nbe changed. Things can\nbe added after it.\n \nThis paragraph contains\nimportant new additions\nto this document.";
+	}
+	
+	function clearFields(){
+		beforeInput.value = "";
+		afterInput.value = "";
+	}
+	</script>
+</head>
+
+<body>
+
+<div id="wrap">
+
+<h1>Diff</h1>
+<div id="editor">
+	<div><textarea id="text-before"></textarea></div><!--
+ --><div><textarea id="text-after"></textarea></div>
+</div>
+
+<!-- compute diff button -->
+<div style="margin: 0 auto; display: flex;">
+	<button style="flex: 1" onclick="dummyText()">Demo Text</button>
+	<button class="primary" style="flex: 1" onclick="showDiff()">Compute Line Diff</button>
+	<button style="flex: 1" onclick="clearFields()">Clear Fields</button>
+</div>
+
+<!-- result -->
+<pre id="diff-result"></pre>
+
+</div>
+
+</body>
+</html>

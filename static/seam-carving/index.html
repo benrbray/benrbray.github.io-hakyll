@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Seam Carving</title>
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<!-- Main Content Column -->
+		<div class="main-wrap">
+			<div class="main-col" id="container">
+				<!-- Image Area -->
+				<div class="canvas-wrap">
+					<div id="image-container">
+						<canvas id="imageCanvas"></canvas>
+						<canvas id="drawCanvas"></canvas>
+						<div id="load-container">
+							<div id="loadbar"><div></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Sidebar -->
+		<div class="side-wrap">
+		<div class="side-col">
+			<select id="image-select"></select>
+			<hr>
+			<input type="radio" name="tool" value="protect" id="protect" checked>Protect<br>
+			<input type="radio" name="tool" value="remove" id="remove">Remove<br>
+			<input type="radio" name="tool" value="clear" id="clear">Clear<br>
+			<hr>
+			<button id="carve-button">Carve!</button>
+			<input id="seam-slider" type="range"></input>
+		</div>
+		</div>
+	</div>
+	<!-- Init -->
+	<script type="text/javascript">
+	window.onload = init;
+	</script>
+</body>
+</html>

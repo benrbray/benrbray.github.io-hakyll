@@ -1,0 +1,3135 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Adambots Automated Scouting Kit</title>
+	<!--[if IE]><script type="text/javascript" src="excanvas/excanvas.js"></script><![endif]-->
+	<script type="text/javascript" src="js/prediction.js"></script>
+	<script type="text/javascript" src="js/output.js"></script>
+	<script type="text/javascript" src="js/statistics.js"></script>
+	<script type="text/javascript" src="js/graphing.js"></script>
+	<script type="text/javascript" src="js/hashtable.js"></script>
+	<script type="text/javascript" src="js/matrix.js"></script>
+	<script type="text/javascript" src="js/frcevent.js"></script>
+	<script type="text/javascript" src="js/sorttable.js"></script>
+	<script type="text/javascript" src="js/page.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<link href="scouting.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="width:820px; padding-left:50px; padding-right:50px; margin-left:auto; margin-right:auto;">
+	<h1>Adambots Automated Scouting Kit</h1>
+	<div style="font-style:italic">Benjamin Bray & Curtis Fenner</div>
+	<p>The Adambots Automated Scouting Kit (AASK) automatically generates estimations of the ability of robots at
+		competition.
+		It utilizes the estimation of solutions to linear equations to predict expected contributions.
+	</p>
+	<p>This tool was produced using Javascript, PHP, HTML, and CSS by Adambots team members for any <em>FIRST</em>
+		robotics teams to use!
+		Click the table headings to sort the table. See <a href="#about">About This Tool▾</a> below for information
+		about this tool and instructions for use.<br>
+		<br><b>Important note:</b> this tool will only produce constructive and accurate results when enough matches
+		have been played; each team should have played at least several matches before any of these calculations are
+		taken seriously.<br>
+
+	</p>
+	<div id="change-selection" style="text-align:center;">
+		<h3>Competition Select <span style="color:red; font-weight:normal">(using archived 2013 match data)</span></h3>
+		<div style="height:35px;">
+			<select disabled id="compselector" style="width:754px;height:35px;outline:none;vertical-align:top;">
+				<option id="eventBAESystemsGraniteStateRegional">BAE Systems Granite State Regional</option>
+				<option id="eventFingerLakesRegional">Finger Lakes Regional</option>
+				<option id="eventPalmettoRegional">Palmetto Regional</option>
+				<option id="eventHubCityRegional">Hub City Regional</option>
+				<option id="eventCentralValleyRegional">Central Valley Regional</option>
+				<option id="eventKetteringUniversityDistrict">Kettering University District</option>
+				<option id="eventTraverseCityDistrict">Traverse City District</option>
+				<option id="eventHatboroHorshamDistrict">Hatboro-Horsham District</option>
+				<option id="eventGreaterTorontoEastRegional">Greater Toronto East Regional</option>
+				<option id="eventSanDiegoRegional">San Diego Regional</option>
+				<option id="eventOrlandoRegional">Orlando Regional</option>
+				<option id="eventWPIRegional">WPI Regional</option>
+				<option id="eventLakeSuperiorRegional">Lake Superior Regional</option>
+				<option id="eventNorthernLightsRegional">Northern Lights Regional</option>
+				<option id="eventNewYorkCityRegional">New York City Regional</option>
+				<option id="eventAutodeskOregonRegional">Autodesk Oregon Regional</option>
+				<option id="eventLoneStarRegional">Lone Star Regional</option>
+				<option id="eventGullLakeDistrict">Gull Lake District</option>
+				<option id="eventWaterfordDistrict">Waterford District</option>
+				<option id="eventIsraelRegional">Israel Regional</option>
+				<option id="eventMontrealRegional">Montreal Regional</option>
+				<option id="eventPeachtreeRegional">Peachtree Regional</option>
+				<option id="eventBoilermakerRegional">Boilermaker Regional</option>
+				<option id="eventGreaterKansasCityRegional">Greater Kansas City Regional</option>
+				<option id="eventSt.LouisRegional">St. Louis Regional</option>
+				<option id="eventNorthCarolinaRegional">North Carolina Regional</option>
+				<option id="eventPittsburghRegional">Pittsburgh Regional</option>
+				<option id="eventVirginiaRegional">Virginia Regional</option>
+				<option id="eventDetroitDistrict">Detroit District</option>
+				<option id="eventSt.JosephDistrict">St. Joseph District</option>
+				<option id="eventTCNJDistrict">TCNJ District</option>
+				<option id="eventSpringsideChestnutHillDistrict">Springside - Chestnut Hill District</option>
+				<option id="eventWaterlooRegional">Waterloo Regional</option>
+				<option id="eventPhoenixRegional">Phoenix Regional</option>
+				<option id="eventSacramentoRegional">Sacramento Regional</option>
+				<option id="eventLosAngelesRegionalsponsoredbyTheRoddenberryFoundation">Los Angeles Regional sponsored
+					by The Roddenberry Foundation</option>
+				<option id="eventBayouRegional">Bayou Regional</option>
+				<option id="eventBostonRegional">Boston Regional</option>
+				<option id="eventQueenCityRegional">Queen City Regional</option>
+				<option id="eventDallasRegional">Dallas Regional</option>
+				<option id="eventUtahRegionalcosponsoredbytheLarryH.MillerGroup&amp;Platt">Utah Regional co-sponsored by
+					the Larry H. Miller Group &amp; Platt</option>
+				<option id="eventCentralWashingtonRegional">Central Washington Regional</option>
+				<option id="eventWisconsinRegional">Wisconsin Regional</option>
+				<option id="eventWestMichiganDistrict">West Michigan District</option>
+				<option id="eventGrandBlancDistrict">Grand Blanc District</option>
+				<option id="eventMountOliveDistrict">Mount Olive District</option>
+				<option id="eventLenapeSenecaDistrict">Lenape Seneca District</option>
+				<option id="eventGreaterTorontoWestRegional">Greater Toronto West Regional</option>
+				<option id="eventInlandEmpireRegional">Inland Empire Regional</option>
+				<option id="eventConnecticutRegionalsponsoredbyUTC">Connecticut Regional sponsored by UTC</option>
+				<option id="eventWashingtonDCRegional">Washington DC Regional</option>
+				<option id="eventSouthFloridaRegional">South Florida Regional</option>
+				<option id="eventMinnesota10000LakesRegional">Minnesota 10000 Lakes Regional</option>
+				<option id="eventMinnesotaNorthStarRegional">Minnesota North Star Regional</option>
+				<option id="eventBuckeyeRegional">Buckeye Regional</option>
+				<option id="eventOklahomaRegional">Oklahoma Regional</option>
+				<option id="eventSmokyMountainsRegional">Smoky Mountains Regional</option>
+				<option id="eventAlamoRegionalsponsoredbyRackspaceHosting">Alamo Regional sponsored by Rackspace Hosting
+				</option>
+				<option id="eventSeattleRegional">Seattle Regional</option>
+				<option id="eventLivoniaDistrict">Livonia District</option>
+				<option id="eventTroyDistrict">Troy District</option>
+				<option id="eventWesternCanadianRegional">Western Canadian Regional</option>
+				<option id="eventRazorbackRegional">Razorback Regional</option>
+				<option id="eventSiliconValleyRegional">Silicon Valley Regional</option>
+				<option id="eventColoradoRegional">Colorado Regional</option>
+				<option id="eventHawaiiRegionalsponsoredbyBAESystems">Hawaii Regional sponsored by BAE Systems</option>
+				<option id="eventMidwestRegional">Midwest Regional</option>
+				<option id="eventCrossroadsRegional">Crossroads Regional</option>
+				<option id="eventPineTreeRegional">Pine Tree Regional</option>
+				<option id="eventLasVegasRegional">Las Vegas Regional</option>
+				<option id="eventSBPLILongIslandRegional">SBPLI Long Island Regional</option>
+				<option id="eventSpokaneRegional">Spokane Regional</option>
+				<option id="eventBedfordDistrict">Bedford District</option>
+				<option id="eventBridgewaterRaritanDistrict">Bridgewater-Raritan District</option>
+				<option id="eventChesapeakeRegional">Chesapeake Regional</option>
+				<option id="eventMichiganStateChampionship">Michigan State Championship</option>
+				<option id="eventMidAtlanticRoboticsRegionalChampionship">Mid-Atlantic Robotics Regional Championship
+				</option>
+				<option id="eventArchimedesChampionship">Archimedes Championship</option>
+				<option id="eventCurieChampionship">Curie Championship</option>
+				<option id="eventGalileoChampionship">Galileo Championship</option>
+				<option id="eventNewtonChampionship">Newton Championship</option>
+			</select><span style="display:inline-block; width:6px;height:1px; background:white;"></span><button
+				id="goToComp" style="width:60px;height:35px;">Go!</button><br>
+		</div>
+		<script src="js/competitions.js" type="text/javascript"></script>
+	</div>
+
+	<br>
+
+	<div style="width:819px; margin:0px; padding:0px;">
+		<table class="shinytable" id="bigtable" data-sorting="iidddddd" style="width:819px;">
+			<thead>
+				<tr>
+					<td colspan="9">
+						<script>document.write(eventName + " (Analysis)");</script>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">FIRST Data*</td>
+					<td colspan="4">Direct Calculations<sup>†</sup></td>
+					<td colspan="3">Subjective Calculations<sup>‡</sup></td>
+				</tr>
+				<tr>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(0);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(0);return false;">Team</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(1);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(1);return false;">Rank</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(2);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(2);return false;">Auton</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(3);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(3);return false;">Climb</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(4);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(4);return false;">Teleop</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(5);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(5);return false;">OPR</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(6);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(6);return false;">DPR</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(7);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(7);return false;">CCWM</a></td>
+					<td><a style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(8);return false;"></a><a
+							style="color:black;cursor:pointer;text-decoration:underline;"
+							onclick="clickcol(8);return false;">Seed</a></td>
+				</tr>
+			</thead>
+			<tbody id="bigdata">
+				<tr>
+					<td style="background:#EEEEEE">118</td>
+					<td style="background:#98E3A7">1</td>
+					<td style="background:#98E3A7">33.9</td>
+					<td style="background:#EFCC8C">5.2</td>
+					<td style="background:#B8E99C">51.5</td>
+					<td style="background:#98E3A7">90.6</td>
+					<td style="background:#F5ED89">1.6</td>
+					<td style="background:#B3E89E">47.2</td>
+					<td style="background:#98E3A7">1</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1114</td>
+					<td style="background:#99E3A6">2</td>
+					<td style="background:#EDF58B">17.1</td>
+					<td style="background:#98E3A7">27.0</td>
+					<td style="background:#EDF58B">30.6</td>
+					<td style="background:#B9EA9C">74.7</td>
+					<td style="background:#EAAF8F">-12.1</td>
+					<td style="background:#D4EF94">28.2</td>
+					<td style="background:#99E3A6">2</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2169</td>
+					<td style="background:#9BE3A5">3</td>
+					<td style="background:#F1F58A">16.3</td>
+					<td style="background:#F6F689">11.5</td>
+					<td style="background:#B3E89E">53.6</td>
+					<td style="background:#ABE7A0">81.4</td>
+					<td style="background:#D1EF94">13.1</td>
+					<td style="background:#BFEB9A">40.0</td>
+					<td style="background:#9BE3A5">3</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1425</td>
+					<td style="background:#9DE4A5">4</td>
+					<td style="background:#F4E98A">12.9</td>
+					<td style="background:#F3E18A">8.3</td>
+					<td style="background:#98E3A7">64.2</td>
+					<td style="background:#A2E5A3">85.4</td>
+					<td style="background:#F1D78B">-3.4</td>
+					<td style="background:#98E3A7">63.0</td>
+					<td style="background:#9FE4A4">5</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2630</td>
+					<td style="background:#9FE4A4">5</td>
+					<td style="background:#EFCB8C">7.8</td>
+					<td style="background:#F0D38C">6.3</td>
+					<td style="background:#CAED97">44.6</td>
+					<td style="background:#DAF191">58.7</td>
+					<td style="background:#F3E48A">-0.5</td>
+					<td style="background:#E1F28F">20.6</td>
+					<td style="background:#A1E5A3">6</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1241</td>
+					<td style="background:#A1E5A3">6</td>
+					<td style="background:#F0F58B">16.5</td>
+					<td style="background:#EEC98D">4.9</td>
+					<td style="background:#F1F58A">29.4</td>
+					<td style="background:#EBF48C">50.7</td>
+					<td style="background:#F4E98A">0.6</td>
+					<td style="background:#E5F38E">18.4</td>
+					<td style="background:#A3E5A3">7</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2474</td>
+					<td style="background:#A3E5A3">7</td>
+					<td style="background:#D3EF94">22.1</td>
+					<td style="background:#E7A290">-0.7</td>
+					<td style="background:#F4E68A">21.5</td>
+					<td style="background:#F5F189">42.9</td>
+					<td style="background:#F6F289">2.5</td>
+					<td style="background:#E9F48D">16.0</td>
+					<td style="background:#A5E5A2">8</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3656</td>
+					<td style="background:#A5E5A2">8</td>
+					<td style="background:#D6F093">21.5</td>
+					<td style="background:#F4E88A">9.3</td>
+					<td style="background:#F3E18A">19.9</td>
+					<td style="background:#EBF48C">50.8</td>
+					<td style="background:#F0D38C">-4.2</td>
+					<td style="background:#DAF191">24.3</td>
+					<td style="background:#A9E6A1">10</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2338</td>
+					<td style="background:#A7E6A2">9</td>
+					<td style="background:#F6F289">14.4</td>
+					<td style="background:#EDC08D">3.5</td>
+					<td style="background:#F0D58C">15.9</td>
+					<td style="background:#F1DB8B">33.8</td>
+					<td style="background:#ECBF8E">-8.5</td>
+					<td style="background:#D4EF93">27.8</td>
+					<td style="background:#9DE4A5">4</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2512</td>
+					<td style="background:#A9E6A1">10</td>
+					<td style="background:#D4EF93">22.0</td>
+					<td style="background:#EAB08F">1.2</td>
+					<td style="background:#B8E99C">51.4</td>
+					<td style="background:#B9EA9C">74.6</td>
+					<td style="background:#F1D78B">-3.3</td>
+					<td style="background:#9EE4A5">59.4</td>
+					<td style="background:#A7E6A2">9</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">245</td>
+					<td style="background:#ABE7A0">11</td>
+					<td style="background:#ECF48C">17.2</td>
+					<td style="background:#EFF58B">12.6</td>
+					<td style="background:#DAF092">38.4</td>
+					<td style="background:#C7EC98">68.1</td>
+					<td style="background:#EDC38D">-7.7</td>
+					<td style="background:#CEEE95">31.2</td>
+					<td style="background:#B0E89F">14</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4069</td>
+					<td style="background:#ADE7A0">12</td>
+					<td style="background:#E4F38E">18.8</td>
+					<td style="background:#F4E98A">9.5</td>
+					<td style="background:#F6F589">26.5</td>
+					<td style="background:#E3F28F">54.7</td>
+					<td style="background:#F1F58A">5.0</td>
+					<td style="background:#D2EF94">29.1</td>
+					<td style="background:#ADE7A0">12</td>
+				</tr>
+				<tr>
+					<td style="background:#EDEDED">295</td>
+					<td style="background:#AFE79F">13</td>
+					<td style="background:#E5F38E">18.6</td>
+					<td style="background:#F5F089">10.4</td>
+					<td style="background:#F4E98A">22.6</td>
+					<td style="background:#E9F48D">51.5</td>
+					<td style="background:#E7A390">-14.6</td>
+					<td style="background:#C2EB99">38.6</td>
+					<td style="background:#AFE79F">13</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">610</td>
+					<td style="background:#B0E89F">14</td>
+					<td style="background:#F1D78B">9.8</td>
+					<td style="background:#F1D98B">7.1</td>
+					<td style="background:#F3F68A">28.5</td>
+					<td style="background:#F6F689">45.4</td>
+					<td style="background:#F5EC89">1.3</td>
+					<td style="background:#DCF191">23.4</td>
+					<td style="background:#B8E99C">18</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2729</td>
+					<td style="background:#B2E89E">15</td>
+					<td style="background:#E3F28F">19.0</td>
+					<td style="background:#F3E28A">8.4</td>
+					<td style="background:#CDEE96">43.3</td>
+					<td style="background:#C1EB99">70.7</td>
+					<td style="background:#E1F28F">9.1</td>
+					<td style="background:#E0F290">21.1</td>
+					<td style="background:#ABE7A0">11</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2907</td>
+					<td style="background:#B4E99D">16</td>
+					<td style="background:#EFCF8C">8.5</td>
+					<td style="background:#F6F289">10.7</td>
+					<td style="background:#F2DC8B">18.0</td>
+					<td style="background:#F3E38A">37.2</td>
+					<td style="background:#C5EC98">16.2</td>
+					<td style="background:#F3E58A">-0.6</td>
+					<td style="background:#BCEA9B">20</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3641</td>
+					<td style="background:#B6E99D">17</td>
+					<td style="background:#F2DE8B">11.0</td>
+					<td style="background:#DEF190">15.4</td>
+					<td style="background:#F6F389">25.8</td>
+					<td style="background:#E8F38D">52.2</td>
+					<td style="background:#EEC58D">-7.2</td>
+					<td style="background:#E0F290">21.2</td>
+					<td style="background:#B6E99D">17</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4334</td>
+					<td style="background:#B8E99C">18</td>
+					<td style="background:#EFCF8C">8.5</td>
+					<td style="background:#F3E18A">8.3</td>
+					<td style="background:#D1EF94">41.9</td>
+					<td style="background:#DAF191">58.6</td>
+					<td style="background:#E38993">-20.5</td>
+					<td style="background:#CCED96">32.7</td>
+					<td style="background:#BEEB9A">21</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">27</td>
+					<td style="background:#BAEA9C">19</td>
+					<td style="background:#F4EA8A">13.1</td>
+					<td style="background:#EEC68D">4.5</td>
+					<td style="background:#DDF191">37.1</td>
+					<td style="background:#E3F28F">54.7</td>
+					<td style="background:#F4E88A">0.4</td>
+					<td style="background:#E1F28F">20.5</td>
+					<td style="background:#B2E89E">15</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">422</td>
+					<td style="background:#BCEA9B">20</td>
+					<td style="background:#F3E18A">11.6</td>
+					<td style="background:#F2DF8B">7.9</td>
+					<td style="background:#F3E38A">20.6</td>
+					<td style="background:#F4EA8A">40.1</td>
+					<td style="background:#ECBE8E">-8.7</td>
+					<td style="background:#CBED96">33.1</td>
+					<td style="background:#B4E99D">16</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2341</td>
+					<td style="background:#BEEB9A">21</td>
+					<td style="background:#F0D48C">9.3</td>
+					<td style="background:#E8A590">-0.3</td>
+					<td style="background:#F3E48A">20.9</td>
+					<td style="background:#F0D28C">30.0</td>
+					<td style="background:#EBB88E">-10.0</td>
+					<td style="background:#EFF58B">12.4</td>
+					<td style="background:#BAEA9C">19</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4557</td>
+					<td style="background:#C0EB9A">22</td>
+					<td style="background:#ECBD8E">5.5</td>
+					<td style="background:#F1D68B">6.7</td>
+					<td style="background:#F0D28C">14.6</td>
+					<td style="background:#EECA8D">26.7</td>
+					<td style="background:#EFCE8C">-5.4</td>
+					<td style="background:#E5F38E">18.2</td>
+					<td style="background:#C0EB9A">22</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4039</td>
+					<td style="background:#C2EB99">23</td>
+					<td style="background:#EDF48C">17.1</td>
+					<td style="background:#F3F68A">11.9</td>
+					<td style="background:#F6F389">25.8</td>
+					<td style="background:#E2F28F">54.9</td>
+					<td style="background:#EFCE8C">-5.2</td>
+					<td style="background:#F6F689">7.8</td>
+					<td style="background:#C2EB99">23</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3528</td>
+					<td style="background:#C4EC99">24</td>
+					<td style="background:#D7F092">21.4</td>
+					<td style="background:#F1D68B">6.7</td>
+					<td style="background:#F2DC8B">18.2</td>
+					<td style="background:#F4F689">46.3</td>
+					<td style="background:#F6F489">2.9</td>
+					<td style="background:#E1F28F">20.5</td>
+					<td style="background:#C7ED97">26</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">111</td>
+					<td style="background:#C6EC98">25</td>
+					<td style="background:#C1EB99">25.8</td>
+					<td style="background:#F1DA8B">7.3</td>
+					<td style="background:#E1F28F">35.6</td>
+					<td style="background:#C5EC98">68.7</td>
+					<td style="background:#F2F68A">4.6</td>
+					<td style="background:#DAF191">24.2</td>
+					<td style="background:#C6EC98">25</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1732</td>
+					<td style="background:#C7ED97">26</td>
+					<td style="background:#BDEA9B">26.5</td>
+					<td style="background:#EEC98D">4.9</td>
+					<td style="background:#E9F48D">32.5</td>
+					<td style="background:#CFEE95">63.9</td>
+					<td style="background:#F1F58A">5.0</td>
+					<td style="background:#D0EE95">30.4</td>
+					<td style="background:#C4EC99">24</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1477</td>
+					<td style="background:#C9ED97">27</td>
+					<td style="background:#DFF290">19.8</td>
+					<td style="background:#EFF58B">12.6</td>
+					<td style="background:#F3E68A">21.4</td>
+					<td style="background:#E4F38E">53.8</td>
+					<td style="background:#F1D68B">-3.7</td>
+					<td style="background:#F4E78A">0.3</td>
+					<td style="background:#CBED96">28</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1323</td>
+					<td style="background:#CBED96">28</td>
+					<td style="background:#EFF58B">16.8</td>
+					<td style="background:#EAB38F">1.8</td>
+					<td style="background:#F6F689">27.2</td>
+					<td style="background:#F5F689">45.7</td>
+					<td style="background:#F2DB8B">-2.4</td>
+					<td style="background:#F4E78A">0.1</td>
+					<td style="background:#CFEE95">30</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2000</td>
+					<td style="background:#CDEE96">29</td>
+					<td style="background:#F4E98A">12.9</td>
+					<td style="background:#F4EA8A">9.6</td>
+					<td style="background:#F1DA8B">17.4</td>
+					<td style="background:#F4EA8A">40.0</td>
+					<td style="background:#EFCE8C">-5.4</td>
+					<td style="background:#E9F48D">15.9</td>
+					<td style="background:#D5EF93">33</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">222</td>
+					<td style="background:#CFEE95">30</td>
+					<td style="background:#EAF48C">17.6</td>
+					<td style="background:#F2DE8B">7.8</td>
+					<td style="background:#C4EC98">46.8</td>
+					<td style="background:#BEEB9A">72.3</td>
+					<td style="background:#F0F58A">5.1</td>
+					<td style="background:#EFF58B">12.5</td>
+					<td style="background:#CDEE96">29</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4601</td>
+					<td style="background:#D1EF94">31</td>
+					<td style="background:#DDF191">20.2</td>
+					<td style="background:#E8F38D">13.8</td>
+					<td style="background:#EFF58B">30.1</td>
+					<td style="background:#CFEE95">64.2</td>
+					<td style="background:#EAF48C">6.6</td>
+					<td style="background:#C9ED97">34.1</td>
+					<td style="background:#C9ED97">27</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3944</td>
+					<td style="background:#D3EF94">32</td>
+					<td style="background:#EEC98D">7.5</td>
+					<td style="background:#E7A190">-0.8</td>
+					<td style="background:#EFCD8C">13.1</td>
+					<td style="background:#EBB98E">19.8</td>
+					<td style="background:#F0D28C">-4.3</td>
+					<td style="background:#EEC68D">-16.3</td>
+					<td style="background:#DDF191">37</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2199</td>
+					<td style="background:#D5EF93">33</td>
+					<td style="background:#F6F389">14.6</td>
+					<td style="background:#F6F289">10.6</td>
+					<td style="background:#F3E68A">21.4</td>
+					<td style="background:#F4F689">46.6</td>
+					<td style="background:#F4E98A">0.7</td>
+					<td style="background:#EEF58B">13.1</td>
+					<td style="background:#D1EF94">31</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1806</td>
+					<td style="background:#D7F093">34</td>
+					<td style="background:#EFCE8C">8.3</td>
+					<td style="background:#DCF191">15.8</td>
+					<td style="background:#CEEE95">42.8</td>
+					<td style="background:#C9ED97">67.0</td>
+					<td style="background:#F2DE8B">-1.7</td>
+					<td style="background:#F6F389">6.3</td>
+					<td style="background:#D7F093">34</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2403</td>
+					<td style="background:#D9F092">35</td>
+					<td style="background:#F5EF89">13.8</td>
+					<td style="background:#D8F092">16.4</td>
+					<td style="background:#EDC08D">8.8</td>
+					<td style="background:#F4E88A">39.0</td>
+					<td style="background:#F0D48C">-4.0</td>
+					<td style="background:#E4F38E">18.8</td>
+					<td style="background:#D3EF94">32</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3941</td>
+					<td style="background:#DBF191">36</td>
+					<td style="background:#EFCC8C">7.9</td>
+					<td style="background:#F5EC89">9.8</td>
+					<td style="background:#F6F189">25.3</td>
+					<td style="background:#F6F189">43.0</td>
+					<td style="background:#F2DE8B">-1.7</td>
+					<td style="background:#EFF58B">12.3</td>
+					<td style="background:#DBF191">36</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4627</td>
+					<td style="background:#DDF191">37</td>
+					<td style="background:#E49092">-2.2</td>
+					<td style="background:#EFCC8C">5.3</td>
+					<td style="background:#EDC18D">9.1</td>
+					<td style="background:#E8A790">12.2</td>
+					<td style="background:#F5EC89">1.2</td>
+					<td style="background:#EFCB8C">-13.9</td>
+					<td style="background:#E4F38E">41</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">329</td>
+					<td style="background:#DFF190">38</td>
+					<td style="background:#EEC78D">7.1</td>
+					<td style="background:#E49092">-3.3</td>
+					<td style="background:#E0F290">35.8</td>
+					<td style="background:#F4E98A">39.6</td>
+					<td style="background:#F1DA8B">-2.7</td>
+					<td style="background:#E4F38E">18.8</td>
+					<td style="background:#DFF190">38</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">842</td>
+					<td style="background:#E0F28F">39</td>
+					<td style="background:#E7A390">1.0</td>
+					<td style="background:#B4E89E">22.3</td>
+					<td style="background:#E79F90">-2.6</td>
+					<td style="background:#ECBB8E">20.7</td>
+					<td style="background:#E8A790">-13.8</td>
+					<td style="background:#EFCE8C">-12.1</td>
+					<td style="background:#E2F28F">40</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1710</td>
+					<td style="background:#E2F28F">40</td>
+					<td style="background:#EDC48D">6.6</td>
+					<td style="background:#F0D28C">6.2</td>
+					<td style="background:#F2DB8B">17.8</td>
+					<td style="background:#F0D38C">30.6</td>
+					<td style="background:#F0D48C">-3.9</td>
+					<td style="background:#D6F093">26.7</td>
+					<td style="background:#E0F28F">39</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3459</td>
+					<td style="background:#E4F38E">41</td>
+					<td style="background:#F5F689">15.5</td>
+					<td style="background:#E8A590">-0.2</td>
+					<td style="background:#EBB98E">6.4</td>
+					<td style="background:#ECBE8E">21.7</td>
+					<td style="background:#DFF290">9.5</td>
+					<td style="background:#E7A290">-34.1</td>
+					<td style="background:#E6F38E">42</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4492</td>
+					<td style="background:#E6F38E">42</td>
+					<td style="background:#F1D68B">9.7</td>
+					<td style="background:#E38993">-4.3</td>
+					<td style="background:#F2E08B">19.4</td>
+					<td style="background:#EEC58D">24.8</td>
+					<td style="background:#F3E38A">-0.7</td>
+					<td style="background:#F3E38A">-1.9</td>
+					<td style="background:#E8F38D">43</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2502</td>
+					<td style="background:#E8F38D">43</td>
+					<td style="background:#ECBF8E">5.8</td>
+					<td style="background:#F2DD8B">7.7</td>
+					<td style="background:#EFCD8C">13.2</td>
+					<td style="background:#EECA8D">26.6</td>
+					<td style="background:#F4EA8A">0.9</td>
+					<td style="background:#F6F689">7.5</td>
+					<td style="background:#ECF48C">45</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1325</td>
+					<td style="background:#EAF48C">44</td>
+					<td style="background:#EDC28D">6.2</td>
+					<td style="background:#ECBE8E">3.3</td>
+					<td style="background:#ECBA8E">6.7</td>
+					<td style="background:#EAB08F">16.2</td>
+					<td style="background:#F0F58B">5.2</td>
+					<td style="background:#EEC88D">-15.4</td>
+					<td style="background:#EAF48C">44</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4481</td>
+					<td style="background:#ECF48C">45</td>
+					<td style="background:#DDF190">20.1</td>
+					<td style="background:#EEF58B">12.8</td>
+					<td style="background:#F2E08B">19.4</td>
+					<td style="background:#E7F38D">52.4</td>
+					<td style="background:#EDC48D">-7.5</td>
+					<td style="background:#E7F38D">16.9</td>
+					<td style="background:#F0F58B">47</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2337</td>
+					<td style="background:#EEF58B">46</td>
+					<td style="background:#DCF191">20.4</td>
+					<td style="background:#F1D88B">7.0</td>
+					<td style="background:#F2DF8B">19.1</td>
+					<td style="background:#F4F689">46.6</td>
+					<td style="background:#EEF58B">5.6</td>
+					<td style="background:#F1DA8B">-6.5</td>
+					<td style="background:#EEF58B">46</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">125</td>
+					<td style="background:#F0F58B">47</td>
+					<td style="background:#EDF58B">17.0</td>
+					<td style="background:#F2F58A">12.1</td>
+					<td style="background:#EDF58B">30.7</td>
+					<td style="background:#D8F092">59.9</td>
+					<td style="background:#EFCB8C">-6.0</td>
+					<td style="background:#E0F290">20.8</td>
+					<td style="background:#F2F58A">48</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2834</td>
+					<td style="background:#F2F58A">48</td>
+					<td style="background:#F4EA8A">13.1</td>
+					<td style="background:#EEC68D">4.5</td>
+					<td style="background:#EDC38D">9.8</td>
+					<td style="background:#EFCB8C">27.4</td>
+					<td style="background:#DDF191">10.0</td>
+					<td style="background:#F3E58A">-0.9</td>
+					<td style="background:#F6F689">50</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4579</td>
+					<td style="background:#F4F689">49</td>
+					<td style="background:#EFCC8C">8.0</td>
+					<td style="background:#EAB48F">1.9</td>
+					<td style="background:#ECBC8E">7.3</td>
+					<td style="background:#EAB38F">17.2</td>
+					<td style="background:#F1D78B">-3.3</td>
+					<td style="background:#EEC78D">-15.7</td>
+					<td style="background:#D9F092">35</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2648</td>
+					<td style="background:#F6F689">50</td>
+					<td style="background:#F3E58A">12.1</td>
+					<td style="background:#F6F289">10.7</td>
+					<td style="background:#EEF58B">30.3</td>
+					<td style="background:#E6F38E">53.1</td>
+					<td style="background:#D2EF94">12.9</td>
+					<td style="background:#E3F28F">19.5</td>
+					<td style="background:#F6F589">51</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1378</td>
+					<td style="background:#F6F589">51</td>
+					<td style="background:#F0D28C">9.0</td>
+					<td style="background:#E48F92">-3.4</td>
+					<td style="background:#F1D78B">16.5</td>
+					<td style="background:#ECBF8E">22.0</td>
+					<td style="background:#F1D98B">-2.8</td>
+					<td style="background:#EEC68D">-16.3</td>
+					<td style="background:#F5F189">53</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4472</td>
+					<td style="background:#F6F389">52</td>
+					<td style="background:#F5ED89">13.6</td>
+					<td style="background:#F0D38C">6.3</td>
+					<td style="background:#EECA8D">12.1</td>
+					<td style="background:#F1D78B">32.0</td>
+					<td style="background:#F2DF8B">-1.6</td>
+					<td style="background:#F2DF8B">-3.9</td>
+					<td style="background:#F4F689">49</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1218</td>
+					<td style="background:#F5F189">53</td>
+					<td style="background:#F2DD8B">10.8</td>
+					<td style="background:#F1D98B">7.1</td>
+					<td style="background:#F0F58B">29.7</td>
+					<td style="background:#F1F58A">47.6</td>
+					<td style="background:#E7F38E">7.6</td>
+					<td style="background:#F1DB8B">-5.9</td>
+					<td style="background:#F6F389">52</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4462</td>
+					<td style="background:#F5EF89">54</td>
+					<td style="background:#F0D18C">8.8</td>
+					<td style="background:#EBB68E">2.2</td>
+					<td style="background:#F2DC8B">18.2</td>
+					<td style="background:#EFD08C">29.2</td>
+					<td style="background:#EAF48C">6.7</td>
+					<td style="background:#EDC48D">-17.3</td>
+					<td style="background:#F5EF89">54</td>
+				</tr>
+				<tr>
+					<td style="background:#EDEDED">95</td>
+					<td style="background:#F5ED89">55</td>
+					<td style="background:#E38A92">-3.3</td>
+					<td style="background:#F2DB8B">7.5</td>
+					<td style="background:#E9AC8F">1.8</td>
+					<td style="background:#E59891">5.9</td>
+					<td style="background:#F4E98A">0.5</td>
+					<td style="background:#EBB78E">-24.0</td>
+					<td style="background:#F4EA8A">56</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">337</td>
+					<td style="background:#F4EA8A">56</td>
+					<td style="background:#E9AA8F">2.1</td>
+					<td style="background:#F1F58A">12.3</td>
+					<td style="background:#F0D38C">15.0</td>
+					<td style="background:#F0D08C">29.4</td>
+					<td style="background:#ECBD8E">-9.1</td>
+					<td style="background:#F0D08C">-11.2</td>
+					<td style="background:#F5ED89">55</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1987</td>
+					<td style="background:#F4E88A">57</td>
+					<td style="background:#ECBE8E">5.6</td>
+					<td style="background:#EEC78D">4.6</td>
+					<td style="background:#F4E78A">21.7</td>
+					<td style="background:#F1D68B">31.9</td>
+					<td style="background:#ECBD8E">-9.1</td>
+					<td style="background:#F4E78A">0.1</td>
+					<td style="background:#F3E68A">58</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1726</td>
+					<td style="background:#F3E68A">58</td>
+					<td style="background:#EFCD8C">8.1</td>
+					<td style="background:#F4E78A">9.2</td>
+					<td style="background:#EEC58D">10.4</td>
+					<td style="background:#EFCC8C">27.7</td>
+					<td style="background:#F4E78A">0.2</td>
+					<td style="background:#F0D48C">-9.5</td>
+					<td style="background:#F4E88A">57</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4641</td>
+					<td style="background:#F3E48A">59</td>
+					<td style="background:#EAB38F">3.7</td>
+					<td style="background:#F4E88A">9.3</td>
+					<td style="background:#F0D28C">14.7</td>
+					<td style="background:#EFCD8C">27.8</td>
+					<td style="background:#EEC78D">-6.9</td>
+					<td style="background:#F6F189">5.5</td>
+					<td style="background:#F3E48A">59</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">70</td>
+					<td style="background:#F3E18A">60</td>
+					<td style="background:#BAEA9C">27.2</td>
+					<td style="background:#F5ED89">9.9</td>
+					<td style="background:#E9F48D">32.4</td>
+					<td style="background:#C4EC99">69.5</td>
+					<td style="background:#EBB98E">-9.9</td>
+					<td style="background:#EFF58B">12.2</td>
+					<td style="background:#F3E18A">60</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1629</td>
+					<td style="background:#F2DF8B">61</td>
+					<td style="background:#E9F48D">17.9</td>
+					<td style="background:#EEC78D">4.7</td>
+					<td style="background:#F1D98B">17.2</td>
+					<td style="background:#F4E98A">39.8</td>
+					<td style="background:#F2DD8B">-2.0</td>
+					<td style="background:#EDC58D">-16.8</td>
+					<td style="background:#F1DB8B">63</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2978</td>
+					<td style="background:#F2DD8B">62</td>
+					<td style="background:#D7F093">21.5</td>
+					<td style="background:#EECA8D">5.0</td>
+					<td style="background:#EEC88D">11.5</td>
+					<td style="background:#F3E58A">38.0</td>
+					<td style="background:#E3F28F">8.4</td>
+					<td style="background:#F4E98A">1.4</td>
+					<td style="background:#F2DF8B">61</td>
+				</tr>
+				<tr>
+					<td style="background:#EDEDED">3284</td>
+					<td style="background:#F1DB8B">63</td>
+					<td style="background:#F3E28A">11.7</td>
+					<td style="background:#F3E28A">8.4</td>
+					<td style="background:#F4E68A">21.5</td>
+					<td style="background:#F5EE89">41.6</td>
+					<td style="background:#F3E58A">-0.4</td>
+					<td style="background:#F1D68B">-8.2</td>
+					<td style="background:#F0D28C">67</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2175</td>
+					<td style="background:#F1D98B">64</td>
+					<td style="background:#E0F290">19.6</td>
+					<td style="background:#E69B91">-1.7</td>
+					<td style="background:#EFF58B">30.1</td>
+					<td style="background:#F1F58A">47.9</td>
+					<td style="background:#F1D78B">-3.4</td>
+					<td style="background:#F3E18A">-3.0</td>
+					<td style="background:#F2DD8B">62</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">447</td>
+					<td style="background:#F1D68B">65</td>
+					<td style="background:#EFCB8C">7.8</td>
+					<td style="background:#F5F089">10.4</td>
+					<td style="background:#E7A390">-1.3</td>
+					<td style="background:#EAB28F">16.9</td>
+					<td style="background:#D5EF93">12.0</td>
+					<td style="background:#E9AC8F">-29.1</td>
+					<td style="background:#EDC58D">73</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3481</td>
+					<td style="background:#F0D48C">66</td>
+					<td style="background:#EFF58B">16.7</td>
+					<td style="background:#E8A990">0.3</td>
+					<td style="background:#EDC08D">8.8</td>
+					<td style="background:#EEC88D">25.8</td>
+					<td style="background:#98E3A7">27.6</td>
+					<td style="background:#F1D88B">-7.5</td>
+					<td style="background:#F1D68B">65</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2481</td>
+					<td style="background:#F0D28C">67</td>
+					<td style="background:#F1D68B">9.6</td>
+					<td style="background:#B2E89E">22.7</td>
+					<td style="background:#EAAF8F">3.0</td>
+					<td style="background:#F2DF8B">35.4</td>
+					<td style="background:#F5EF89">2.0</td>
+					<td style="background:#E69E91">-36.1</td>
+					<td style="background:#EFCB8C">70</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1675</td>
+					<td style="background:#EFD08C">68</td>
+					<td style="background:#F2DE8B">11.1</td>
+					<td style="background:#EAB48F">1.9</td>
+					<td style="background:#F1D78B">16.6</td>
+					<td style="background:#F0D18C">29.5</td>
+					<td style="background:#F6F389">2.7</td>
+					<td style="background:#EEC98D">-14.7</td>
+					<td style="background:#EFD08C">68</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2485</td>
+					<td style="background:#EFCD8C">69</td>
+					<td style="background:#EEF58B">17.0</td>
+					<td style="background:#EAB18F">1.4</td>
+					<td style="background:#C3EC99">47.0</td>
+					<td style="background:#CCEE96">65.4</td>
+					<td style="background:#EDC28D">-7.9</td>
+					<td style="background:#D6F093">26.9</td>
+					<td style="background:#F1D98B">64</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1772</td>
+					<td style="background:#EFCB8C">70</td>
+					<td style="background:#F1D98B">10.2</td>
+					<td style="background:#F5ED89">10.0</td>
+					<td style="background:#ECBC8E">7.4</td>
+					<td style="background:#EFCC8C">27.7</td>
+					<td style="background:#F0D38C">-4.1</td>
+					<td style="background:#EEC78D">-15.8</td>
+					<td style="background:#EFCD8C">69</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">45</td>
+					<td style="background:#EEC98D">71</td>
+					<td style="background:#EFCE8C">8.3</td>
+					<td style="background:#E38A92">-4.1</td>
+					<td style="background:#EBB68E">5.2</td>
+					<td style="background:#E7A090">9.4</td>
+					<td style="background:#F4F689">4.1</td>
+					<td style="background:#F3E58A">-0.5</td>
+					<td style="background:#EEC98D">71</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3211</td>
+					<td style="background:#EEC78D">72</td>
+					<td style="background:#F5EF89">13.9</td>
+					<td style="background:#ECBB8E">2.8</td>
+					<td style="background:#EFCB8C">12.3</td>
+					<td style="background:#EFD08C">29.1</td>
+					<td style="background:#E9AE8F">-12.4</td>
+					<td style="background:#E7F38D">16.7</td>
+					<td style="background:#F0D48C">66</td>
+				</tr>
+				<tr>
+					<td style="background:#EDEDED">358</td>
+					<td style="background:#EDC58D">73</td>
+					<td style="background:#EFCC8C">8.0</td>
+					<td style="background:#B9EA9C">21.5</td>
+					<td style="background:#F1D88B">16.8</td>
+					<td style="background:#F4F689">46.3</td>
+					<td style="background:#DFF290">9.5</td>
+					<td style="background:#F1D88B">-7.0</td>
+					<td style="background:#EEC78D">72</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4567</td>
+					<td style="background:#EDC28D">74</td>
+					<td style="background:#E9AE8F">2.8</td>
+					<td style="background:#E7A490">-0.4</td>
+					<td style="background:#F2DD8B">18.3</td>
+					<td style="background:#ECBB8E">20.6</td>
+					<td style="background:#E9AF8F">-12.2</td>
+					<td style="background:#ECBF8E">-19.8</td>
+					<td style="background:#ECBE8E">76</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4607</td>
+					<td style="background:#EDC08D">75</td>
+					<td style="background:#E59491">-1.6</td>
+					<td style="background:#E8A690">-0.1</td>
+					<td style="background:#F0D08C">14.2</td>
+					<td style="background:#E8A790">12.5</td>
+					<td style="background:#F5F689">4.0</td>
+					<td style="background:#F2DF8B">-3.6</td>
+					<td style="background:#EBB58E">80</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2046</td>
+					<td style="background:#ECBE8E">76</td>
+					<td style="background:#E9AC8F">2.4</td>
+					<td style="background:#E8A590">-0.3</td>
+					<td style="background:#F1DA8B">17.5</td>
+					<td style="background:#EBB98E">19.6</td>
+					<td style="background:#D6F093">11.7</td>
+					<td style="background:#EAB08F">-27.4</td>
+					<td style="background:#ECBC8E">77</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3018</td>
+					<td style="background:#ECBC8E">77</td>
+					<td style="background:#E7A390">0.9</td>
+					<td style="background:#B7E99C">21.8</td>
+					<td style="background:#E38993">-10.1</td>
+					<td style="background:#E8A890">12.5</td>
+					<td style="background:#F5F689">4.0</td>
+					<td style="background:#E7A190">-35.0</td>
+					<td style="background:#EBB98E">78</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4522</td>
+					<td style="background:#EBB98E">78</td>
+					<td style="background:#EAB38F">3.6</td>
+					<td style="background:#EFCC8C">5.3</td>
+					<td style="background:#E59491">-6.3</td>
+					<td style="background:#E49092">2.7</td>
+					<td style="background:#F6F389">2.8</td>
+					<td style="background:#E59991">-39.0</td>
+					<td style="background:#EDC08D">75</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">192</td>
+					<td style="background:#EBB78E">79</td>
+					<td style="background:#ECBB8E">5.1</td>
+					<td style="background:#E69991">-1.9</td>
+					<td style="background:#F0D58C">15.8</td>
+					<td style="background:#EBB78E">18.9</td>
+					<td style="background:#E1F28F">8.9</td>
+					<td style="background:#E59791">-40.0</td>
+					<td style="background:#EDC28D">74</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3189</td>
+					<td style="background:#EBB58E">80</td>
+					<td style="background:#E69E91">0.2</td>
+					<td style="background:#F2DE8B">7.8</td>
+					<td style="background:#E9AC8F">2.0</td>
+					<td style="background:#E7A190">9.9</td>
+					<td style="background:#F5EC89">1.2</td>
+					<td style="background:#EAB18F">-26.9</td>
+					<td style="background:#EBB78E">79</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4158</td>
+					<td style="background:#EAB38F">81</td>
+					<td style="background:#F5F089">14.2</td>
+					<td style="background:#F4F689">11.8</td>
+					<td style="background:#F0D58C">15.7</td>
+					<td style="background:#F5EE89">41.7</td>
+					<td style="background:#E5F38E">8.1</td>
+					<td style="background:#F4EB8A">2.3</td>
+					<td style="background:#EAB38F">81</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4011</td>
+					<td style="background:#EAB18F">82</td>
+					<td style="background:#F3E68A">12.3</td>
+					<td style="background:#F0D48C">6.5</td>
+					<td style="background:#F1D68B">16.2</td>
+					<td style="background:#F2DE8B">35.0</td>
+					<td style="background:#F4EB8A">1.0</td>
+					<td style="background:#F5F089">4.6</td>
+					<td style="background:#E9AC8F">84</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">578</td>
+					<td style="background:#E9AE8F">83</td>
+					<td style="background:#F6F589">15.0</td>
+					<td style="background:#EEC68D">4.5</td>
+					<td style="background:#E9AF8F">2.9</td>
+					<td style="background:#ECBF8E">22.4</td>
+					<td style="background:#F3E58A">-0.2</td>
+					<td style="background:#E69C91">-37.0</td>
+					<td style="background:#E9AE8F">83</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4026</td>
+					<td style="background:#E9AC8F">84</td>
+					<td style="background:#EEC58D">6.8</td>
+					<td style="background:#F3E38A">8.6</td>
+					<td style="background:#F1D98B">17.1</td>
+					<td style="background:#F1D88B">32.5</td>
+					<td style="background:#EBF48C">6.5</td>
+					<td style="background:#E49292">-42.4</td>
+					<td style="background:#E7A390">88</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">3132</td>
+					<td style="background:#E9AA8F">85</td>
+					<td style="background:#EFF58B">16.8</td>
+					<td style="background:#F2DB8B">7.5</td>
+					<td style="background:#F4E98A">22.4</td>
+					<td style="background:#F3F689">46.7</td>
+					<td style="background:#ECF48C">6.1</td>
+					<td style="background:#F1D88B">-7.4</td>
+					<td style="background:#EAB18F">82</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1405</td>
+					<td style="background:#E8A890">86</td>
+					<td style="background:#EEC88D">7.3</td>
+					<td style="background:#EFCF8C">5.8</td>
+					<td style="background:#EDC08D">8.6</td>
+					<td style="background:#ECBE8E">21.6</td>
+					<td style="background:#B5E99D">20.2</td>
+					<td style="background:#E69D91">-36.9</td>
+					<td style="background:#E8A590">87</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">151</td>
+					<td style="background:#E8A590">87</td>
+					<td style="background:#EDC38D">6.3</td>
+					<td style="background:#EEC78D">4.7</td>
+					<td style="background:#E7A090">-2.2</td>
+					<td style="background:#E79F90">8.8</td>
+					<td style="background:#EFD08C">-4.9</td>
+					<td style="background:#E9AB8F">-30.0</td>
+					<td style="background:#E7A190">89</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">2259</td>
+					<td style="background:#E7A390">88</td>
+					<td style="background:#F0D58C">9.5</td>
+					<td style="background:#F1D68B">6.8</td>
+					<td style="background:#EFCF8C">13.7</td>
+					<td style="background:#F0D28C">29.9</td>
+					<td style="background:#EDF48C">6.0</td>
+					<td style="background:#EDC28D">-18.0</td>
+					<td style="background:#E8A890">86</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">384</td>
+					<td style="background:#E7A190">89</td>
+					<td style="background:#ECBC8E">5.3</td>
+					<td style="background:#EAAF8F">1.2</td>
+					<td style="background:#EDC48D">9.9</td>
+					<td style="background:#EAB18F">16.4</td>
+					<td style="background:#E7A390">-14.7</td>
+					<td style="background:#EAB48F">-25.3</td>
+					<td style="background:#E79F90">90</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">744</td>
+					<td style="background:#E79F90">90</td>
+					<td style="background:#F2DC8B">10.7</td>
+					<td style="background:#F3E18A">8.3</td>
+					<td style="background:#F3E48A">20.9</td>
+					<td style="background:#F4EA8A">39.9</td>
+					<td style="background:#E2F28F">8.8</td>
+					<td style="background:#F3F68A">10.2</td>
+					<td style="background:#E9AA8F">85</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1801</td>
+					<td style="background:#E69D91">91</td>
+					<td style="background:#EBB68E">4.2</td>
+					<td style="background:#EECA8D">5.0</td>
+					<td style="background:#E59891">-4.9</td>
+					<td style="background:#E59491">4.3</td>
+					<td style="background:#EECA8D">-6.2</td>
+					<td style="background:#E69D91">-36.6</td>
+					<td style="background:#E69D91">91</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1086</td>
+					<td style="background:#E69A91">92</td>
+					<td style="background:#E59591">-1.4</td>
+					<td style="background:#E69C91">-1.5</td>
+					<td style="background:#E9AE8F">2.6</td>
+					<td style="background:#E38993">-0.3</td>
+					<td style="background:#F5F089">2.1</td>
+					<td style="background:#E7A290">-34.2</td>
+					<td style="background:#E69A91">92</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4541</td>
+					<td style="background:#E59891">93</td>
+					<td style="background:#E38993">-3.6</td>
+					<td style="background:#AFE79F">23.1</td>
+					<td style="background:#E8A790">0.2</td>
+					<td style="background:#EBB98E">19.8</td>
+					<td style="background:#EDC38D">-7.7</td>
+					<td style="background:#EEC58D">-16.6</td>
+					<td style="background:#E59891">93</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1912</td>
+					<td style="background:#E59691">94</td>
+					<td style="background:#EDC18D">6.0</td>
+					<td style="background:#EAB08F">1.3</td>
+					<td style="background:#EECA8D">12.1</td>
+					<td style="background:#EBB88E">19.5</td>
+					<td style="background:#F5F689">3.9</td>
+					<td style="background:#EECA8D">-14.5</td>
+					<td style="background:#E59491">95</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">467</td>
+					<td style="background:#E59491">95</td>
+					<td style="background:#F1D88B">10.1</td>
+					<td style="background:#E79F90">-1.2</td>
+					<td style="background:#ECBC8E">7.3</td>
+					<td style="background:#EAB08F">16.2</td>
+					<td style="background:#F5F689">3.8</td>
+					<td style="background:#EEC88D">-15.5</td>
+					<td style="background:#E59691">94</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4452</td>
+					<td style="background:#E49192">96</td>
+					<td style="background:#ECBF8E">5.7</td>
+					<td style="background:#EFCB8C">5.1</td>
+					<td style="background:#E69A91">-4.1</td>
+					<td style="background:#E69A91">6.7</td>
+					<td style="background:#EFCF8C">-5.0</td>
+					<td style="background:#EDC18D">-18.9</td>
+					<td style="background:#E48F92">97</td>
+				</tr>
+				<tr>
+					<td style="background:#EDEDED">2809</td>
+					<td style="background:#E48F92">97</td>
+					<td style="background:#F0D48C">9.4</td>
+					<td style="background:#E9AB8F">0.6</td>
+					<td style="background:#E9AB8F">1.4</td>
+					<td style="background:#E8A590">11.4</td>
+					<td style="background:#F3E38A">-0.7</td>
+					<td style="background:#EAB08F">-27.3</td>
+					<td style="background:#E49192">96</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4797</td>
+					<td style="background:#E38D92">98</td>
+					<td style="background:#E59591">-1.5</td>
+					<td style="background:#D5EF93">16.9</td>
+					<td style="background:#EAB28F">3.9</td>
+					<td style="background:#EBB88E">19.4</td>
+					<td style="background:#EFCB8C">-6.1</td>
+					<td style="background:#E7A190">-34.6</td>
+					<td style="background:#E38D92">98</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">4502</td>
+					<td style="background:#E38B92">99</td>
+					<td style="background:#EEC68D">6.9</td>
+					<td style="background:#F3E28A">8.5</td>
+					<td style="background:#ECBA8E">6.7</td>
+					<td style="background:#ECBF8E">22.1</td>
+					<td style="background:#E1F28F">9.0</td>
+					<td style="background:#E38993">-47.0</td>
+					<td style="background:#E38B92">99</td>
+				</tr>
+				<tr>
+					<td style="background:#EEEEEE">1429</td>
+					<td style="background:#E38993">100</td>
+					<td style="background:#E9AE8F">2.9</td>
+					<td style="background:#E9AE8F">1.0</td>
+					<td style="background:#E7A190">-1.9</td>
+					<td style="background:#E48E92">2.0</td>
+					<td style="background:#ECBE8E">-8.9</td>
+					<td style="background:#E7A490">-33.5</td>
+					<td style="background:#E38993">100</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="9">
+						*Tabulated directly from <a href="http://www.usfirst.org">www.US<em>FIRST.org</em></a><br>
+						†Calculated using match and ranking data directly to solve a system of linear equations. These
+						numbers are reliable <em>estimates</em> of team utility.<br>
+						‡Calculated from raw data and previous calculations manipulated in a way deemed meaningful by
+						the creators of AASK.
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+
+	<!-- End of Big Table -->
+
+	<br>
+	<div class="hr"></div>
+	<br>
+
+	<div style="width:819px; margin:0px; padding:0px;">
+		<!--Column container-->
+
+		<!-- Column 1 -->
+
+		<div style="width:400px; margin:0px; padding:0px; float:left;">
+			<!-- Correlation Table -->
+			<table class="shinytable" id="correlationtable" data-sorting="iidddddd" style="width:400px;">
+				<thead>
+					<tr>
+						<td colspan="10">
+							<script>document.write(eventName + " (Correlation)");</script>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Team</td>
+						<td>Rank</td>
+						<td>Auton</td>
+						<td>Climb</td>
+						<td>Teleop</td>
+						<td>OPR</td>
+						<td>DPR</td>
+						<td>CCWM</td>
+						<td>Seed</td>
+					</tr>
+				</thead>
+				<tbody id="correlationdata">
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">Team</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#F6FCF7">0.09</td>
+						<td style="background:#EDFAF0">-0.17</td>
+						<td style="background:#FAFDFB">0.04</td>
+						<td style="background:#ECFAEF">-0.18</td>
+						<td style="background:#EDFAEF">-0.17</td>
+						<td style="background:#FBFEFC">0.03</td>
+						<td style="background:#F4FCF6">-0.10</td>
+						<td style="background:#F5FCF7">0.09</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">Rank</td>
+						<td style="background:#F6FCF7">0.09</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#CBF0D2">-0.50</td>
+						<td style="background:#EFFAF2">-0.15</td>
+						<td style="background:#BBECC5">-0.66</td>
+						<td style="background:#B8EBC2">-0.69</td>
+						<td style="background:#EFFAF1">0.15</td>
+						<td style="background:#AEE9BA">-0.78</td>
+						<td style="background:#98E3A7">1.00</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">Auton</td>
+						<td style="background:#EDFAF0">-0.17</td>
+						<td style="background:#CBF0D2">-0.50</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#FEFEFE">-0.00</td>
+						<td style="background:#C4EFCD">0.57</td>
+						<td style="background:#B1E9BC">0.75</td>
+						<td style="background:#F6FCF7">0.08</td>
+						<td style="background:#C1EECA">0.60</td>
+						<td style="background:#C9F0D1">-0.52</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">Climb</td>
+						<td style="background:#FAFDFB">0.04</td>
+						<td style="background:#EFFAF2">-0.15</td>
+						<td style="background:#FEFEFE">-0.00</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#FEFEFE">0.01</td>
+						<td style="background:#DFF6E3">0.31</td>
+						<td style="background:#F2FBF4">-0.12</td>
+						<td style="background:#F1FBF3">0.13</td>
+						<td style="background:#F0FBF2">-0.14</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">Teleop</td>
+						<td style="background:#ECFAEF">-0.18</td>
+						<td style="background:#BBECC5">-0.66</td>
+						<td style="background:#C4EFCD">0.57</td>
+						<td style="background:#FEFEFE">0.01</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#A1E5AF">0.91</td>
+						<td style="background:#F9FDFA">-0.05</td>
+						<td style="background:#AEE8B9">0.79</td>
+						<td style="background:#BAECC4">-0.66</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">OPR</td>
+						<td style="background:#EDFAEF">-0.17</td>
+						<td style="background:#B8EBC2">-0.69</td>
+						<td style="background:#B1E9BC">0.75</td>
+						<td style="background:#DFF6E3">0.31</td>
+						<td style="background:#A1E5AF">0.91</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#FAFDFB">-0.04</td>
+						<td style="background:#ACE8B8">0.80</td>
+						<td style="background:#B7EBC2">-0.69</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">DPR</td>
+						<td style="background:#FBFEFC">0.03</td>
+						<td style="background:#EFFAF1">0.15</td>
+						<td style="background:#F6FCF7">0.08</td>
+						<td style="background:#F2FBF4">-0.12</td>
+						<td style="background:#F9FDFA">-0.05</td>
+						<td style="background:#FAFDFB">-0.04</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#E7F8EB">-0.23</td>
+						<td style="background:#EEFAF1">0.16</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">CCWM</td>
+						<td style="background:#F4FCF6">-0.10</td>
+						<td style="background:#AEE9BA">-0.78</td>
+						<td style="background:#C1EECA">0.60</td>
+						<td style="background:#F1FBF3">0.13</td>
+						<td style="background:#AEE8B9">0.79</td>
+						<td style="background:#ACE8B8">0.80</td>
+						<td style="background:#E7F8EB">-0.23</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#ADE8B8">-0.80</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE; font-weight:bold">Seed</td>
+						<td style="background:#F5FCF7">0.09</td>
+						<td style="background:#98E3A7">1.00</td>
+						<td style="background:#C9F0D1">-0.52</td>
+						<td style="background:#F0FBF2">-0.14</td>
+						<td style="background:#BAECC4">-0.66</td>
+						<td style="background:#B7EBC2">-0.69</td>
+						<td style="background:#EEFAF1">0.16</td>
+						<td style="background:#ADE8B8">-0.80</td>
+						<td style="background:#98E3A7">1.00</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class="description" colspan="10">
+							This is a correlation matrix for many of the various statistics we have collected and
+							calculated, including raw point values. Values near positive or negative one indicate a high
+							correlation.
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+
+			<br>
+			<div class="hr"></div>
+			<br>
+
+			<!-- Match Prediction Box -->
+			<table class="shinytable" style="width:400px;">
+				<thead>
+					<tr>
+						<td colspan="2">
+							Custom Match Prediction
+						</td>
+					</tr>
+					<tr>
+						<td>Red</td>
+						<td>Blue</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div style="height:7px;"></div>
+							<input class="mini" id="predictionred1" style="font-weight: bold;"><span
+								style="width:12px;display:inline-block;"> + </span><input class="mini"
+								id="predictionred2" style="font-weight: bold;"><span
+								style="width:12px;display:inline-block;"> + </span><input class="mini"
+								id="predictionred3" style="font-weight: bold;"><br>
+							<div style="height:7px;"></div>
+							<input id="redallianceprediction" tabindex="500" class="mini"
+								style="width:178px; background:#FFE0E0;" readonly="">
+							<div style="height:7px;"></div>
+						</td>
+						<td>
+							<div style="height:7px;"></div>
+							<input class="mini" id="predictionblue1" style="font-weight: bold;"><span
+								style="width:12px;display:inline-block;"> + </span><input class="mini"
+								id="predictionblue2" style="font-weight: bold;"><span
+								style="width:12px;display:inline-block;"> + </span><input class="mini"
+								id="predictionblue3" style="font-weight: bold;"><br>
+							<div style="height:7px;"></div>
+							<input id="blueallianceprediction" tabindex="500" class="mini"
+								style="width:178px; background:#E0E0FF;" readonly="">
+							<div style="height:7px;"></div>
+						</td>
+					</tr>
+					<tr>
+						<td id="predictedresult" colspan="2">Blue wins by an expected 57.0 points.</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2">
+							<label><input name="m1atchpredictionmode" type="radio" checked="checked"
+									id="m1atchpredictionmode0">OPR
+								Only</label><br>
+							<label><input name="m1atchpredictionmode" type="radio" id="m1atchpredictionmode1">OPR +
+								DPR</label><br>
+							<label><input name="m1atchpredictionmode" type="radio"
+									id="m1atchpredictionmode2">CCWM</label><br>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+
+			<br>
+			<div class="hr"></div>
+			<br>
+
+			<!-- Score Distribution Graph -->
+			<table class="shinytable">
+				<thead>
+					<tr>
+						<td>Point Distributions</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<canvas id="graphDistro" width="398" height="240"
+								style="background:white;width:398x; height:240px; border:0px #AAAAAA solid;">
+								<img src="img/point-dist.png" width="398" height="240"
+									style="background:white;width:398x; height:240px; border:0px #AAAAAA solid;">
+							</canvas>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>
+							<span style="display:inline-block; position:relative; width:30px;">&nbsp;<span
+									style="display:block; position:absolute; top:40%; height:21%; width:100%; background:#EE9999;"></span></span>
+							OPR Distribution<br>
+							<span style="display:inline-block; position:relative; width:30px;">&nbsp;<span
+									style="display:block; position:absolute; top:40%; height:21%; width:100%; background:#9999EE;"></span></span>
+							CCWM Distribution<br>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+
+			<br>
+			<div class="hr"></div>
+			<br>
+
+			<!-- Match Scores Graph -->
+			<table class="shinytable">
+				<thead>
+					<tr>
+						<td>Match Scores</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<canvas id="graphMatches" width="398" height="240"
+								style="background:white;width:398x; height:240px; border:0px #AAAAAA solid;">
+								<img src="img/match-scores.png" width="398" height="240"
+									style="background:white;width:398x; height:240px; border:0px #AAAAAA solid;">
+							</canvas>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Between Columns -->
+
+		<!-- Column 2 -->
+		<div style="width:400px; margin:0px; padding:0px; float:right">
+
+			<!-- Match Results -->
+			<table class="shinytable" id="matchresults">
+				<thead>
+					<tr>
+						<td colspan="7">Predictions for Unplayed Matches</td>
+					</tr>
+					<tr>
+						<td style="width:20px;">Match</td>
+						<td style="width:95px;">Red Alliance</td>
+						<td style="width:95px;">Blue Alliance</td>
+						<td colspan="2">Actual</td>
+						<td colspan="2">Predicted</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q1</b></td>
+						<td style="background:#FFFFFF">2175&nbsp;&nbsp;4158&nbsp;&nbsp;4452</td>
+						<td style="background:#FFFFFF"><b>4627&nbsp;&nbsp;2834&nbsp;&nbsp;245</b></td>
+						<td style="background:#FFC8C8">79</td>
+						<td style="background:#C8C8FF"><b>125</b></td>
+						<td style="background:#FFC8C8">96.3</td>
+						<td style="background:#C8C8FF">107.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q2</b></td>
+						<td style="background:#FFFFFF">4462&nbsp;&nbsp;1629&nbsp;&nbsp;1772</td>
+						<td style="background:#FFFFFF"><b>2169&nbsp;&nbsp;70&nbsp;&nbsp;4641</b></td>
+						<td style="background:#FFC8C8">106</td>
+						<td style="background:#C8C8FF"><b>187</b></td>
+						<td style="background:#FFC8C8">96.6</td>
+						<td style="background:#C8C8FF">178.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q3</b></td>
+						<td style="background:#FFFFFF">2000&nbsp;&nbsp;3528&nbsp;&nbsp;1405</td>
+						<td style="background:#FFFFFF"><b>1801&nbsp;&nbsp;2502&nbsp;&nbsp;2338</b></td>
+						<td style="background:#FFC8C8">73</td>
+						<td style="background:#C8C8FF"><b>81</b></td>
+						<td style="background:#FFC8C8"><del>107.9</del></td>
+						<td style="background:#C8C8FF"><del>64.8</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q4</b></td>
+						<td style="background:#FFFFFF"><b>384&nbsp;&nbsp;2978&nbsp;&nbsp;2630</b></td>
+						<td style="background:#FFFFFF">4557&nbsp;&nbsp;2474&nbsp;&nbsp;4026</td>
+						<td style="background:#FFC8C8"><b>99</b></td>
+						<td style="background:#C8C8FF">85</td>
+						<td style="background:#FFC8C8">113.0</td>
+						<td style="background:#C8C8FF">102.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q5</b></td>
+						<td style="background:#FFFFFF">151&nbsp;&nbsp;1710&nbsp;&nbsp;1086</td>
+						<td style="background:#FFFFFF"><b>45&nbsp;&nbsp;3656&nbsp;&nbsp;1218</b></td>
+						<td style="background:#FFC8C8">32</td>
+						<td style="background:#C8C8FF"><b>107</b></td>
+						<td style="background:#FFC8C8">39.2</td>
+						<td style="background:#C8C8FF">107.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q6</b></td>
+						<td style="background:#FFFFFF">2403&nbsp;&nbsp;4607&nbsp;&nbsp;1323</td>
+						<td style="background:#FFFFFF"><b>118&nbsp;&nbsp;3284&nbsp;&nbsp;447</b></td>
+						<td style="background:#FFC8C8">86</td>
+						<td style="background:#C8C8FF"><b>147</b></td>
+						<td style="background:#FFC8C8">97.2</td>
+						<td style="background:#C8C8FF">149.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q7</b></td>
+						<td style="background:#FFFFFF">1675&nbsp;&nbsp;1114&nbsp;&nbsp;1806</td>
+						<td style="background:#FFFFFF"><b>1241&nbsp;&nbsp;4334&nbsp;&nbsp;1477</b></td>
+						<td style="background:#FFC8C8">141</td>
+						<td style="background:#C8C8FF"><b>150</b></td>
+						<td style="background:#FFC8C8"><del>171.1</del></td>
+						<td style="background:#C8C8FF"><del>163.2</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q8</b></td>
+						<td style="background:#FFFFFF">192&nbsp;&nbsp;4797&nbsp;&nbsp;744</td>
+						<td style="background:#FFFFFF"><b>3941&nbsp;&nbsp;842&nbsp;&nbsp;422</b></td>
+						<td style="background:#FFC8C8">68</td>
+						<td style="background:#C8C8FF"><b>104</b></td>
+						<td style="background:#FFC8C8">78.2</td>
+						<td style="background:#C8C8FF">103.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q9</b></td>
+						<td style="background:#FFFFFF"><b>2337&nbsp;&nbsp;2199&nbsp;&nbsp;95</b></td>
+						<td style="background:#FFFFFF">4011&nbsp;&nbsp;3018&nbsp;&nbsp;2259</td>
+						<td style="background:#FFC8C8"><b>103</b></td>
+						<td style="background:#C8C8FF">63</td>
+						<td style="background:#FFC8C8">99.1</td>
+						<td style="background:#C8C8FF">77.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q10</b></td>
+						<td style="background:#FFFFFF">2485&nbsp;&nbsp;467&nbsp;&nbsp;4541</td>
+						<td style="background:#FFFFFF"><b>2341&nbsp;&nbsp;27&nbsp;&nbsp;1325</b></td>
+						<td style="background:#FFC8C8">51</td>
+						<td style="background:#C8C8FF"><b>52</b></td>
+						<td style="background:#FFC8C8"><del>101.3</del></td>
+						<td style="background:#C8C8FF"><del>100.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q11</b></td>
+						<td style="background:#FFFFFF">358&nbsp;&nbsp;2648&nbsp;&nbsp;1429</td>
+						<td style="background:#FFFFFF"><b>610&nbsp;&nbsp;3189&nbsp;&nbsp;295</b></td>
+						<td style="background:#FFC8C8">92</td>
+						<td style="background:#C8C8FF"><b>115</b></td>
+						<td style="background:#FFC8C8">101.4</td>
+						<td style="background:#C8C8FF">106.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q12</b></td>
+						<td style="background:#FFFFFF">111&nbsp;&nbsp;4601&nbsp;&nbsp;4579</td>
+						<td style="background:#FFFFFF"><b>2729&nbsp;&nbsp;3944&nbsp;&nbsp;4039</b></td>
+						<td style="background:#FFC8C8">145</td>
+						<td style="background:#C8C8FF"><b>168</b></td>
+						<td style="background:#FFC8C8"><del>150.1</del></td>
+						<td style="background:#C8C8FF"><del>145.4</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q13</b></td>
+						<td style="background:#FFFFFF">2046&nbsp;&nbsp;1732&nbsp;&nbsp;4567</td>
+						<td style="background:#FFFFFF"><b>222&nbsp;&nbsp;2512&nbsp;&nbsp;3459</b></td>
+						<td style="background:#FFC8C8">117</td>
+						<td style="background:#C8C8FF"><b>188</b></td>
+						<td style="background:#FFC8C8">104.2</td>
+						<td style="background:#C8C8FF">168.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q14</b></td>
+						<td style="background:#FFFFFF">1912&nbsp;&nbsp;4472&nbsp;&nbsp;578</td>
+						<td style="background:#FFFFFF"><b>3641&nbsp;&nbsp;3132&nbsp;&nbsp;329</b></td>
+						<td style="background:#FFC8C8">73</td>
+						<td style="background:#C8C8FF"><b>113</b></td>
+						<td style="background:#FFC8C8">73.8</td>
+						<td style="background:#C8C8FF">138.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q15</b></td>
+						<td style="background:#FFFFFF">2809&nbsp;&nbsp;3211&nbsp;&nbsp;4502</td>
+						<td style="background:#FFFFFF"><b>2907&nbsp;&nbsp;125&nbsp;&nbsp;4492</b></td>
+						<td style="background:#FFC8C8">62</td>
+						<td style="background:#C8C8FF"><b>93</b></td>
+						<td style="background:#FFC8C8">62.6</td>
+						<td style="background:#C8C8FF">121.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q16</b></td>
+						<td style="background:#FFFFFF">3481&nbsp;&nbsp;4481&nbsp;&nbsp;1987</td>
+						<td style="background:#FFFFFF"><b>337&nbsp;&nbsp;4069&nbsp;&nbsp;4522</b></td>
+						<td style="background:#FFC8C8">80</td>
+						<td style="background:#C8C8FF"><b>81</b></td>
+						<td style="background:#FFC8C8"><del>110.0</del></td>
+						<td style="background:#C8C8FF"><del>86.8</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q17</b></td>
+						<td style="background:#FFFFFF">1378&nbsp;&nbsp;1726&nbsp;&nbsp;192</td>
+						<td style="background:#FFFFFF"><b>2481&nbsp;&nbsp;1425&nbsp;&nbsp;1710</b></td>
+						<td style="background:#FFC8C8">46</td>
+						<td style="background:#C8C8FF"><b>167</b></td>
+						<td style="background:#FFC8C8">68.6</td>
+						<td style="background:#C8C8FF">151.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q18</b></td>
+						<td style="background:#FFFFFF"><b>2337&nbsp;&nbsp;1114&nbsp;&nbsp;2502</b></td>
+						<td style="background:#FFFFFF">2978&nbsp;&nbsp;3941&nbsp;&nbsp;1323</td>
+						<td style="background:#FFC8C8"><b>156</b></td>
+						<td style="background:#C8C8FF">107</td>
+						<td style="background:#FFC8C8">147.9</td>
+						<td style="background:#C8C8FF">126.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q19</b></td>
+						<td style="background:#FFFFFF"><b>295&nbsp;&nbsp;4334&nbsp;&nbsp;1405</b></td>
+						<td style="background:#FFFFFF">2403&nbsp;&nbsp;2175&nbsp;&nbsp;1086</td>
+						<td style="background:#FFC8C8"><b>144</b></td>
+						<td style="background:#C8C8FF">77</td>
+						<td style="background:#FFC8C8">131.8</td>
+						<td style="background:#C8C8FF">86.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q20</b></td>
+						<td style="background:#FFFFFF">1241&nbsp;&nbsp;2259&nbsp;&nbsp;4641</td>
+						<td style="background:#FFFFFF"><b>2729&nbsp;&nbsp;422&nbsp;&nbsp;2630</b></td>
+						<td style="background:#FFC8C8">114</td>
+						<td style="background:#C8C8FF"><b>177</b></td>
+						<td style="background:#FFC8C8">108.5</td>
+						<td style="background:#C8C8FF">169.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q21</b></td>
+						<td style="background:#FFFFFF">4026&nbsp;&nbsp;2512&nbsp;&nbsp;1772</td>
+						<td style="background:#FFFFFF"><b>2000&nbsp;&nbsp;1675&nbsp;&nbsp;3656</b></td>
+						<td style="background:#FFC8C8">98</td>
+						<td style="background:#C8C8FF"><b>107</b></td>
+						<td style="background:#FFC8C8"><del>134.8</del></td>
+						<td style="background:#C8C8FF"><del>120.2</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q22</b></td>
+						<td style="background:#FFFFFF">245&nbsp;&nbsp;1629&nbsp;&nbsp;2046</td>
+						<td style="background:#FFFFFF"><b>842&nbsp;&nbsp;118&nbsp;&nbsp;2199</b></td>
+						<td style="background:#FFC8C8">126</td>
+						<td style="background:#C8C8FF"><b>146</b></td>
+						<td style="background:#FFC8C8">127.5</td>
+						<td style="background:#C8C8FF">158.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q23</b></td>
+						<td style="background:#FFFFFF">4452&nbsp;&nbsp;3132&nbsp;&nbsp;3944</td>
+						<td style="background:#FFFFFF"><b>222&nbsp;&nbsp;1325&nbsp;&nbsp;744</b></td>
+						<td style="background:#FFC8C8">110</td>
+						<td style="background:#C8C8FF"><b>118</b></td>
+						<td style="background:#FFC8C8">73.2</td>
+						<td style="background:#C8C8FF">128.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q24</b></td>
+						<td style="background:#FFFFFF">1987&nbsp;&nbsp;578&nbsp;&nbsp;2809</td>
+						<td style="background:#FFFFFF"><b>4607&nbsp;&nbsp;2648&nbsp;&nbsp;1806</b></td>
+						<td style="background:#FFC8C8">45</td>
+						<td style="background:#C8C8FF"><b>126</b></td>
+						<td style="background:#FFC8C8">65.7</td>
+						<td style="background:#C8C8FF">132.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q25</b></td>
+						<td style="background:#FFFFFF">3284&nbsp;&nbsp;2338&nbsp;&nbsp;1378</td>
+						<td style="background:#FFFFFF"><b>4601&nbsp;&nbsp;329&nbsp;&nbsp;95</b></td>
+						<td style="background:#FFC8C8">83</td>
+						<td style="background:#C8C8FF"><b>101</b></td>
+						<td style="background:#FFC8C8">97.4</td>
+						<td style="background:#C8C8FF">109.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q26</b></td>
+						<td style="background:#FFFFFF">3459&nbsp;&nbsp;4797&nbsp;&nbsp;4557</td>
+						<td style="background:#FFFFFF"><b>4627&nbsp;&nbsp;2169&nbsp;&nbsp;2485</b></td>
+						<td style="background:#FFC8C8">45</td>
+						<td style="background:#C8C8FF"><b>152</b></td>
+						<td style="background:#FFC8C8">67.8</td>
+						<td style="background:#C8C8FF">158.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q27</b></td>
+						<td style="background:#FFFFFF">3211&nbsp;&nbsp;1801&nbsp;&nbsp;4462</td>
+						<td style="background:#FFFFFF"><b>151&nbsp;&nbsp;4579&nbsp;&nbsp;1732</b></td>
+						<td style="background:#FFC8C8">30</td>
+						<td style="background:#C8C8FF"><b>103</b></td>
+						<td style="background:#FFC8C8">62.6</td>
+						<td style="background:#C8C8FF">90.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q28</b></td>
+						<td style="background:#FFFFFF"><b>3018&nbsp;&nbsp;3641&nbsp;&nbsp;2341</b></td>
+						<td style="background:#FFFFFF">2474&nbsp;&nbsp;1726&nbsp;&nbsp;3189</td>
+						<td style="background:#FFC8C8"><b>86</b></td>
+						<td style="background:#C8C8FF">38</td>
+						<td style="background:#FFC8C8">94.7</td>
+						<td style="background:#C8C8FF">80.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q29</b></td>
+						<td style="background:#FFFFFF">4567&nbsp;&nbsp;4472&nbsp;&nbsp;125</td>
+						<td style="background:#FFFFFF"><b>70&nbsp;&nbsp;4481&nbsp;&nbsp;610</b></td>
+						<td style="background:#FFC8C8">93</td>
+						<td style="background:#C8C8FF"><b>126</b></td>
+						<td style="background:#FFC8C8">112.5</td>
+						<td style="background:#C8C8FF">167.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q30</b></td>
+						<td style="background:#FFFFFF"><b>4522&nbsp;&nbsp;111&nbsp;&nbsp;1912</b></td>
+						<td style="background:#FFFFFF">45&nbsp;&nbsp;384&nbsp;&nbsp;4502</td>
+						<td style="background:#FFC8C8"><b>82</b></td>
+						<td style="background:#C8C8FF">42</td>
+						<td style="background:#FFC8C8">90.8</td>
+						<td style="background:#C8C8FF">47.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q31</b></td>
+						<td style="background:#FFFFFF"><b>4039&nbsp;&nbsp;2481&nbsp;&nbsp;4069</b></td>
+						<td style="background:#FFFFFF">1218&nbsp;&nbsp;358&nbsp;&nbsp;4541</td>
+						<td style="background:#FFC8C8"><b>142</b></td>
+						<td style="background:#C8C8FF">116</td>
+						<td style="background:#FFC8C8">145.0</td>
+						<td style="background:#C8C8FF">113.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q32</b></td>
+						<td style="background:#FFFFFF">447&nbsp;&nbsp;467&nbsp;&nbsp;337</td>
+						<td style="background:#FFFFFF"><b>3528&nbsp;&nbsp;2907&nbsp;&nbsp;2834</b></td>
+						<td style="background:#FFC8C8">87</td>
+						<td style="background:#C8C8FF"><b>134</b></td>
+						<td style="background:#FFC8C8">62.5</td>
+						<td style="background:#C8C8FF">110.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q33</b></td>
+						<td style="background:#FFFFFF">1429&nbsp;&nbsp;4492&nbsp;&nbsp;27</td>
+						<td style="background:#FFFFFF"><b>1477&nbsp;&nbsp;3481&nbsp;&nbsp;1425</b></td>
+						<td style="background:#FFC8C8">126</td>
+						<td style="background:#C8C8FF"><b>156</b></td>
+						<td style="background:#FFC8C8">81.5</td>
+						<td style="background:#C8C8FF">165.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q34</b></td>
+						<td style="background:#FFFFFF">4158&nbsp;&nbsp;1405&nbsp;&nbsp;118</td>
+						<td style="background:#FFFFFF"><b>4011&nbsp;&nbsp;1114&nbsp;&nbsp;192</b></td>
+						<td style="background:#FFC8C8">131</td>
+						<td style="background:#C8C8FF"><b>139</b></td>
+						<td style="background:#FFC8C8"><del>154.0</del></td>
+						<td style="background:#C8C8FF"><del>128.6</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q35</b></td>
+						<td style="background:#FFFFFF">4452&nbsp;&nbsp;2502&nbsp;&nbsp;2485</td>
+						<td style="background:#FFFFFF"><b>4579&nbsp;&nbsp;2199&nbsp;&nbsp;1710</b></td>
+						<td style="background:#FFC8C8">94</td>
+						<td style="background:#C8C8FF"><b>97</b></td>
+						<td style="background:#FFC8C8"><del>98.7</del></td>
+						<td style="background:#C8C8FF"><del>94.4</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q36</b></td>
+						<td style="background:#FFFFFF"><b>2338&nbsp;&nbsp;4557&nbsp;&nbsp;3189</b></td>
+						<td style="background:#FFFFFF">4607&nbsp;&nbsp;1325&nbsp;&nbsp;1675</td>
+						<td style="background:#FFC8C8"><b>118</b></td>
+						<td style="background:#C8C8FF">60</td>
+						<td style="background:#FFC8C8">70.5</td>
+						<td style="background:#C8C8FF">58.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q37</b></td>
+						<td style="background:#FFFFFF"><b>3211&nbsp;&nbsp;578&nbsp;&nbsp;3941</b></td>
+						<td style="background:#FFFFFF">1086&nbsp;&nbsp;4567&nbsp;&nbsp;4601</td>
+						<td style="background:#FFC8C8"><b>112</b></td>
+						<td style="background:#C8C8FF">41</td>
+						<td style="background:#FFC8C8">94.4</td>
+						<td style="background:#C8C8FF">84.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q38</b></td>
+						<td style="background:#FFFFFF">4522&nbsp;&nbsp;3944&nbsp;&nbsp;2337</td>
+						<td style="background:#FFFFFF"><b>245&nbsp;&nbsp;1378&nbsp;&nbsp;2512</b></td>
+						<td style="background:#FFC8C8">36</td>
+						<td style="background:#C8C8FF"><b>189</b></td>
+						<td style="background:#FFC8C8">69.1</td>
+						<td style="background:#C7C7FF">164.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q39</b></td>
+						<td style="background:#FFFFFF"><b>2169&nbsp;&nbsp;2175&nbsp;&nbsp;1241</b></td>
+						<td style="background:#FFFFFF">4502&nbsp;&nbsp;1218&nbsp;&nbsp;1726</td>
+						<td style="background:#FFC8C8"><b>201</b></td>
+						<td style="background:#C8C8FF">109</td>
+						<td style="background:#FFC8C8">180.0</td>
+						<td style="background:#C8C8FF">97.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q40</b></td>
+						<td style="background:#FFFFFF"><b>447&nbsp;&nbsp;2729&nbsp;&nbsp;610</b></td>
+						<td style="background:#FFFFFF">2809&nbsp;&nbsp;384&nbsp;&nbsp;2341</td>
+						<td style="background:#FFC8C8"><b>80</b></td>
+						<td style="background:#C8C8FF">79</td>
+						<td style="background:#FFC8C8">133.0</td>
+						<td style="background:#C8C8FF">57.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q41</b></td>
+						<td style="background:#FFFFFF">1987&nbsp;&nbsp;1429&nbsp;&nbsp;3132</td>
+						<td style="background:#FFFFFF"><b>4462&nbsp;&nbsp;2259&nbsp;&nbsp;125</b></td>
+						<td style="background:#FFC8C8">50</td>
+						<td style="background:#C8C8FF"><b>103</b></td>
+						<td style="background:#FFC8C8">80.6</td>
+						<td style="background:#C8C8FF">119.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q42</b></td>
+						<td style="background:#FFFFFF"><b>2046&nbsp;&nbsp;4158&nbsp;&nbsp;337</b></td>
+						<td style="background:#FFFFFF">4797&nbsp;&nbsp;4541&nbsp;&nbsp;45</td>
+						<td style="background:#FFC8C8"><b>71</b></td>
+						<td style="background:#C8C8FF">46</td>
+						<td style="background:#FFC8C8">90.7</td>
+						<td style="background:#C8C8FF">48.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q43</b></td>
+						<td style="background:#FFFFFF">4069&nbsp;&nbsp;4011&nbsp;&nbsp;2648</td>
+						<td style="background:#FFFFFF"><b>3459&nbsp;&nbsp;3641&nbsp;&nbsp;3528</b></td>
+						<td style="background:#FFC8C8">125</td>
+						<td style="background:#C8C8FF"><b>130</b></td>
+						<td style="background:#FFC8C8"><del>142.9</del></td>
+						<td style="background:#C8C8FF"><del>120.1</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q44</b></td>
+						<td style="background:#FFFFFF">329&nbsp;&nbsp;70&nbsp;&nbsp;1801</td>
+						<td style="background:#FFFFFF"><b>1323&nbsp;&nbsp;1425&nbsp;&nbsp;358</b></td>
+						<td style="background:#FFC8C8">103</td>
+						<td style="background:#C8C8FF"><b>164</b></td>
+						<td style="background:#FFC8C8">113.4</td>
+						<td style="background:#C8C8FF">177.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q45</b></td>
+						<td style="background:#FFFFFF">1912&nbsp;&nbsp;4039&nbsp;&nbsp;4481</td>
+						<td style="background:#FFFFFF"><b>1772&nbsp;&nbsp;4334&nbsp;&nbsp;1732</b></td>
+						<td style="background:#FFC8C8">109</td>
+						<td style="background:#C8C8FF"><b>129</b></td>
+						<td style="background:#FFC8C8">126.7</td>
+						<td style="background:#C8C8FF">150.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q46</b></td>
+						<td style="background:#FFFFFF"><b>222&nbsp;&nbsp;3481&nbsp;&nbsp;842</b></td>
+						<td style="background:#FFFFFF">3018&nbsp;&nbsp;467&nbsp;&nbsp;2630</td>
+						<td style="background:#FFC8C8"><b>133</b></td>
+						<td style="background:#C8C8FF">77</td>
+						<td style="background:#FFC8C8">118.8</td>
+						<td style="background:#C8C8FF">87.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q47</b></td>
+						<td style="background:#FFFFFF"><b>1806&nbsp;&nbsp;2474&nbsp;&nbsp;4492</b></td>
+						<td style="background:#FFFFFF">295&nbsp;&nbsp;3656&nbsp;&nbsp;95</td>
+						<td style="background:#FFC8C8"><b>125</b></td>
+						<td style="background:#C8C8FF">98</td>
+						<td style="background:#FFC8C8">134.6</td>
+						<td style="background:#C8C8FF">108.3</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q48</b></td>
+						<td style="background:#FFFFFF">2978&nbsp;&nbsp;2481&nbsp;&nbsp;2907</td>
+						<td style="background:#FFFFFF"><b>2000&nbsp;&nbsp;1629&nbsp;&nbsp;4472</b></td>
+						<td style="background:#FFC8C8">105</td>
+						<td style="background:#C8C8FF"><b>153</b></td>
+						<td style="background:#FFC8C8">110.6</td>
+						<td style="background:#C8C8FF">111.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q49</b></td>
+						<td style="background:#FFFFFF">2834&nbsp;&nbsp;1477&nbsp;&nbsp;3284</td>
+						<td style="background:#FFFFFF"><b>111&nbsp;&nbsp;4026&nbsp;&nbsp;422</b></td>
+						<td style="background:#FFC8C8">128</td>
+						<td style="background:#C8C8FF"><b>143</b></td>
+						<td style="background:#FFC8C8">122.8</td>
+						<td style="background:#C8C8FF">141.3</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q50</b></td>
+						<td style="background:#FFFFFF">4627&nbsp;&nbsp;2403&nbsp;&nbsp;744</td>
+						<td style="background:#FFFFFF"><b>151&nbsp;&nbsp;27&nbsp;&nbsp;4641</b></td>
+						<td style="background:#FFC8C8">78</td>
+						<td style="background:#C8C8FF"><b>109</b></td>
+						<td style="background:#FFC8C8">91.1</td>
+						<td style="background:#C8C8FF">91.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q51</b></td>
+						<td style="background:#FFFFFF">4541&nbsp;&nbsp;2648&nbsp;&nbsp;2259</td>
+						<td style="background:#FFFFFF"><b>4601&nbsp;&nbsp;192&nbsp;&nbsp;4522</b></td>
+						<td style="background:#FFC8C8">112</td>
+						<td style="background:#C8C8FF"><b>117</b></td>
+						<td style="background:#FFC8C8"><del>102.9</del></td>
+						<td style="background:#C8C8FF"><del>85.8</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q52</b></td>
+						<td style="background:#FFFFFF">4011&nbsp;&nbsp;2485&nbsp;&nbsp;384</td>
+						<td style="background:#FFFFFF"><b>3941&nbsp;&nbsp;2512&nbsp;&nbsp;337</b></td>
+						<td style="background:#FFC8C8">110</td>
+						<td style="background:#C8C8FF"><b>139</b></td>
+						<td style="background:#FFC8C8">116.7</td>
+						<td style="background:#C8C8FF">147.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q53</b></td>
+						<td style="background:#FFFFFF"><b>2341&nbsp;&nbsp;4557&nbsp;&nbsp;1114</b></td>
+						<td style="background:#FFFFFF">70&nbsp;&nbsp;4452&nbsp;&nbsp;1912</td>
+						<td style="background:#FFC8C8"><b>136</b></td>
+						<td style="background:#C8C8FF">125</td>
+						<td style="background:#FFC8C8">131.4</td>
+						<td style="background:#C8C8FF">95.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q54</b></td>
+						<td style="background:#FFFFFF"><b>4579&nbsp;&nbsp;2169&nbsp;&nbsp;842</b></td>
+						<td style="background:#FFFFFF">447&nbsp;&nbsp;2337&nbsp;&nbsp;4158</td>
+						<td style="background:#FFC8C8"><b>143</b></td>
+						<td style="background:#C8C8FF">116</td>
+						<td style="background:#FFC8C8">119.3</td>
+						<td style="background:#C8C8FF">105.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q55</b></td>
+						<td style="background:#FFFFFF"><b>4797&nbsp;&nbsp;3211&nbsp;&nbsp;95</b></td>
+						<td style="background:#FFFFFF">1405&nbsp;&nbsp;1710&nbsp;&nbsp;1772</td>
+						<td style="background:#FFC8C8"><b>70</b></td>
+						<td style="background:#C8C8FF">55</td>
+						<td style="background:#FFC8C8"><del>54.4</del></td>
+						<td style="background:#C8C8FF"><del>79.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q56</b></td>
+						<td style="background:#FFFFFF">610&nbsp;&nbsp;1218&nbsp;&nbsp;2199</td>
+						<td style="background:#FFFFFF"><b>222&nbsp;&nbsp;1378&nbsp;&nbsp;2907</b></td>
+						<td style="background:#FFC8C8">122</td>
+						<td style="background:#C8C8FF"><b>140</b></td>
+						<td style="background:#FFC8C8"><del>139.6</del></td>
+						<td style="background:#C8C8FF"><del>131.5</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q57</b></td>
+						<td style="background:#FFFFFF">1323&nbsp;&nbsp;4472&nbsp;&nbsp;3018</td>
+						<td style="background:#FFFFFF"><b>3528&nbsp;&nbsp;4492&nbsp;&nbsp;245</b></td>
+						<td style="background:#FFC8C8">62</td>
+						<td style="background:#C8C8FF"><b>149</b></td>
+						<td style="background:#FFC8C8">90.3</td>
+						<td style="background:#C8C8FF">139.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q58</b></td>
+						<td style="background:#FFFFFF"><b>4334&nbsp;&nbsp;1726&nbsp;&nbsp;4069</b></td>
+						<td style="background:#FFFFFF">422&nbsp;&nbsp;578&nbsp;&nbsp;4627</td>
+						<td style="background:#FFC8C8"><b>148</b></td>
+						<td style="background:#C8C8FF">55</td>
+						<td style="background:#FFC8C8">141.0</td>
+						<td style="background:#C8C8FF">74.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q59</b></td>
+						<td style="background:#FFFFFF">2729&nbsp;&nbsp;1325&nbsp;&nbsp;1801</td>
+						<td style="background:#FFFFFF"><b>1477&nbsp;&nbsp;2474&nbsp;&nbsp;2403</b></td>
+						<td style="background:#FFC8C8">96</td>
+						<td style="background:#C8C8FF"><b>128</b></td>
+						<td style="background:#FFC8C8">91.2</td>
+						<td style="background:#C8C8FF">135.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q60</b></td>
+						<td style="background:#FFFFFF"><b>111&nbsp;&nbsp;3641&nbsp;&nbsp;4607</b></td>
+						<td style="background:#FFFFFF">1629&nbsp;&nbsp;1429&nbsp;&nbsp;151</td>
+						<td style="background:#FFC8C8"><b>140</b></td>
+						<td style="background:#C8C8FF">64</td>
+						<td style="background:#FFC8C8">133.4</td>
+						<td style="background:#C8C8FF">50.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q61</b></td>
+						<td style="background:#FFFFFF"><b>4026&nbsp;&nbsp;27&nbsp;&nbsp;118</b></td>
+						<td style="background:#FFFFFF">358&nbsp;&nbsp;125&nbsp;&nbsp;1806</td>
+						<td style="background:#FFC8C8"><b>205</b></td>
+						<td style="background:#C8C8FF">187</td>
+						<td style="background:#FFC8C8">177.8</td>
+						<td style="background:#C8C8FF">173.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q62</b></td>
+						<td style="background:#FFFFFF"><b>295&nbsp;&nbsp;3481&nbsp;&nbsp;1675</b></td>
+						<td style="background:#FFFFFF">2481&nbsp;&nbsp;2809&nbsp;&nbsp;45</td>
+						<td style="background:#FFC8C8"><b>119</b></td>
+						<td style="background:#C8C8FF">57</td>
+						<td style="background:#FFC8C8">106.8</td>
+						<td style="background:#C8C8FF">56.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q63</b></td>
+						<td style="background:#FFFFFF">4502&nbsp;&nbsp;2834&nbsp;&nbsp;2978</td>
+						<td style="background:#FFFFFF"><b>4481&nbsp;&nbsp;2338&nbsp;&nbsp;3944</b></td>
+						<td style="background:#FFC8C8">66</td>
+						<td style="background:#C8C8FF"><b>125</b></td>
+						<td style="background:#FFC8C8">87.4</td>
+						<td style="background:#C8C8FF">106.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q64</b></td>
+						<td style="background:#FFFFFF"><b>4462&nbsp;&nbsp;1086&nbsp;&nbsp;2630</b></td>
+						<td style="background:#FFFFFF">2046&nbsp;&nbsp;744&nbsp;&nbsp;329</td>
+						<td style="background:#FFC8C8"><b>75</b></td>
+						<td style="background:#C8C8FF">72</td>
+						<td style="background:#FFC8C8"><del>87.6</del></td>
+						<td style="background:#C8C8FF"><del>99.1</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q65</b></td>
+						<td style="background:#FFFFFF">2000&nbsp;&nbsp;3189&nbsp;&nbsp;1425</td>
+						<td style="background:#FFFFFF"><b>2175&nbsp;&nbsp;1732&nbsp;&nbsp;4641</b></td>
+						<td style="background:#FFC8C8">83</td>
+						<td style="background:#C8C8FF"><b>116</b></td>
+						<td style="background:#FFC8C8">135.3</td>
+						<td style="background:#C8C8FF">139.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q66</b></td>
+						<td style="background:#FFFFFF"><b>3459&nbsp;&nbsp;2502&nbsp;&nbsp;4039</b></td>
+						<td style="background:#FFFFFF"><b>1987&nbsp;&nbsp;1241&nbsp;&nbsp;467</b></td>
+						<td style="background:#FFC8C8"><b>85</b></td>
+						<td style="background:#C8C8FF"><b>85</b></td>
+						<td style="background:#FFC8C8">103.2</td>
+						<td style="background:#C8C8FF">98.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q67</b></td>
+						<td style="background:#FFFFFF"><b>3656&nbsp;&nbsp;3284&nbsp;&nbsp;3528</b></td>
+						<td style="background:#FFFFFF">4567&nbsp;&nbsp;3132&nbsp;&nbsp;1726</td>
+						<td style="background:#FFC8C8"><b>118</b></td>
+						<td style="background:#C8C8FF">97</td>
+						<td style="background:#FFC8C8">138.7</td>
+						<td style="background:#C8C8FF">95.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q68</b></td>
+						<td style="background:#FFFFFF"><b>4579&nbsp;&nbsp;2403&nbsp;&nbsp;3941</b></td>
+						<td style="background:#FFFFFF">1429&nbsp;&nbsp;1378&nbsp;&nbsp;1912</td>
+						<td style="background:#FFC8C8"><b>101</b></td>
+						<td style="background:#C8C8FF">33</td>
+						<td style="background:#FFC8C8">99.2</td>
+						<td style="background:#C8C8FF">43.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q69</b></td>
+						<td style="background:#FFFFFF"><b>358&nbsp;&nbsp;2474&nbsp;&nbsp;2512</b></td>
+						<td style="background:#FFFFFF">3211&nbsp;&nbsp;447&nbsp;&nbsp;4472</td>
+						<td style="background:#FFC8C8"><b>170</b></td>
+						<td style="background:#C8C8FF">88</td>
+						<td style="background:#FFC8C8">163.8</td>
+						<td style="background:#C8C8FF">78.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q70</b></td>
+						<td style="background:#FFFFFF">70&nbsp;&nbsp;4158&nbsp;&nbsp;2481</td>
+						<td style="background:#FFFFFF"><b>2729&nbsp;&nbsp;1806&nbsp;&nbsp;3641</b></td>
+						<td style="background:#FFC8C8">174</td>
+						<td style="background:#C8C8FF"><b>193</b></td>
+						<td style="background:#FFC8C8">146.5</td>
+						<td style="background:#C8C8FF">189.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q71</b></td>
+						<td style="background:#FFFFFF"><b>2338&nbsp;&nbsp;245&nbsp;&nbsp;222</b></td>
+						<td style="background:#FFFFFF">1772&nbsp;&nbsp;151&nbsp;&nbsp;2485</td>
+						<td style="background:#FFC8C8"><b>148</b></td>
+						<td style="background:#C8C8FF">113</td>
+						<td style="background:#FFC8C8">174.2</td>
+						<td style="background:#C8C8FF">101.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q72</b></td>
+						<td style="background:#FFFFFF">1477&nbsp;&nbsp;45&nbsp;&nbsp;2648</td>
+						<td style="background:#FFFFFF"><b>1405&nbsp;&nbsp;2199&nbsp;&nbsp;4557</b></td>
+						<td style="background:#FFC8C8">89</td>
+						<td style="background:#C8C8FF"><b>99</b></td>
+						<td style="background:#FFC8C8"><del>116.4</del></td>
+						<td style="background:#C8C8FF"><del>94.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q73</b></td>
+						<td style="background:#FFFFFF"><b>27&nbsp;&nbsp;578&nbsp;&nbsp;2630</b></td>
+						<td style="background:#FFFFFF">2175&nbsp;&nbsp;1675&nbsp;&nbsp;337</td>
+						<td style="background:#FFC8C8"><b>129</b></td>
+						<td style="background:#C8C8FF">109</td>
+						<td style="background:#FFC8C8">135.7</td>
+						<td style="background:#C8C8FF">106.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q74</b></td>
+						<td style="background:#FFFFFF"><b>1323&nbsp;&nbsp;3944&nbsp;&nbsp;2000</b></td>
+						<td style="background:#FFFFFF">4462&nbsp;&nbsp;4069&nbsp;&nbsp;95</td>
+						<td style="background:#FFC8C8"><b>125</b></td>
+						<td style="background:#C8C8FF">88</td>
+						<td style="background:#FFC8C8">105.5</td>
+						<td style="background:#C8C8FF">89.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q75</b></td>
+						<td style="background:#FFFFFF">384&nbsp;&nbsp;2169&nbsp;&nbsp;4039</td>
+						<td style="background:#FFFFFF"><b>3284&nbsp;&nbsp;1114&nbsp;&nbsp;1425</b></td>
+						<td style="background:#FFC8C8">98</td>
+						<td style="background:#C8C8FF"><b>223</b></td>
+						<td style="background:#FFC8C8">152.6</td>
+						<td style="background:#C8C8FF">201.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q76</b></td>
+						<td style="background:#FFFFFF"><b>2337&nbsp;&nbsp;610&nbsp;&nbsp;4627</b></td>
+						<td style="background:#FFFFFF">4026&nbsp;&nbsp;2046&nbsp;&nbsp;1801</td>
+						<td style="background:#FFC8C8"><b>152</b></td>
+						<td style="background:#C8C8FF">59</td>
+						<td style="background:#FFC8C8">104.1</td>
+						<td style="background:#C8C8FF">56.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q77</b></td>
+						<td style="background:#FFFFFF"><b>2341&nbsp;&nbsp;2502&nbsp;&nbsp;842</b></td>
+						<td style="background:#FFFFFF">4641&nbsp;&nbsp;4011&nbsp;&nbsp;4502</td>
+						<td style="background:#FFC8C8"><b>77</b></td>
+						<td style="background:#C8C8FF">63</td>
+						<td style="background:#FFC8C8"><del>77.4</del></td>
+						<td style="background:#C8C8FF"><del>84.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q78</b></td>
+						<td style="background:#FFFFFF"><b>4334&nbsp;&nbsp;1325&nbsp;&nbsp;3656</b></td>
+						<td style="background:#FFFFFF">4797&nbsp;&nbsp;125&nbsp;&nbsp;3481</td>
+						<td style="background:#FFC8C8"><b>165</b></td>
+						<td style="background:#C8C8FF">87</td>
+						<td style="background:#FFC8C8">125.6</td>
+						<td style="background:#C8C8FF">105.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q79</b></td>
+						<td style="background:#FFFFFF">2259&nbsp;&nbsp;329&nbsp;&nbsp;3189</td>
+						<td style="background:#FFFFFF"><b>1218&nbsp;&nbsp;4567&nbsp;&nbsp;2834</b></td>
+						<td style="background:#FFC8C8">73</td>
+						<td style="background:#C8C8FF"><b>98</b></td>
+						<td style="background:#FFC8C8">79.5</td>
+						<td style="background:#C8C8FF">95.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q80</b></td>
+						<td style="background:#FFFFFF"><b>4492&nbsp;&nbsp;1710&nbsp;&nbsp;744</b></td>
+						<td style="background:#FFFFFF">4522&nbsp;&nbsp;2978&nbsp;&nbsp;467</td>
+						<td style="background:#FFC8C8"><b>91</b></td>
+						<td style="background:#C8C8FF">70</td>
+						<td style="background:#FFC8C8">95.3</td>
+						<td style="background:#C8C8FF">56.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q81</b></td>
+						<td style="background:#FFFFFF"><b>118&nbsp;&nbsp;4541&nbsp;&nbsp;2809</b></td>
+						<td style="background:#FFFFFF">3132&nbsp;&nbsp;1086&nbsp;&nbsp;4481</td>
+						<td style="background:#FFC8C8"><b>126</b></td>
+						<td style="background:#C8C8FF">100</td>
+						<td style="background:#FFC8C8">121.9</td>
+						<td style="background:#C8C8FF">98.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q82</b></td>
+						<td style="background:#FFFFFF"><b>1732&nbsp;&nbsp;1987&nbsp;&nbsp;2907</b></td>
+						<td style="background:#FFFFFF">192&nbsp;&nbsp;111&nbsp;&nbsp;4452</td>
+						<td style="background:#FFC8C8"><b>154</b></td>
+						<td style="background:#C8C8FF">104</td>
+						<td style="background:#FFC8C8">133.0</td>
+						<td style="background:#C8C8FF">94.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q83</b></td>
+						<td style="background:#FFFFFF"><b>3018&nbsp;&nbsp;422&nbsp;&nbsp;4601</b></td>
+						<td style="background:#FFFFFF">295&nbsp;&nbsp;3459&nbsp;&nbsp;4607</td>
+						<td style="background:#FFC8C8"><b>125</b></td>
+						<td style="background:#C8C8FF">58</td>
+						<td style="background:#FFC8C8">116.9</td>
+						<td style="background:#C8C8FF">85.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q84</b></td>
+						<td style="background:#FFFFFF"><b>1241&nbsp;&nbsp;2403&nbsp;&nbsp;337</b></td>
+						<td style="background:#FFFFFF">1629&nbsp;&nbsp;2337&nbsp;&nbsp;3211</td>
+						<td style="background:#FFC8C8"><b>102</b></td>
+						<td style="background:#C8C8FF">75</td>
+						<td style="background:#FFC8C8">119.2</td>
+						<td style="background:#C8C8FF">115.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q85</b></td>
+						<td style="background:#FFFFFF"><b>2729&nbsp;&nbsp;1726&nbsp;&nbsp;4557</b></td>
+						<td style="background:#FFFFFF">358&nbsp;&nbsp;3941&nbsp;&nbsp;151</td>
+						<td style="background:#FFC8C8"><b>117</b></td>
+						<td style="background:#C8C8FF">83</td>
+						<td style="background:#FFC8C8">125.1</td>
+						<td style="background:#C8C8FF">98.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q86</b></td>
+						<td style="background:#FFFFFF"><b>1325&nbsp;&nbsp;1806&nbsp;&nbsp;1772</b></td>
+						<td style="background:#FFFFFF">1429&nbsp;&nbsp;3284&nbsp;&nbsp;2199</td>
+						<td style="background:#FFC8C8"><b>122</b></td>
+						<td style="background:#C8C8FF">68</td>
+						<td style="background:#FFC8C8">110.8</td>
+						<td style="background:#C8C8FF">90.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q87</b></td>
+						<td style="background:#FFFFFF">3656&nbsp;&nbsp;3189&nbsp;&nbsp;4502</td>
+						<td style="background:#FFFFFF"><b>2630&nbsp;&nbsp;4472&nbsp;&nbsp;4627</b></td>
+						<td style="background:#FFC8C8">88</td>
+						<td style="background:#C8C8FF"><b>115</b></td>
+						<td style="background:#FFC8C8">82.8</td>
+						<td style="background:#C8C8FF">102.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q88</b></td>
+						<td style="background:#FFFFFF"><b>1218&nbsp;&nbsp;1425&nbsp;&nbsp;2648</b></td>
+						<td style="background:#FFFFFF">4026&nbsp;&nbsp;467&nbsp;&nbsp;4158</td>
+						<td style="background:#FFC8C8"><b>191</b></td>
+						<td style="background:#C8C8FF">120</td>
+						<td style="background:#FFC8C8">186.2</td>
+						<td style="background:#C8C8FF">90.3</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q89</b></td>
+						<td style="background:#FFFFFF"><b>70&nbsp;&nbsp;447&nbsp;&nbsp;2000</b></td>
+						<td style="background:#FFFFFF">4334&nbsp;&nbsp;2259&nbsp;&nbsp;1378</td>
+						<td style="background:#FFC8C8"><b>116</b></td>
+						<td style="background:#C8C8FF">78</td>
+						<td style="background:#FFC8C8">126.3</td>
+						<td style="background:#C8C8FF">110.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q90</b></td>
+						<td style="background:#FFFFFF"><b>1086&nbsp;&nbsp;1477&nbsp;&nbsp;384</b></td>
+						<td style="background:#FFFFFF">95&nbsp;&nbsp;3528&nbsp;&nbsp;1732</td>
+						<td style="background:#FFC8C8"><b>117</b></td>
+						<td style="background:#C8C8FF">94</td>
+						<td style="background:#FFC8C8"><del>69.9</del></td>
+						<td style="background:#C8C8FF"><del>116.1</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q91</b></td>
+						<td style="background:#FFFFFF">1675&nbsp;&nbsp;3132&nbsp;&nbsp;3459</td>
+						<td style="background:#FFFFFF"><b>1323&nbsp;&nbsp;111&nbsp;&nbsp;1710</b></td>
+						<td style="background:#FFC8C8">73</td>
+						<td style="background:#C8C8FF"><b>178</b></td>
+						<td style="background:#FFC8C8">97.8</td>
+						<td style="background:#C8C8FF">145.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q92</b></td>
+						<td style="background:#FFFFFF"><b>4567&nbsp;&nbsp;2169&nbsp;&nbsp;295</b></td>
+						<td style="background:#FFFFFF">3641&nbsp;&nbsp;3944&nbsp;&nbsp;192</td>
+						<td style="background:#FFC8C8"><b>150</b></td>
+						<td style="background:#C8C8FF">56</td>
+						<td style="background:#FFC8C8">153.6</td>
+						<td style="background:#C8C8FF">90.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q93</b></td>
+						<td style="background:#FFFFFF"><b>329&nbsp;&nbsp;4011&nbsp;&nbsp;2474</b></td>
+						<td style="background:#FFFFFF">3481&nbsp;&nbsp;4541&nbsp;&nbsp;4579</td>
+						<td style="background:#FFC8C8"><b>161</b></td>
+						<td style="background:#C8C8FF">91</td>
+						<td style="background:#FFC8C8">117.5</td>
+						<td style="background:#C8C8FF">62.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q94</b></td>
+						<td style="background:#FFFFFF"><b>245&nbsp;&nbsp;2907&nbsp;&nbsp;2341</b></td>
+						<td style="background:#FFFFFF">744&nbsp;&nbsp;578&nbsp;&nbsp;4481</td>
+						<td style="background:#FFC8C8"><b>134</b></td>
+						<td style="background:#C8C8FF">125</td>
+						<td style="background:#FFC8C8">135.4</td>
+						<td style="background:#C8C8FF">114.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q95</b></td>
+						<td style="background:#FFFFFF">1912&nbsp;&nbsp;2834&nbsp;&nbsp;222</td>
+						<td style="background:#FFFFFF"><b>118&nbsp;&nbsp;1987&nbsp;&nbsp;1801</b></td>
+						<td style="background:#FFC8C8">84</td>
+						<td style="background:#C8C8FF"><b>159</b></td>
+						<td style="background:#FFC8C8">119.1</td>
+						<td style="background:#C8C8FF">126.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q96</b></td>
+						<td style="background:#FFFFFF"><b>2512&nbsp;&nbsp;27&nbsp;&nbsp;3018</b></td>
+						<td style="background:#FFFFFF">4797&nbsp;&nbsp;4462&nbsp;&nbsp;2338</td>
+						<td style="background:#FFC8C8"><b>136</b></td>
+						<td style="background:#C8C8FF">132</td>
+						<td style="background:#FFC8C8">141.9</td>
+						<td style="background:#C8C8FF">82.3</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q97</b></td>
+						<td style="background:#FFFFFF">2978&nbsp;&nbsp;2809&nbsp;&nbsp;842</td>
+						<td style="background:#FFFFFF"><b>4601&nbsp;&nbsp;4452&nbsp;&nbsp;1241</b></td>
+						<td style="background:#FFC8C8">78</td>
+						<td style="background:#C8C8FF"><b>122</b></td>
+						<td style="background:#FFC8C8">70.1</td>
+						<td style="background:#C8C8FF">121.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q98</b></td>
+						<td style="background:#FFFFFF">1405&nbsp;&nbsp;4641&nbsp;&nbsp;4522</td>
+						<td style="background:#FFFFFF"><b>610&nbsp;&nbsp;4039&nbsp;&nbsp;4607</b></td>
+						<td style="background:#FFC8C8">56</td>
+						<td style="background:#C8C8FF"><b>168</b></td>
+						<td style="background:#FFC8C8">52.1</td>
+						<td style="background:#C8C8FF">112.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q99</b></td>
+						<td style="background:#FFFFFF">1629&nbsp;&nbsp;125&nbsp;&nbsp;45</td>
+						<td style="background:#FFFFFF"><b>4069&nbsp;&nbsp;1114&nbsp;&nbsp;2485</b></td>
+						<td style="background:#FFC8C8">98</td>
+						<td style="background:#C8C8FF"><b>168</b></td>
+						<td style="background:#FFC8C8">109.0</td>
+						<td style="background:#C8C8FF">194.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q100</b></td>
+						<td style="background:#FFFFFF"><b>2046&nbsp;&nbsp;422&nbsp;&nbsp;2175</b></td>
+						<td style="background:#FFFFFF">2502&nbsp;&nbsp;4492&nbsp;&nbsp;2481</td>
+						<td style="background:#FFC8C8"><b>123</b></td>
+						<td style="background:#C8C8FF">74</td>
+						<td style="background:#FFC8C8">107.7</td>
+						<td style="background:#C8C8FF">86.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q101</b></td>
+						<td style="background:#FFFFFF"><b>1732&nbsp;&nbsp;1323&nbsp;&nbsp;3641</b></td>
+						<td style="background:#FFFFFF">2199&nbsp;&nbsp;4541&nbsp;&nbsp;4502</td>
+						<td style="background:#FFC8C8"><b>182</b></td>
+						<td style="background:#C8C8FF">83</td>
+						<td style="background:#FFC8C8">161.8</td>
+						<td style="background:#C8C8FF">88.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q102</b></td>
+						<td style="background:#FFFFFF">4579&nbsp;&nbsp;358&nbsp;&nbsp;192</td>
+						<td style="background:#FFFFFF"><b>2341&nbsp;&nbsp;1772&nbsp;&nbsp;3528</b></td>
+						<td style="background:#FFC8C8">75</td>
+						<td style="background:#C8C8FF"><b>147</b></td>
+						<td style="background:#FFC7C7">82.4</td>
+						<td style="background:#C8C8FF">103.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q103</b></td>
+						<td style="background:#FFFFFF">245&nbsp;&nbsp;1987&nbsp;&nbsp;1325</td>
+						<td style="background:#FFFFFF"><b>2169&nbsp;&nbsp;2630&nbsp;&nbsp;3211</b></td>
+						<td style="background:#FFC8C8">117</td>
+						<td style="background:#C8C8FF"><b>190</b></td>
+						<td style="background:#FFC8C8">116.2</td>
+						<td style="background:#C8C8FF">169.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q104</b></td>
+						<td style="background:#FFFFFF">1086&nbsp;&nbsp;222&nbsp;&nbsp;3284</td>
+						<td style="background:#FFFFFF"><b>2337&nbsp;&nbsp;2474&nbsp;&nbsp;2648</b></td>
+						<td style="background:#FFC8C8">137</td>
+						<td style="background:#C8C8FF"><b>155</b></td>
+						<td style="background:#FFC8C8">113.6</td>
+						<td style="background:#C8C8FF">142.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q105</b></td>
+						<td style="background:#FFFFFF">578&nbsp;&nbsp;3481&nbsp;&nbsp;95</td>
+						<td style="background:#FFFFFF"><b>3459&nbsp;&nbsp;3189&nbsp;&nbsp;2403</b></td>
+						<td style="background:#FFC8C8">63</td>
+						<td style="background:#C8C8FF"><b>105</b></td>
+						<td style="background:#FFC8C8">54.1</td>
+						<td style="background:#C8C8FF">70.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q106</b></td>
+						<td style="background:#FFFFFF"><b>118&nbsp;&nbsp;4627&nbsp;&nbsp;1241</b></td>
+						<td style="background:#FFFFFF">1429&nbsp;&nbsp;3018&nbsp;&nbsp;70</td>
+						<td style="background:#FFC8C8"><b>124</b></td>
+						<td style="background:#C8C8FF">105</td>
+						<td style="background:#FFC8C8">153.5</td>
+						<td style="background:#C8C8FF">84.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q107</b></td>
+						<td style="background:#FFFFFF"><b>1726&nbsp;&nbsp;45&nbsp;&nbsp;4481</b></td>
+						<td style="background:#FFFFFF">467&nbsp;&nbsp;4452&nbsp;&nbsp;2000</td>
+						<td style="background:#FFC8C8"><b>133</b></td>
+						<td style="background:#C8C8FF">93</td>
+						<td style="background:#FFC8C8">89.4</td>
+						<td style="background:#C8C8FF">62.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q108</b></td>
+						<td style="background:#FFFFFF"><b>1378&nbsp;&nbsp;125&nbsp;&nbsp;2834</b></td>
+						<td style="background:#FFFFFF">744&nbsp;&nbsp;1405&nbsp;&nbsp;1675</td>
+						<td style="background:#FFC8C8"><b>142</b></td>
+						<td style="background:#C8C8FF">119</td>
+						<td style="background:#FFC8C8">109.3</td>
+						<td style="background:#C8C8FF">91.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q109</b></td>
+						<td style="background:#FFFFFF"><b>610&nbsp;&nbsp;1114&nbsp;&nbsp;111</b></td>
+						<td style="background:#FFFFFF">842&nbsp;&nbsp;2481&nbsp;&nbsp;2512</td>
+						<td style="background:#FFC8C8"><b>160</b></td>
+						<td style="background:#C8C8FF">117</td>
+						<td style="background:#FFC8C8">188.8</td>
+						<td style="background:#C8C8FF">130.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q110</b></td>
+						<td style="background:#FFFFFF"><b>4462&nbsp;&nbsp;2907&nbsp;&nbsp;1425</b></td>
+						<td style="background:#FFFFFF">4567&nbsp;&nbsp;2485&nbsp;&nbsp;4607</td>
+						<td style="background:#FFC8C8"><b>155</b></td>
+						<td style="background:#C8C8FF">148</td>
+						<td style="background:#FFC8C8">151.8</td>
+						<td style="background:#C8C8FF">98.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q111</b></td>
+						<td style="background:#FFFFFF">2809&nbsp;&nbsp;1710&nbsp;&nbsp;337</td>
+						<td style="background:#FFFFFF"><b>4557&nbsp;&nbsp;4039&nbsp;&nbsp;329</b></td>
+						<td style="background:#FFC8C8">61</td>
+						<td style="background:#C8C8FF"><b>136</b></td>
+						<td style="background:#FFC8C8">71.5</td>
+						<td style="background:#C8C8FF">121.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q112</b></td>
+						<td style="background:#FFFFFF">2259&nbsp;&nbsp;3941&nbsp;&nbsp;2175</td>
+						<td style="background:#FFFFFF"><b>2338&nbsp;&nbsp;4069&nbsp;&nbsp;1806</b></td>
+						<td style="background:#FFC8C8">153</td>
+						<td style="background:#C8C8FF"><b>180</b></td>
+						<td style="background:#FFC8C8">120.9</td>
+						<td style="background:#C8C8FF">155.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q113</b></td>
+						<td style="background:#FFFFFF">4026&nbsp;&nbsp;151&nbsp;&nbsp;4601</td>
+						<td style="background:#FFFFFF"><b>3132&nbsp;&nbsp;2502&nbsp;&nbsp;4334</b></td>
+						<td style="background:#FFC8C8">82</td>
+						<td style="background:#C8C8FF"><b>134</b></td>
+						<td style="background:#FFC8C8">105.5</td>
+						<td style="background:#C8C8FF">131.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q114</b></td>
+						<td style="background:#FFFFFF">1477&nbsp;&nbsp;447&nbsp;&nbsp;4011</td>
+						<td style="background:#FFFFFF"><b>3656&nbsp;&nbsp;2046&nbsp;&nbsp;2978</b></td>
+						<td style="background:#FFC8C8">115</td>
+						<td style="background:#C8C8FF"><b>118</b></td>
+						<td style="background:#FFC8C8">105.8</td>
+						<td style="background:#C8C8FF">108.4</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q115</b></td>
+						<td style="background:#FFFFFF"><b>1218&nbsp;&nbsp;295&nbsp;&nbsp;1629</b></td>
+						<td style="background:#FFFFFF">4522&nbsp;&nbsp;4797&nbsp;&nbsp;2729</td>
+						<td style="background:#FFC8C8"><b>128</b></td>
+						<td style="background:#C8C8FF">81</td>
+						<td style="background:#FFC8C8">138.9</td>
+						<td style="background:#C8C8FF">92.7</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q116</b></td>
+						<td style="background:#FFFFFF">1801&nbsp;&nbsp;384&nbsp;&nbsp;422</td>
+						<td style="background:#FFFFFF"><b>4472&nbsp;&nbsp;27&nbsp;&nbsp;3944</b></td>
+						<td style="background:#FFC8C8">47</td>
+						<td style="background:#C8C8FF"><b>81</b></td>
+						<td style="background:#FFC8C8">60.8</td>
+						<td style="background:#C8C8FF">106.6</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q117</b></td>
+						<td style="background:#FFFFFF"><b>1912&nbsp;&nbsp;4641&nbsp;&nbsp;1726</b></td>
+						<td style="background:#FFFFFF"><b>4492&nbsp;&nbsp;4158&nbsp;&nbsp;1325</b></td>
+						<td style="background:#FFC8C8"><b>84</b></td>
+						<td style="background:#C8C8FF"><b>84</b></td>
+						<td style="background:#FFC8C8"><del>74.9</del></td>
+						<td style="background:#C8C8FF"><del>82.7</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q118</b></td>
+						<td style="background:#FFFFFF">111&nbsp;&nbsp;3528&nbsp;&nbsp;4627</td>
+						<td style="background:#FFFFFF"><b>2474&nbsp;&nbsp;4481&nbsp;&nbsp;1378</b></td>
+						<td style="background:#FFC8C8">119</td>
+						<td style="background:#C8C8FF"><b>132</b></td>
+						<td style="background:#FFC8C8"><del>127.2</del></td>
+						<td style="background:#C8C8FF"><del>117.3</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q119</b></td>
+						<td style="background:#FFFFFF"><b>4541&nbsp;&nbsp;95&nbsp;&nbsp;2512</b></td>
+						<td style="background:#FFFFFF">2834&nbsp;&nbsp;4607&nbsp;&nbsp;70</td>
+						<td style="background:#FFC8C8"><b>115</b></td>
+						<td style="background:#C8C8FF">85</td>
+						<td style="background:#FFC8C8"><del>100.4</del></td>
+						<td style="background:#C8C8FF"><del>109.3</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q120</b></td>
+						<td style="background:#FFFFFF"><b>2630&nbsp;&nbsp;118&nbsp;&nbsp;45</b></td>
+						<td style="background:#FFFFFF">4579&nbsp;&nbsp;3641&nbsp;&nbsp;610</td>
+						<td style="background:#FFC8C8"><b>162</b></td>
+						<td style="background:#C8C8FF">144</td>
+						<td style="background:#FFC8C8">158.7</td>
+						<td style="background:#C8C8FF">114.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q121</b></td>
+						<td style="background:#FFFFFF"><b>2481&nbsp;&nbsp;2169&nbsp;&nbsp;3941</b></td>
+						<td style="background:#FFFFFF">222&nbsp;&nbsp;4334&nbsp;&nbsp;3189</td>
+						<td style="background:#FFC8C8"><b>151</b></td>
+						<td style="background:#C8C8FF">147</td>
+						<td style="background:#FFC8C8">159.8</td>
+						<td style="background:#C8C8FF">140.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q122</b></td>
+						<td style="background:#FFFFFF"><b>192&nbsp;&nbsp;4069&nbsp;&nbsp;1675</b></td>
+						<td style="background:#FFFFFF">3284&nbsp;&nbsp;2502&nbsp;&nbsp;3211</td>
+						<td style="background:#FFC8C8"><b>127</b></td>
+						<td style="background:#C8C8FF">107</td>
+						<td style="background:#FFC8C8">103.1</td>
+						<td style="background:#C8C8FF">97.3</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q123</b></td>
+						<td style="background:#FFFFFF"><b>1241&nbsp;&nbsp;125&nbsp;&nbsp;2199</b></td>
+						<td style="background:#FFFFFF">4522&nbsp;&nbsp;447&nbsp;&nbsp;578</td>
+						<td style="background:#FFC8C8"><b>204</b></td>
+						<td style="background:#C8C8FF">53</td>
+						<td style="background:#FFC8C8">157.2</td>
+						<td style="background:#C8C8FF">41.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q124</b></td>
+						<td style="background:#FFFFFF">2046&nbsp;&nbsp;1772&nbsp;&nbsp;1218</td>
+						<td style="background:#FFFFFF"><b>1114&nbsp;&nbsp;4601&nbsp;&nbsp;1987</b></td>
+						<td style="background:#FFC8C8">103</td>
+						<td style="background:#C8C8FF"><b>212</b></td>
+						<td style="background:#FFC8C8">94.9</td>
+						<td style="background:#C8C8FF">170.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q125</b></td>
+						<td style="background:#FFFFFF"><b>3656&nbsp;&nbsp;4158&nbsp;&nbsp;2338</b></td>
+						<td style="background:#FFFFFF">384&nbsp;&nbsp;744&nbsp;&nbsp;1429</td>
+						<td style="background:#FFC8C8"><b>117</b></td>
+						<td style="background:#C8C8FF">85</td>
+						<td style="background:#FFC8C8">126.3</td>
+						<td style="background:#C8C8FF">58.3</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q126</b></td>
+						<td style="background:#FFFFFF">1806&nbsp;&nbsp;4452&nbsp;&nbsp;3481</td>
+						<td style="background:#FFFFFF"><b>4462&nbsp;&nbsp;422&nbsp;&nbsp;4039</b></td>
+						<td style="background:#FFC8C8">93</td>
+						<td style="background:#C8C8FF"><b>125</b></td>
+						<td style="background:#FFC8C8">99.5</td>
+						<td style="background:#C8C8FF">124.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q127</b></td>
+						<td style="background:#FFFFFF"><b>3459&nbsp;&nbsp;2978&nbsp;&nbsp;1425</b></td>
+						<td style="background:#FFFFFF">1912&nbsp;&nbsp;1405&nbsp;&nbsp;337</td>
+						<td style="background:#FFC8C8"><b>175</b></td>
+						<td style="background:#C8C8FF">105</td>
+						<td style="background:#FFC8C8">145.1</td>
+						<td style="background:#C8C8FF">70.5</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q128</b></td>
+						<td style="background:#FFFFFF"><b>1629&nbsp;&nbsp;1323&nbsp;&nbsp;4567</b></td>
+						<td style="background:#FFFFFF">2809&nbsp;&nbsp;27&nbsp;&nbsp;4011</td>
+						<td style="background:#FFC8C8"><b>106</b></td>
+						<td style="background:#C8C8FF">99</td>
+						<td style="background:#FFC8C8">106.1</td>
+						<td style="background:#C8C8FF">101.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q129</b></td>
+						<td style="background:#FFFFFF">151&nbsp;&nbsp;2337&nbsp;&nbsp;2341</td>
+						<td style="background:#FFFFFF"><b>329&nbsp;&nbsp;2000&nbsp;&nbsp;295</b></td>
+						<td style="background:#FFC8C8">76</td>
+						<td style="background:#C8C8FF"><b>151</b></td>
+						<td style="background:#FFC8C8">85.5</td>
+						<td style="background:#C8C8FF">131.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q130</b></td>
+						<td style="background:#FFFFFF"><b>1710&nbsp;&nbsp;1477&nbsp;&nbsp;3944</b></td>
+						<td style="background:#FFFFFF">2175&nbsp;&nbsp;842&nbsp;&nbsp;2907</td>
+						<td style="background:#FFC8C8"><b>100</b></td>
+						<td style="background:#C8C8FF">86</td>
+						<td style="background:#FFC8C8"><del>104.3</del></td>
+						<td style="background:#C8C8FF"><del>105.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q131</b></td>
+						<td style="background:#FFFFFF">4797&nbsp;&nbsp;1732&nbsp;&nbsp;4492</td>
+						<td style="background:#FFFFFF"><b>2403&nbsp;&nbsp;2259&nbsp;&nbsp;358</b></td>
+						<td style="background:#FFC8C8">108</td>
+						<td style="background:#C8C8FF"><b>138</b></td>
+						<td style="background:#FFC8C8">108.1</td>
+						<td style="background:#C8C8FF">115.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q132</b></td>
+						<td style="background:#FFFFFF"><b>467&nbsp;&nbsp;245&nbsp;&nbsp;4557</b></td>
+						<td style="background:#FFFFFF">1801&nbsp;&nbsp;1086&nbsp;&nbsp;4641</td>
+						<td style="background:#FFC8C8"><b>88</b></td>
+						<td style="background:#C8C8FF">33</td>
+						<td style="background:#FFC8C8">111.0</td>
+						<td style="background:#C8C8FF">31.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q133</b></td>
+						<td style="background:#FFFFFF">3018&nbsp;&nbsp;4502&nbsp;&nbsp;3132</td>
+						<td style="background:#FFFFFF"><b>2648&nbsp;&nbsp;2729&nbsp;&nbsp;2485</b></td>
+						<td style="background:#FFC8C8">120</td>
+						<td style="background:#C8C8FF"><b>224</b></td>
+						<td style="background:#FFC8C8">81.3</td>
+						<td style="background:#C8C8FF">189.2</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>Q134</b></td>
+						<td style="background:#FFFFFF">4026&nbsp;&nbsp;4452&nbsp;&nbsp;4607</td>
+						<td style="background:#FFFFFF"><b>4472&nbsp;&nbsp;4579&nbsp;&nbsp;2338</b></td>
+						<td style="background:#FFC8C8">68</td>
+						<td style="background:#C8C8FF"><b>94</b></td>
+						<td style="background:#FFC8C8">51.7</td>
+						<td style="background:#C8C8FF">83.0</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>1-1</b></td>
+						<td style="background:#FFFFFF"><b>4039&nbsp;&nbsp;1114&nbsp;&nbsp;118</b></td>
+						<td style="background:#FFFFFF">1732&nbsp;&nbsp;245&nbsp;&nbsp;27</td>
+						<td style="background:#FFC8C8"><b>213</b></td>
+						<td style="background:#C8C8FF">170</td>
+						<td style="background:#FFC8C8">220.2</td>
+						<td style="background:#C8C8FF">186.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>2-1</b></td>
+						<td style="background:#FFFFFF"><b>2630&nbsp;&nbsp;3641&nbsp;&nbsp;111</b></td>
+						<td style="background:#FFFFFF">1241&nbsp;&nbsp;610&nbsp;&nbsp;1477</td>
+						<td style="background:#FFC8C8"><b>199</b></td>
+						<td style="background:#C8C8FF">181</td>
+						<td style="background:#FFC8C8">179.6</td>
+						<td style="background:#C8C8FF">149.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>3-1</b></td>
+						<td style="background:#FFFFFF"><b>3284&nbsp;&nbsp;2175&nbsp;&nbsp;2169</b></td>
+						<td style="background:#FFFFFF">2338&nbsp;&nbsp;1323&nbsp;&nbsp;2512</td>
+						<td style="background:#FFC8C8"><b>189</b></td>
+						<td style="background:#C8C8FF">154</td>
+						<td style="background:#FFC8C8">170.9</td>
+						<td style="background:#C8C8FF">154.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>4-1</b></td>
+						<td style="background:#FFFFFF"><b>2337&nbsp;&nbsp;1425&nbsp;&nbsp;2474</b></td>
+						<td style="background:#FFFFFF">1806&nbsp;&nbsp;3656&nbsp;&nbsp;4334</td>
+						<td style="background:#FFC8C8"><b>194</b></td>
+						<td style="background:#C8C8FF">122</td>
+						<td style="background:#FFC8C8"><del>174.9</del></td>
+						<td style="background:#C8C8FF"><del>176.3</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>1-2</b></td>
+						<td style="background:#FFFFFF">118&nbsp;&nbsp;4039&nbsp;&nbsp;1114</td>
+						<td style="background:#FFFFFF"><b>1732&nbsp;&nbsp;245&nbsp;&nbsp;27</b></td>
+						<td style="background:#FFC8C8">148</td>
+						<td style="background:#C8C8FF"><b>166</b></td>
+						<td style="background:#FFC8C8"><del>220.2</del></td>
+						<td style="background:#C8C8FF"><del>186.8</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>2-2</b></td>
+						<td style="background:#FFFFFF">111&nbsp;&nbsp;3641&nbsp;&nbsp;2630</td>
+						<td style="background:#FFFFFF"><b>1477&nbsp;&nbsp;1241&nbsp;&nbsp;610</b></td>
+						<td style="background:#FFC8C8">201</td>
+						<td style="background:#C8C8FF"><b>216</b></td>
+						<td style="background:#FFC8C8"><del>179.6</del></td>
+						<td style="background:#C8C8FF"><del>149.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>3-2</b></td>
+						<td style="background:#FFFFFF">2175&nbsp;&nbsp;3284&nbsp;&nbsp;2169</td>
+						<td style="background:#FFFFFF"><b>2512&nbsp;&nbsp;1323&nbsp;&nbsp;2338</b></td>
+						<td style="background:#FFC8C8">136</td>
+						<td style="background:#C8C8FF"><b>137</b></td>
+						<td style="background:#FFC8C8"><del>170.9</del></td>
+						<td style="background:#C8C8FF"><del>154.1</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>4-2</b></td>
+						<td style="background:#FFFFFF"><b>2337&nbsp;&nbsp;2474&nbsp;&nbsp;1425</b></td>
+						<td style="background:#FFFFFF">3656&nbsp;&nbsp;1806&nbsp;&nbsp;4334</td>
+						<td style="background:#FFC8C8"><b>218</b></td>
+						<td style="background:#C8C8FF">125</td>
+						<td style="background:#FFC8C8"><del>174.9</del></td>
+						<td style="background:#C8C8FF"><del>176.3</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>1-3</b></td>
+						<td style="background:#FFFFFF"><b>1114&nbsp;&nbsp;118&nbsp;&nbsp;4039</b></td>
+						<td style="background:#FFFFFF">245&nbsp;&nbsp;27&nbsp;&nbsp;1732</td>
+						<td style="background:#FFC8C8"><b>288</b></td>
+						<td style="background:#C8C8FF">186</td>
+						<td style="background:#FFC8C8">220.2</td>
+						<td style="background:#C8C8FF">186.8</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>2-3</b></td>
+						<td style="background:#FFFFFF">2630&nbsp;&nbsp;3641&nbsp;&nbsp;111</td>
+						<td style="background:#FFFFFF"><b>610&nbsp;&nbsp;1477&nbsp;&nbsp;1241</b></td>
+						<td style="background:#FFC8C8">193</td>
+						<td style="background:#C8C8FF"><b>203</b></td>
+						<td style="background:#FFC8C8"><del>179.6</del></td>
+						<td style="background:#C8C8FF"><del>149.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>QTR<br>3-3</b></td>
+						<td style="background:#FFFFFF"><b>3284&nbsp;&nbsp;2169&nbsp;&nbsp;2175</b></td>
+						<td style="background:#FFFFFF">2512&nbsp;&nbsp;1323&nbsp;&nbsp;2338</td>
+						<td style="background:#FFC8C8"><b>224</b></td>
+						<td style="background:#C8C8FF">109</td>
+						<td style="background:#FFC8C8">170.9</td>
+						<td style="background:#C8C8FF">154.1</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>SEMI<br>1-1</b></td>
+						<td style="background:#FFFFFF"><b>1114&nbsp;&nbsp;4039&nbsp;&nbsp;118</b></td>
+						<td style="background:#FFFFFF">610&nbsp;&nbsp;1241&nbsp;&nbsp;1477</td>
+						<td style="background:#FFC8C8"><b>243</b></td>
+						<td style="background:#C8C8FF">207</td>
+						<td style="background:#FFC8C8">220.2</td>
+						<td style="background:#C8C8FF">149.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>SEMI<br>2-1</b></td>
+						<td style="background:#FFFFFF">2175&nbsp;&nbsp;3284&nbsp;&nbsp;2169</td>
+						<td style="background:#FFFFFF"><b>2474&nbsp;&nbsp;2337&nbsp;&nbsp;1425</b></td>
+						<td style="background:#FFC8C8">101</td>
+						<td style="background:#C8C8FF"><b>106</b></td>
+						<td style="background:#FFC8C8">170.9</td>
+						<td style="background:#C8C8FF">174.9</td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>SEMI<br>1-2</b></td>
+						<td style="background:#FFFFFF">1114&nbsp;&nbsp;118&nbsp;&nbsp;4039</td>
+						<td style="background:#FFFFFF"><b>1477&nbsp;&nbsp;1241&nbsp;&nbsp;610</b></td>
+						<td style="background:#FFC8C8">203</td>
+						<td style="background:#C8C8FF"><b>230</b></td>
+						<td style="background:#FFC8C8"><del>220.2</del></td>
+						<td style="background:#C8C8FF"><del>149.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>SEMI<br>2-2</b></td>
+						<td style="background:#FFFFFF"><b>2175&nbsp;&nbsp;2169&nbsp;&nbsp;3284</b></td>
+						<td style="background:#FFFFFF">1425&nbsp;&nbsp;2337&nbsp;&nbsp;2474</td>
+						<td style="background:#FFC8C8"><b>135</b></td>
+						<td style="background:#C8C8FF">108</td>
+						<td style="background:#FFC8C8"><del>170.9</del></td>
+						<td style="background:#C8C8FF"><del>174.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>SEMI<br>1-3</b></td>
+						<td style="background:#FFFFFF">1114&nbsp;&nbsp;118&nbsp;&nbsp;4039</td>
+						<td style="background:#FFFFFF"><b>1477&nbsp;&nbsp;1241&nbsp;&nbsp;610</b></td>
+						<td style="background:#FFC8C8">219</td>
+						<td style="background:#C8C8FF"><b>235</b></td>
+						<td style="background:#FFC8C8"><del>220.2</del></td>
+						<td style="background:#C8C8FF"><del>149.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>SEMI<br>2-3</b></td>
+						<td style="background:#FFFFFF"><b>2169&nbsp;&nbsp;2175&nbsp;&nbsp;3284</b></td>
+						<td style="background:#FFFFFF">1425&nbsp;&nbsp;2337&nbsp;&nbsp;2474</td>
+						<td style="background:#FFC8C8"><b>156</b></td>
+						<td style="background:#C8C8FF">117</td>
+						<td style="background:#FFC8C8"><del>170.9</del></td>
+						<td style="background:#C8C8FF"><del>174.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>FINAL<br>1-1</b></td>
+						<td style="background:#FFFFFF"><b>610&nbsp;&nbsp;1241&nbsp;&nbsp;1477</b></td>
+						<td style="background:#FFFFFF">3284&nbsp;&nbsp;2169&nbsp;&nbsp;2175</td>
+						<td style="background:#FFC8C8"><b>164</b></td>
+						<td style="background:#C8C8FF">59</td>
+						<td style="background:#FFC8C8"><del>149.9</del></td>
+						<td style="background:#C8C8FF"><del>170.9</del></td>
+					</tr>
+					<tr>
+						<td style="background:#EEEEEE"><b>FINAL<br>1-2</b></td>
+						<td style="background:#FFFFFF"><b>610&nbsp;&nbsp;1241&nbsp;&nbsp;1477</b></td>
+						<td style="background:#FFFFFF">3284&nbsp;&nbsp;2169&nbsp;&nbsp;2175</td>
+						<td style="background:#FFC8C8"><b>193</b></td>
+						<td style="background:#C8C8FF">174</td>
+						<td style="background:#FFC8C8"><del>149.9</del></td>
+						<td style="background:#C8C8FF"><del>170.9</del></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<br>
+			<div class="hr"></div>
+			<br>
+
+			<!-- Unplayed Match Prediction -->
+			<table class="shinytable" id="matchpredictions">
+				<thead>
+					<tr>
+						<td colspan="5">Predictions for Unplayed Matches</td>
+					</tr>
+					<tr>
+						<td style="width:20px;">Match</td>
+						<td>Red Alliance</td>
+						<td>Blue Alliance</td>
+						<td>Red Prediction</td>
+						<td>Blue Prediction</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="5" class="error">No unplayed matches are scheduled.</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="5">
+							<label><input name="m2atchpredictionmode" type="radio" checked="checked"
+									id="m2atchpredictionmode0">OPR Only (<span id="m2ode0acc">79%
+									accuracy</span>)</label><br>
+							<label><input name="m2atchpredictionmode" type="radio" id="m2atchpredictionmode1">OPR + DPR
+								(<span id="m2ode1acc">76% accuracy</span>)</label><br>
+							<label><input name="m2atchpredictionmode" type="radio" id="m2atchpredictionmode2">CCWM
+								(<span id="m2ode2acc">79% accuracy</span>)</label><br>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+
+
+		</div>
+
+	</div>
+
+	<div style="clear:both; padding-top:30px;">
+		<!--return to 1 column layout-->
+		<h2 id="about">About This Tool</h2>
+
+		<h3>What Do All Those Numbers Mean?</h3>
+		<p>Below is a description of each of the columns of the <a href="#bigtable">Analysis Table▴</a> above. Remember
+			that you can sort the columns of the table by clicking the underlined headings!
+		</p>
+		<ul>
+			<li><b>Rank:</b> The team's rank at the event, in terms of Qualification Points, as reported by
+				<em>FIRST</em>.</li>
+			<li><b>Auton:</b> An estimate of the number of points a team scores, on average, during the autonomous
+				period.</li>
+			<li><b>Climb:</b> An estimate of the number of points a team earns, on average, by climbing.</li>
+			<li><b>Teleop:</b> An estimate of the number of points a team scores, on average, during the teleoperated
+				period.</li>
+			<li><b>OPR:</b> Offensive Power Rating. An estimate of the number of points the team scores overall, on
+				average. This number represents the offensive utility of a team. Comparable to the OPR reported by other
+				teams.</li>
+			<li><b>DPR:</b> Defensive Power Rating. An estimate of the defensive utility of a team. May be interpreted
+				as the number of points that a team takes away from its opposing alliance, on average.</li>
+			<li><b>CCWM:</b> Calculated Contribution to Winning Margin. An estimate of the number of points a team
+				contributes to the winning margin of its alliance.</li>
+		</ul>
+
+		<h3>Should My Team Still Scout?</h3>
+		<p>Yes! AASK is meant only as a secondary source of information, either as a basis for comparison or to replace
+			missing or faulty information. We do not guarantee that the results of our estimates will accurately reflect
+			the capabilities of each team.
+
+		</p>
+		<h3>How Does This Work?</h3>
+		<p>For each point category, our system solves a <a
+				href="http://en.wikipedia.org/wiki/System_of_linear_equations">system of linear equations</a> for the
+			"average contribution" of each team per match. Each equation corresponds to a single team and expresses the
+			total accumulated points earned by that team as a linear combination of that team's average contribution and
+			the average contributions of every other team that has competed on an alliance with that team. Naturally, we
+			represent the system of equations with a single matrix equation of the form <code>Ax=b</code>
+		</p>
+		<ul>
+			<li>Vector <code>b</code> contains the aggregate point value (one of AP, CP, TP, or their sum) for each
+				team.</li>
+			<li>Each element <code>A<sub>i⁣j</sub></code> of matrix <code>A</code> represents the number of times team
+				<code>i</code> has played with team <code>j</code>.
+				Each element on the diagonal, therefore, is the total number of matches played by the team represented
+				by that row and column. The alliance matrix is also <a href="http://en.wikipedia.org/wiki/Symmetric_matrix">symmetric</a>.
+			</li>
+			<li>We solve for the vector <code>x</code>, which contains the average contribution of each team.</li>
+		</ul>
+
+		<p>Because of the special properties of our matrix, we can easily find an exact solution when the matrix is
+			nonsingular using <a href="http://en.wikipedia.org/wiki/LU_decomposition">LU Factorization</a> (without
+			pivoting!) followed by forward- and back-substitution. When the matrix is singular, we approximate the
+			solution iteratively with the <a href="http://en.wikipedia.org/wiki/Gauss-Seidel">Gauss-Seidel method</a>
+			and display a warning to the user.
+
+		</p>
+		<p>The <b>Defensive Power Rating (DPR)</b> for a team is calculated by iterating through the list of completed
+			matches and using the calculated OPR values to predict the outcome of each match. For each match, for both
+			alliances, the difference between this expected outcome and the true outcome of the match is credited to the
+			defensive utility of the opposing alliance. For each team, we sum up these differences and solve a linear
+			system similar to the one above using this new tabulated data.
+
+		</p>
+		<p>The <b>Calculated Contribution to the Winning Margin (CCWM)</b> for each team is calculated by summing up the
+			alliance score difference for each team for each match and solving our favorite system of linear equations
+			for the <code>x</code> vector with these margins in our <code>b</code> vector.
+
+		</p>
+		<p>AASK is dependent on the match schedule and rankings reported by <a
+				href="http://www.usfirst.org">www.US<em>FIRST.org</em></a>. Occasionally, the <em>FIRST</em> website
+			will experience an outage, rendering our tool temporarily incapacitated. We have implemented a simple
+			caching system, designed to reduce the frequency of such failures, but ultimately the status of the
+			<em>FIRST</em> website controls the functionality of this tool.<br>
+
+		</p>
+		<h3>Want Source Code?</h3>
+		This project is available on <a href="https://github.com/benrbray/adambots-automated-scouting-kit/">GitHub</a>
+		under the <a href="http://www.gnu.org/licenses/gpl.html">GPU General Public License</a>:
+		<br><br>
+
+		<div class="license">
+			<code>The <em>Adambots Automated Scouting Kit (AASK)</em> is free software: you can 
+				redistribute it and/or modify it under the terms of the GNU General Public License
+				as published by the Free Software Foundation, either version 3 of the License, 
+				or (at your option) any later version.
+				<br><br>
+				AASK is distributed in the hope that it will be useful, but WITHOUT ANY
+				WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+				PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+				<br><br>
+				You should have received a copy of the GNU General Public License along with
+				AASK.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+				<br><br>
+				AASK was started during the 2013 FIRST season by Ben Bray and Curtis Fenner of
+				Team 245, the Adambots, for use by other FRC teams.</code>
+			<br>
+		</div>
+
+		<h3>Excanvas.js</h3>
+		This project utilizes <code>Excanvas.js</code> (© Google 2006) for backwards compatibility with
+		Microsoft Internet Explorer, which is licenced under the Apache License. See <a href="excanvas">here</a>.
+	</div>
+	<div style="height:50px;"></div>
+	<script type="text/javascript">setTimeout(Main, 1);</script>
+
+
+	<iframe src="chrome-extension://dagcmkpagjlhakfdhnbomgmjdpkdklff/index.html" id="extension"
+		style="background-color: rgb(255, 255, 255); border: none; box-shadow: rgba(0, 0, 0, 0.3) 3px 3px 20px; display: none; height: 80%; width: 400px; margin: 0px; max-height: 1200px; min-height: 460px; padding: 0px; position: fixed; right: 20px; top: 20px; z-index: 99999999;"></iframe>
+
+
+</body>
+
+</html>

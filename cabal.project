@@ -1,0 +1,11 @@
+packages: . /home/benjamin/oss/citeproc/citeproc.cabal /home/benjamin/oss/pandoc/pandoc.cabal
+
+source-repository-package
+    type: git
+    location: https://github.com/jaspervdj/hakyll.git
+    tag: fe01ecf71671faf9fcb5d33457c43ddd01f041a4
+
+-- source-repository-package
+--    type: git
+--    location: https://github.com/jgm/pandoc.git
+--    tag: 649133fe5ecf6a2408eeb3c01bc654f71754a590

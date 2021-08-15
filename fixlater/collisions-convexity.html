@@ -1,0 +1,117 @@
+<html>
+<head>
+<!-- Metadata -->
+<meta name="title" content="Collision Detection: Convex Geometry" />
+<meta name="date" content="March 18, 2020" />
+<meta name="category" content="articles" />
+<meta name="tags" content="geometry, linear-algebra, game-dev, graphics" />
+<meta name="tools" content="typescript, webgl" />
+<meta name="summary" content="Working with convex polygons." />
+<meta name="unpublished" content="true" />
+</head>
+<body>
+
+<script src="/static/geom/dist/index.js"></script>
+
+<style>
+.edge {
+	stroke: #00f;
+}
+.pending {
+	stroke-dasharray: 4,4;
+	stroke-width: 4;
+	animation: dash 0.5s linear infinite;
+}
+
+@keyframes dash {
+	0% { stroke-dashoffset: 0; }
+	100%{ stroke-dashoffset: 8; }
+}
+
+svg .rotatable, svg .draggable {
+	cursor: grab;
+}
+</style>
+
+<h3>Figure 1</h3>
+<div id="fig1" style="border: 1px solid gray"></div>
+<h3>Figure 2</h3>
+<div id="fig2" style="border: 1px solid gray"></div>
+<h3>Figure 3</h3>
+<div id="fig3" style="border: 1px solid gray"></div>
+<h3>Figure 4</h3>
+<div id="fig4" style="border: 1px solid gray"></div>
+
+<svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="Gradient-1">
+            <stop offset="0%" stop-color="#bbc42a" />
+            <stop offset="100%" stop-color="#765373" />
+        </linearGradient>
+    </defs>
+    <rect x="10" y="10" width="200" height="100" fill= "url(#Gradient-1)" stroke="#333333" stroke-width="3px" />
+		<rect x="240" y="10" width="200" height="100" stroke-linejoin="round" stroke-dasharray="8,4" stroke-width="2" stroke="#000000" fill="none" />
+</svg>
+
+# Geom Demo
+# Algorithms for Convex Geometry
+
+Convex and Affine Sets
+
+* Separating Hyperplane Theorem
+* Supporting Hyperplane Theorem
+
+Convex Polygons
+
+* Determine if sequence of vertices represents a convex polygon?
+* Point inside convex polygon?
+* Barycentric Coordinates
+	* Screen Space and the PS2
+
+Convex Primitives
+
+* Lines and Planes
+* Simplex
+
+Convex Hull
+
+* Compute Convex Hulls
+	* Gift Wrapping Algorithm
+	* Graham Scan
+	* Quickhull
+	* Chan's Algorithm
+	* Melkman [Online Convex Hull](https://www.ime.usp.br/~walterfm/cursos/mac0331/2006/melkman.pdf)
+	* Notes, [Melkman's Convex Hull](http://www.ams.sunysb.edu/~jsbm/courses/345/13/melkman.pdf)
+* [Convex Hull of a Simple Polygon](https://en.wikipedia.org/wiki/Convex_hull_of_a_simple_polygon#cite_note-aloupis-6)
+	* David, [Online Construction of Convex Hull of Simple Polyline](http://w3.impa.br/~rdcastan/Cgeometry/index.html)
+
+Misc
+* [CS 763 Project](https://cs.uwaterloo.ca/~alubiw/CS763/project.html/)
+* Eppstein, ["Guard Placement for Efficient Point-in-Polygon Proofs"](https://dl-acm-org.prx.library.gatech.edu/doi/10.1145/1247069.1247075)
+* Lin 2005, [Approximate Convex Decomposition of Polygons](https://www-sciencedirect-com.prx.library.gatech.edu/science/article/pii/S0925772105001008)
+* Zuckerberger 2002, [Polyhedral Surface Decomposition with Applications](https://www-sciencedirect-com.prx.library.gatech.edu/science/article/pii/S0097849302001280)
+* Chan 2001, [Dynamic planar convex hull operations in near-logarithmic amortized time](https://dl.acm.org/doi/10.1145/363647.363652)
+* Avis 1997, [How Good are Convex Hull Algorithms?](https://www.sciencedirect.com/science/article/pii/S0925772196000235)
+
+Cutting Shapes
+
+# Duality
+
+* Support Functions
+* Fenchel Conjugate
+* Representing Convex Shapes with Support Functions
+
+# Collision Detection
+
+Simple Collisions
+
+* Line-Line 
+* Ball-Line (bouncing ball demo)
+* Ball-Ball
+* Rect-Rect
+* Ball-Rect
+
+Principled Collision Detection
+
+</body>
+</html>

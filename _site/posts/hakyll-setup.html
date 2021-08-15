@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Hakyll Configuration / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/article.css" />
+	<link rel="stylesheet" href="../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="../">Benjamin R. Bray</a></li>
+				<li><a href="../blog">WRITING</a></li>
+				<li><a href="../projects">PROJECTS</a></li>
+				<li><a href="../resources">RESOURCES</a></li>
+				<li><a href="../resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main role="main">
+		<div id="pre-content">
+    <!-- Banner -->
+    
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">Hakyll Configuration</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted  on August  8, 2021 / Updated August  8, 2021
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                
+                
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            
+            <!-- GitHub URL -->
+            
+            <!-- PDF URL -->
+            
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        <div class="toc"><h2>Table of Contents</h2>
+<ul>
+<li><a href="#migration">Migration</a></li>
+<li><a href="#pre-rendered-katex">Pre-rendered KaTeX</a></li>
+<li><a href="#pandoc-citations">Pandoc Citations</a></li>
+<li><a href="#fine-tuning">Fine-Tuning</a></li>
+<li><a href="#contributing-to-pandoc-citeproc-hakyll">Contributing to Pandoc / Citeproc / Hakyll</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+<h3 id="migration">Migration</h3>
+<p>I recently migrated this static website from Pelican (with Python) to Hakyll (with Haskell). Blogging about one's ownconvoluted Hakyll setup seems almost like a rite of passage, so here's mine!</p>
+<h3 id="pre-rendered-katex">Pre-rendered KaTeX</h3>
+<h3 id="pandoc-citations">Pandoc Citations</h3>
+<h3 id="fine-tuning">Fine-Tuning</h3>
+<ul>
+<li>date last generated</li>
+<li><code>fenced_divs</code> extension / markdown directive syntax</li>
+</ul>
+<h3 id="contributing-to-pandoc-citeproc-hakyll">Contributing to Pandoc / Citeproc / Hakyll</h3>
+<p>What I learned:</p>
+<ul>
+<li>I learned about the <a href="https://hackage.haskell.org/package/uniplate"><code>Uniplate</code> package</a> for generic data structure traversals. Apparently, list comprehensions support <a href="https://en.wikibooks.org/wiki/Haskell/Pattern_matching#List_comprehensions">pattern matching</a>!</li>
+<li>I learned how to <a href="https://cabal.readthedocs.io/en/3.4/nix-local-build.html#developing-multiple-packages">configure</a> <code>cabal</code> to compile <code>pandoc</code> against my local copy of <code>citeproc</code>. I'm also using <a href="https://cabal.readthedocs.io/en/3.4/cabal-projecthtml#specifying-packages-from-remote-version-control-locations">remote versions</a> of both <code>pandoc</code> and <code>hakyll</code>, until the latest changes make it into a release. So, my Hakyll site can benefit immediately from the new changes :)</li>
+<li>I read most of the <a href="https://docs.citationstyles.org/en/stable/specification.html">CSL specification</a>, which will be useful later when I add citations to my <a href="https://github.com/benrbray/noteworthy">Noteworthy</a> editor.</li>
+</ul>
+<h3 id="references">References</h3>
+<p>LaTeX Math</p>
+<p>Pandoc Citations</p>
+<ul>
+<li>jaspervdj, <a href="https://github.com/jaspervdj/hakyll-citeproc-example"><code>hakyll-citeproc-example</code></a></li>
+<li><a href="https://github.com/mcmtroffaes/homepage/blob/master/posts/2015-01-09-hakyll-and-bibtex.markdown">Gist by mcmtroffaes</a></li>
+<li>phiresky, <a href="https://phiresky.github.io/blog/2019/pandoc-url2cite/"><code>url2cite</code>: Automatic citation extraction from URLs</a></li>
+</ul>
+<p>Pandoc Linked Titles</p>
+<ul>
+<li>StackOverflow, <a href="https://stackoverflow.com/questions/45513465/make-pandoc-link-whole-citation-instead-of-only-the-year">Make pandoc link whole citation instead of only the year</a></li>
+<li>pandoc-citeproc @ GitHub, <a href="https://github.com/jgm/pandoc-citeproc/issues/268">Adding option to link/color the entire citation, not only the year?</a></li>
+</ul>
+<p>CSL</p>
+<ul>
+<li>CSL @ GitHub, <a href="https://github.com/citation-style-language/documentation/issues/76">Feature request: hyperlinks on text</a></li>
+</ul>
+
+    </section>
+</article>
+</div>
+
+	</main>
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated August 15, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

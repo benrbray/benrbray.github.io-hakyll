@@ -1,0 +1,622 @@
+/*
+Theme Name: Academic Theme
+Theme URI: http://benrbray.com/
+Author: Benjamin R. Bray
+Author URI: http://benrbray.com
+Description: Plain, academic-style theme for my personal site.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: academic
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+:root {
+	/* Page Dimensions */
+	--min-width: 25rem;
+	--max-width: 46rem;
+	/* Header */
+	--header-height: 60px;
+	--title-size: 1.3em;
+	/** Font Families **/
+	--code-font: "Droid Sans Mono", "Ubuntu Mono", "Consolas", monospace;
+	--serif-font: "Lora", serif;
+	--sans-font: "Roboto", "Ubuntu", sans-serif;
+
+	/** Font Size **/
+	--font-size: 1.0rem;
+	--line-height: 1.2em;
+
+	/** UI Colors **/
+	--color-bg: #fefefe;
+	--color-bg-1: #f3f3f3;
+	--color-bg-2: #eeeeee;    /* e.g. sidebar */
+	--color-bg-3: #d0d0d0; /* e.g. code_blocks */
+	--color-bg-textinput: #ccc; /* e.g. folder */
+	--color-textinput: var(--color-text);
+	--color-bg-hover: #d0d0d0;
+
+	/* e.g. used to indicate that an item can be clicked/selected */
+	--color-bg-selected: white;
+	/* e.g. used to indicate than an item is currently selected   */
+	--color-bg-highlight: #a4c2f9;
+	
+	/* e.g. active file */
+	--color-text: #101010;
+	--color-text-faint: #666;
+	--color-text-fainter: #aaa;
+	--color-outline-emphasis: rgb(88, 172, 179);
+	
+	/** Semantic Colors: Background **/
+	--color-bg-good: hsl(120, 100%, 89%);
+	--color-bg-bad: hsl(0, 100%, 89%);
+	--color-bg-error: hsl(0, 100%, 89%);
+	--color-bg-warning: hsl(43 100%, 89%);
+	--color-bg-neutral: hsl(207, 100%, 89%);
+	--color-bg-question: hsl(300, 100%, 89%);
+	
+	/** Semantic Colors **/
+	--color-good: green;
+	--color-bad: darkred;
+	--color-warning: goldenrod;
+	--color-neutral: steelblue;
+	--color-question: purple;
+	--color-todo: purple;
+	
+	/** Editor Colors **/
+	--color-link: #2a7ae2;
+	--color-wikilink: #2a7ae2;
+	--color-citation: seagreen;
+	--color-definition: blue;
+	--color-inline-delims: #d0d0d0;
+	--color-heading-level: #e0e0e0;
+	--color-math-src: purple;
+}
+
+body {
+	margin: 0;
+	font-family: var(--serif-font);
+	font-size: var(--font-size);
+	color: #303030;
+}
+
+/* Basic Styles ------------------------------------------------------------- */
+
+/* ---- Headings ---------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--serif-font);
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+h2 {
+	margin: 20px 0 10px 0;
+	font-size: 1.2em;
+}
+
+h3 { font-size: 1.125em; color: var(--color-text-faint); }
+h4 { font-size: 1em;     }
+
+/* ---- Block Elements ---------------------------------- */ 
+
+.center {
+	margin: 0 auto;
+}
+
+p {
+	line-height: var(--line-height);
+}
+
+section > * {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+section > .container {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+section > .container[data-name="proof"] {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+blockquote {
+	margin: 1em 0 1em 2em;
+	padding: 0 1em;
+	border-left: 0.2em solid var(--color-text-fainter);
+	color: var(--color-text-fainter);
+}
+
+/* ---- Math -------------------------------------------- */
+
+.katex-html { font-size: 0.90em; }
+.katex-display .katex-html { font-size: unset; }
+
+.katex-display {
+	overflow-x: auto;
+}
+
+/* ---- Inline Styles ----------------------------------- */
+
+em {
+	font-style: italic;
+}
+
+b, strong {
+	font-weight: bold;
+	font-style: normal;
+}
+
+dfn, span.definition {
+	color: var(--color-definition);
+	font-weight: bold;
+}
+
+
+
+/* ---- Code -------------------------------------------- */
+
+pre      { font-family: var(--code-font); display: block; }
+code     { font-family: var(--code-font); background-color: var(--color-bg-2); }
+pre code { display: block; }
+
+p code {
+	display: inline;
+	padding: 0.1rem 0.2rem;
+}
+
+code {
+	padding: 0.2em 0.4em;
+	background-color: var(--color-bg-2);
+	font-family: "Consolas", "Ubuntu Mono", monospace;
+	text-align: left;
+}
+
+/* code in headings */
+h1 code { padding: 0.2rem; }
+h2 code { padding: 0.2rem; }
+h3 code { padding: 0.2rem; }
+h4 code { padding: 0.2rem; }
+h5 code { padding: 0.2rem; }
+h6 code { padding: 0.2rem; }
+
+/* ---- Links ------------------------------------------- */
+
+a {
+	color: var(--color-link);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+.displaynone {
+	display: none !important;
+}
+
+/* ---- Lists ------------------------------------------- */
+
+ul ul {
+	margin: 0;
+}
+
+li p {
+	margin: 0;
+}
+
+ul {
+	padding-left: 2em;
+	position: relative;
+	/* list-style-type: none; */
+	line-height: var(--line-height-list);
+}
+
+ul li {
+	margin-bottom: 0.2em;
+}
+
+/* ---- Containers -------------------------------------- */
+
+
+.container {
+    margin-top: 1em;
+    padding: 1em;
+    background-color: #ffffff;
+    border: 1px solid #d3d3d3;
+    border-radius: 0.5em;
+}
+
+.container > p:first-child { margin: 1em 0 0 0;   }
+.container > *:last-child  { margin-bottom: 0;    }
+.container > .katex-display:last-child { margin-bottom: 0; }
+
+.container p:not(:first-child) {
+  margin-left:  0 !important;
+  margin-right: 0 !important;
+  margin-top:  1.0em;
+}
+
+.container::before {
+  content: attr(data-name) ".";
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+
+.container > p:first-child {
+  display: inline;
+}
+
+.container[data-name="example"] {
+}
+
+.container[data-name="definition"] {
+}
+.container[data-name="remark"] {
+}
+
+/* ==== Error ==== */
+
+.container[data-name="error"] {
+  color: var(--color-bad);
+  background-color: var(--color-bg-error);
+  border: none;
+}
+
+/* ==== Warning / Caution ==== */
+
+.container[data-name="warning"], .container[data-name="caution"] {
+  color: var(--color-warning);
+  background-color: var(--color-bg-warning);
+  border: none;
+}
+
+/* ==== Theorem ==== */
+
+.container[data-name="theorem"] ol {
+  list-style-type: upper-roman;
+}
+
+/* ==== Proof ==== */
+
+.container[data-name="proof"]::before {
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* top-level proof */
+.ProseMirror > .container[data-name="proof"] {
+  padding: 0.5em;
+}
+
+.container[data-name="proof"] {
+  position: relative;
+  padding: 1.0em 0.5em 0.5em 0;
+  border: none;
+  border-radius: 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  /* prevents border wiggle https://stackoverflow.com/a/11661286/1444650 */
+  overflow: auto;
+  box-sizing: border-box;
+  background-color: unset;
+  color: var(--color-text-faint);
+}
+
+.container[data-name="proof"]:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+/* .container[data-name="proof"] > p:last-child::after {
+  content: "";
+  display: inline-block;
+  border: 1px solid;
+  width: 0.5em;
+  height: 0.5em;
+  margin-left: 0.5em;
+} */
+
+/* proof qed */
+.container[data-name="proof"]::after {
+  content: "";
+  display: block;
+  
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.4em;
+
+  border: 1px solid;
+  width: 0.6em;
+  height: 0.6em;
+}
+
+/* Page Content ------------------------------------------------------------- */
+
+#page {
+	margin: 30px auto 0 auto;
+	max-width: var(--max-width);
+	min-width: var(--min-width);
+}
+
+#content {
+	padding: 0 0.5em;
+}
+
+.page-banner {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.page-banner .banner-comment {
+	position: absolute;
+	bottom: 0.5em;
+	left: 0.5em;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	padding: 0.3em;
+	font-size: 0.75em;
+	border-radius: 5px;
+}
+
+.page-banner img {
+	object-fit: cover;
+	display: block;
+	min-height: 16em;
+	max-height: 22em;
+	height: auto;
+	width: 100%;
+}
+
+/* Page Header -------------------------------------------------------------- */
+
+@media (max-width: 40rem) {
+	#header-nav {
+		grid-template-columns: 1fr 1fr;
+		grid-auto-flow: row dense;
+		grid-auto-rows: var(--header-height);
+	}
+	#header-nav li:first-child {
+		grid-column: 1 / span 2;
+		width: 100%;
+		text-align: center;
+	}
+}
+
+@media (min-width: 40rem) {
+	#header-nav {
+		grid-auto-flow: column;
+	}
+}
+
+#header-box {
+	border-bottom: 1px solid #ccc;
+}
+
+#header {
+	box-sizing: border-box;
+	/*align-items: baseline;*/
+	margin: 0 auto;
+	padding: 0 10px;
+	max-width: var(--max-width);
+	/*min-width: var(--min-width);*/
+}
+
+#header-nav {
+	display: grid;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	font-family: var(--sans-font);
+	font-size: 1.125em;
+}
+
+#header-nav li {
+	margin: unset;
+}
+
+#header-name {
+	/*display: inline-block;*/
+	margin-right: 20px;
+	height: var(--header-height);
+	line-height: var(--header-height);
+	vertical-align: middle;
+	user-select: none;
+	cursor: pointer;
+	color: inherit;
+	font-family: var(--serif-font);
+	font-size: 1.4em;
+	text-decoration: none;
+}
+
+#header-nav li:not(:first-child) {
+	display: inline-block;
+	color: #999;
+}
+
+#header-nav li:not(:first-child) a {
+	display: block;
+	width: auto;
+	height: var(--header-height);
+	line-height: var(--header-height);
+	color: inherit;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	user-select: none;
+}
+
+#header-nav li:not(:first-child):hover {
+	color: #000;
+	background-color: #eee;
+	cursor: pointer;
+}
+
+/* Footer */
+
+#page-footer {
+	box-sizing: border-box;
+	max-width: var(--max-width);
+	margin: 20px auto;
+	padding: 10px 30px;
+	color: #aaa;
+	border-top: 1px solid #aaa;
+	font-size: 0.8em;
+}
+
+/* Footer ------------------------------------------------------------------- */
+
+#page-footer a, #page-footer a:visited {
+	color: #aaa;
+}
+
+#visitor-count {
+	display: inline-block;
+	height: 1.2em;
+	margin-right: 1em;
+	vertical-align: middle;
+	filter: grayscale(100%);
+}
+
+/* Projects ----------------------------------------------------------------- */
+
+#projects {
+	margin-bottom: 40px;
+}
+
+.project-container {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-row-gap: 0.5em;
+	grid-column-gap: 0.5em;
+	grid-auto-flow: dense;
+	margin-top: 0.5em;
+}
+
+@media (max-width: 35rem) {
+	.project-container {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.project-box {
+	display: block;
+	position: relative;
+	grid-column-end: span 2;
+}
+
+.project-box.priority-1 {
+	grid-column-end: span 1;
+}
+
+.project-box.unpublished {
+	opacity: 0.5;
+	border: 2px dashed red;
+}
+
+.project-box:hover .project-title {
+	text-decoration: underline;
+}
+
+.project-title {
+	display: block;
+	position: absolute;
+	bottom: 0.5em;
+	left: 0.5em;
+	right: 0.5em;
+	color: white;
+}
+
+.project-title p {
+	display: inline;
+	background-color: rgba(0, 0, 0, 0.7);
+	/* #245994;*/
+	padding: 0.1em 0.2em;
+	line-height: 1.35em;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	font-size: var(--title-size);
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* CSS hack to set height proportionally to dynamic width.
+/*   > padding specified as a percentage is computed wrt
+/*       width of the containing block
+/*   > use a :before element to set image aspect ratio
+/* (see also https://stackoverflow.com/a/20117454/1444650)
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.project-thumb:before {
+	content: "";
+	display: block;
+	padding-top: 50%;
+}
+
+.project-thumb {
+	position: relative;
+	margin: 0 auto auto;
+	width: 100%;
+	height: 100%;
+}
+
+.project-thumb img {
+	object-fit: cover;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.project-box.priority-1 .project-thumb:before {
+	padding-top: 100%;
+}
+
+/* Posts -------------------------------------------------------------------- */
+
+/* - - - - - - - - - - - - - - - - - - - - - - */
+
+.post-box {
+	margin: 1.5em 0;
+}
+
+.post-box.unpublished {
+	opacity: 0.5;
+	border: 2px dashed red;
+}
+
+.post-box p {
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+
+a.post-title {
+	display: block;
+	color: #339;
+	font-size: var(--title-size);
+	text-decoration: none;
+	margin-bottom: 0.5em;
+}
+
+a.post-title:hover {
+	text-decoration: underline;
+}
+
+.post-date {
+	margin-right: 0.5em;
+	color: #aaa;
+	font-style: italic;
+}

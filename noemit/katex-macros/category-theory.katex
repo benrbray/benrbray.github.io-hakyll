@@ -1,0 +1,9 @@
+\Hom:\mathrm{Hom}
+\fcmp:\mathbin{\textbf{;}}
+\Set:\texttt{Set}
+\Hask:\texttt{Hask}
+\id:\mathrm{id}
+\ev:\mathrm{ev}
+\el:\smallint{\hspace{-0.3em}}
+\comcat:{#1\hspace{-0.2em}\downarrow\hspace{-0.2em}#2}
+\code:{\colorbox{e0e0e0}{$\texttt{#1}$}}

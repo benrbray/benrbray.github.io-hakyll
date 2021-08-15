@@ -1,0 +1,56 @@
+<div id="pre-content">
+    <!-- Banner -->
+    $if(banner_url)$
+    <section class="page-banner">
+        <img src="/$banner_url$"></img>
+        $if(banner_comment)$
+        <div class="banner-comment">$banner_comment$</div>
+        $endif$
+    </section>
+    $endif$
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">$title$</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted $if(category)$in $category$$endif$ on $date$$if(date_updated)$ / Updated $date_updated$$endif$
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                $if(tags)$$tags$$endif$
+                $if(tools)$$tools$$endif$
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            $if(demo_url)$
+            <a class="article-button demo" href="$demo_url$">
+                <div>LIVE DEMO</div>
+            </a>
+            $endif$
+            <!-- GitHub URL -->
+            $if(github_url)$
+            <a class="article-button github" href="$github_url$">
+                <div>GITHUB</div>
+            </a>
+            $endif$
+            <!-- PDF URL -->
+            $if(pdf_url)$
+            <a class="article-button pdf" href=$pdf_url$>
+                <div>PDF</div>
+            </a>
+            $endif$
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        $body$
+    </section>
+</article>
+</div>
