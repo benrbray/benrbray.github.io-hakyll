@@ -21,15 +21,16 @@
 		<nav id="header">
 			<ul id="header-nav">
 				<li><a id="header-name" href="./">Benjamin R. Bray</a></li>
-				<li><a href="./blog">WRITING</a></li>
-				<li><a href="./projects">PROJECTS</a></li>
-				<li><a href="./resources">RESOURCES</a></li>
+				<li><a href="./blog.html">WRITING</a></li>
+				<li><a href="./projects.html">PROJECTS</a></li>
+				<li><a href="./resources.html">RESOURCES</a></li>
 				<li><a href="./resume.pdf">RESUME</a></li>
 			</ul>
 		</nav>
 	</header>
-
-	<main role="main">
+	
+	<div id="page">
+		<article id="content">
 		<style>
 /* About Me */
 
@@ -191,7 +192,7 @@ h2 {
 		<ul id="about-info">
 			<li class="social">
 				<img alt="resume" src="./images/icons/resume-14px-black.png" />
-				<a href="{{SITEURL}}/resume">resume</a>
+				<a href="{{SITEURL}}/static/resume">resume</a>
 			</li>
 			<li class="social">
 				<img alt="github" src="./images/icons/github-14px-black.png" />
@@ -307,20 +308,35 @@ h2 {
 
 <p>I maintain the following open-source `npm` packages:</p>
 
-prosemirror-math
+@benrbray/prosemirror-math
+@benrbray/remark-cite
 
 <p>I have also made a few small contributions to open-source libraries:</p>
 
 <div class="github-pr">
 	<div class="github-pr-badge">
-		<span class="github-pr-draft">
-			<img src="./images/icons/git-pull-request-draft-16.svg" width="14" height="14">
+		<span class="github-pr-merged">
+			<img src="./images/icons/git-merge-16.svg" width="14" height="14">
 		</span>
 	</div>
 	<div class="github-pr-title">
 		<a href="https://github.com/jgm/citeproc/pull/88">
 			Support Hyperlinked Titles per Draft of CSL v1.0.2 Spec
 			<span class="github-pr-subtitle">jgm/citeproc#88</span>
+		</a>
+	</div>
+</div>
+
+<div class="github-pr">
+	<div class="github-pr-badge">
+		<span class="github-pr-open">
+			<img src="./images/icons/git-pull-request-16.svg" width="14" height="14">
+		</span>
+	</div>
+	<div class="github-pr-title">
+		<a href="https://github.com/jgm/pandoc/pull/7514">
+			Adjust <code>fenced_divs</code> Syntax to Resemble Directive Syntax
+			<span class="github-pr-subtitle">jgm/pandoc#7514</span>
 		</a>
 	</div>
 </div>
@@ -502,7 +518,8 @@ prosemirror-math
 </div>
 
 </div>
-	</main>
+		</article>
+	</div>
 
 	<footer id="page-footer">
 		<span style="float: left; vertical-align: middle">
@@ -510,7 +527,7 @@ prosemirror-math
 			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
 		</span>
 		<span style="float: right">
-			Generated August 15, 2021
+			Generated August 20, 2021
 		</span>
 	</footer>
 <!--------------------------------------------------------->

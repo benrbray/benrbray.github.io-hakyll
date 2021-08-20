@@ -21,15 +21,16 @@
 		<nav id="header">
 			<ul id="header-nav">
 				<li><a id="header-name" href="../../">Benjamin R. Bray</a></li>
-				<li><a href="../../blog">WRITING</a></li>
-				<li><a href="../../projects">PROJECTS</a></li>
-				<li><a href="../../resources">RESOURCES</a></li>
+				<li><a href="../../blog.html">WRITING</a></li>
+				<li><a href="../../projects.html">PROJECTS</a></li>
+				<li><a href="../../resources.html">RESOURCES</a></li>
 				<li><a href="../../resume.pdf">RESUME</a></li>
 			</ul>
 		</nav>
 	</header>
-
-	<main role="main">
+	
+	<div id="page">
+		<article id="content">
 		<div id="pre-content">
     <!-- Banner -->
     
@@ -85,33 +86,33 @@
 <p>paragraph</p>
 </div>
 <p>This is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>a</mi><mi>t</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">math</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">ma</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span></span></span></span></p>
-<p><span class="citation" data-cites="meijer1991functional">(Meijer, Fokkinga, and Paterson 1991)</span></p>
-<p><span class="citation" data-cites="riehl2017:category">(Riehl 2017)</span></p>
-<p><span class="citation" data-cites="notitle_doi">(DOI 2015)</span> <span class="citation" data-cites="notitle_pmid">(PMID 2016)</span> <span class="citation" data-cites="notitle_url">(URL 2017)</span></p>
-<p><span class="citation" data-cites="shortdoi">(ShortDOI 2017)</span></p>
-<p><span class="citation" data-cites="booknotitle">(Author 2015)</span></p>
+<p><span class="citation" data-cites="meijer1991functional">[Meijer et al. 1991]</span></p>
+<p><span class="citation" data-cites="riehl2017:category">[Riehl 2017]</span></p>
+<p><span class="citation" data-cites="notitle_doi">[DOI 2015]</span> <span class="citation" data-cites="notitle_pmid">[PMID 2016]</span> <span class="citation" data-cites="notitle_url">[URL 2017]</span></p>
+<p><span class="citation" data-cites="shortdoi">[ShortDOI 2017]</span></p>
+<p><span class="citation" data-cites="booknotitle">[Author 2015]</span></p>
 <h2 class="unnumbered" id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-booknotitle" class="csl-entry" role="doc-biblioentry">
-Author, Book. 2015. In. Book Publisher<a href="https://doi.org/12345">. https://doi.org/12345</a>.
+<a href="https://doi.org/12345"><span class="smallcaps">Author, B.</span> 2015. In: Book Publisher.</a>
 </div>
 <div id="ref-notitle_doi" class="csl-entry" role="doc-biblioentry">
-DOI, Sally. 2015<a href="https://doi.org/12345">. https://doi.org/12345</a>.
+<span class="smallcaps">DOI, S.</span> 2015. <a href="https://ignore.this/">https://ignore.this/</a>.
 </div>
 <div id="ref-meijer1991functional" class="csl-entry" role="doc-biblioentry">
-Meijer, Erik, Maarten Fokkinga, and Ross Paterson. 1991. <span>“Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire.”</span> In <em>Conference on Functional Programming Languages and Computer Architecture</em>, 124–44. Springer<a href="https://www.google.com">. https://www.google.com</a>.
+<span class="smallcaps">Meijer, E., Fokkinga, M., and Paterson, R.</span> 1991. <a href="https://www.google.com">Functional programming with bananas, lenses, envelopes and barbed wire</a>. <em>Conference on functional programming languages and computer architecture</em>, Springer, 124–144.
 </div>
 <div id="ref-notitle_pmid" class="csl-entry" role="doc-biblioentry">
-PMID, John. 2016<a href="https://ignore.this/">. https://ignore.this/</a>.
+<span class="smallcaps">PMID, J.</span> 2016. <a href="https://ignore.this/">https://ignore.this/</a>.
 </div>
 <div id="ref-riehl2017:category" class="csl-entry" role="doc-biblioentry">
-Riehl, Emily. 2017. <em>Category Theory in Context</em>. Courier Dover Publications<a href="https://store.doverpublications.com/048680903x.html">. https://store.doverpublications.com/048680903x.html</a>.
+<span class="smallcaps">Riehl, E.</span> 2017. <em><a href="https://store.doverpublications.com/048680903x.html">Category theory in context</a></em>. Courier Dover Publications.
 </div>
 <div id="ref-shortdoi" class="csl-entry" role="doc-biblioentry">
-ShortDOI, Tom. 2017<a href="https://doi.org/abcde">. https://doi.org/abcde</a>.
+<a href="https://doi.org/abcde"><span class="smallcaps">ShortDOI, T.</span> 2017. </a>.
 </div>
 <div id="ref-notitle_url" class="csl-entry" role="doc-biblioentry">
-URL, Arthur. 2017<a href="https://ignore.this/">. https://ignore.this/</a>.
+<span class="smallcaps">URL, A.</span> 2017. <a href="https://ignore.this/">https://ignore.this/</a>.
 </div>
 </div>
 
@@ -119,7 +120,8 @@ URL, Arthur. 2017<a href="https://ignore.this/">. https://ignore.this/</a>.
 </article>
 </div>
 
-	</main>
+		</article>
+	</div>
 
 	<footer id="page-footer">
 		<span style="float: left; vertical-align: middle">
@@ -127,7 +129,7 @@ URL, Arthur. 2017<a href="https://ignore.this/">. https://ignore.this/</a>.
 			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
 		</span>
 		<span style="float: right">
-			Generated August 15, 2021
+			Generated August 20, 2021
 		</span>
 	</footer>
 <!--------------------------------------------------------->

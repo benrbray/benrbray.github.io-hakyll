@@ -2,6 +2,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 
+-- system
+import System.Environment
 -- pandoc
 import Text.Pandoc
 import qualified Text.Pandoc.Extensions as TPE
@@ -13,14 +15,16 @@ import Text.Blaze.Html ( toHtml, toValue, Html, (!))
 import qualified Text.Blaze.Html5              as H
 import qualified Text.Blaze.Html5.Attributes   as A
 -- data
+import Data.Bool (bool)
 import Data.Maybe (fromMaybe)
-import Data.List (intersperse, sortBy)
+import Data.List (intersperse, sortBy, elem, isSuffixOf)
+import Data.List.Extra (stripSuffix)
 import Data.Functor.Identity
 import qualified Data.Time as Time
 import Data.Time.Locale.Compat (TimeLocale, defaultTimeLocale)
 -- control
 import Control.Applicative ((<|>))
-import Control.Monad (mplus, liftM)
+import Control.Monad (mplus, liftM, liftM2, ap, (>=>))
 -- text
 import qualified Data.Text as T
 import Data.Text (Text)
@@ -46,6 +50,12 @@ projectGlob = "projects/**"
 main :: IO ()
 main = do
   now <- Time.getCurrentTime
+
+  -- handle urls differently in watch mode
+  isPublish <- notElem "watch" <$> getArgs
+  let adjustUrls = bool pure removeExt isPublish >=> relativizeUrls
+  
+  -- compile website
   hakyll $ do
 
     match "images/**" $ do
@@ -71,18 +81,18 @@ main = do
 
     let timeCtx = ctxWithDate now defaultContext
 
-
     -- collect all tags found in posts and assign them a url
     -- https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html
     tags  <- buildTagsWith getTags  postGlob (fromCapture "tags/*.html")
     tools <- buildTagsWith getTools postGlob (fromCapture "tools/*.html")
     let ctx = ctxWithDate now $ postCtxWithTags tags tools
 
-    match (fromList ["about.rst", "contact.md"]) $ do
+    -- miscellaneous pages with fixed links
+    match (fromList ["resources.md"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" ctx
-            >>= relativizeUrls
+            >>= adjustUrls
 
     -- give each tag its own page
     tagsRules tags $ \tag pattern -> do
@@ -97,7 +107,7 @@ main = do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/tag.html" tagCtx
                 >>= loadAndApplyTemplate "templates/default.html" tagCtx
-                >>= relativizeUrls
+                >>= adjustUrls
 
     -- give each tag its own page
     tagsRules tools $ \tag pattern -> do
@@ -112,15 +122,7 @@ main = do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/tag.html" tagCtx
                 >>= loadAndApplyTemplate "templates/default.html" tagCtx
-                >>= relativizeUrls
-
-    -- test post
-    -- match "research.md" $ do
-    --     route   $ setExtension "html"
-    --     compile $ Bib.pandocBiblioCompiler "csl/chicago.csl" "bib/refs.bib"
-    --         >>= loadAndApplyTemplate "templates/post.html"    defaultContext
-    --         >>= loadAndApplyTemplate "templates/default.html" defaultContext
-    --         >>= relativizeUrls
+                >>= adjustUrls
 
     -- posts
     match postGlob $ do
@@ -136,28 +138,42 @@ main = do
                 >>= renderMath
                 >>= loadAndApplyTemplate "templates/post.html"    ctx
                 >>= loadAndApplyTemplate "templates/default.html" ctx
-                >>= relativizeUrls
+                >>= adjustUrls
 
     match projectGlob $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    ctx
             >>= loadAndApplyTemplate "templates/default.html" ctx
-            >>= relativizeUrls
+            >>= adjustUrls
 
-    create ["archive.html"] $ do
+    create ["blog.html"] $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll postGlob
             let archiveCtx =
                     listField "posts" ctx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
+                    constField "title" "Archives"        `mappend`
                     ctx
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+                >>= adjustUrls
+
+    create ["projects.html"] $ do
+        route idRoute
+        compile $ do
+            projects <- recentFirst =<< loadAll projectGlob
+            let archiveCtx =
+                    listField "posts" ctx (return projects) `mappend`
+                    constField "title" "Archives"              `mappend`
+                    ctx
+
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= adjustUrls
 
 
     match "index.html" $ do
@@ -166,17 +182,39 @@ main = do
             posts    <- recentFirst =<< loadAll postGlob
             projects <- recentFirst =<< loadAll projectGlob
             let indexCtx =
-                    listField "posts"    ctx (return (take 5 posts))    `mappend`
-                    listField "projects" ctx (return projects) `mappend`
+                    listField "posts"    ctx (return (take 5 posts)) `mappend`
+                    listField "projects" ctx (return projects)       `mappend`
                     ctx
 
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
+                >>= adjustUrls
 
     match "templates/*" $ compile templateBodyCompiler
 
+--------------------------------------------------------------------------------
+
+if' :: Bool -> a -> a -> a
+if' b x y = if b then x else y 
+
+--------------------------------------------------------------------------------
+
+withInternalUrls :: (String -> String) -> String -> String
+withInternalUrls f = withUrls h
+    where h :: String -> String
+          h = ap (liftM2 if' isExternal id) f
+
+-- | Strip ".html" extension from all internal links.  Useful when
+-- publishing to GitHub Pages, which redirects extensionless urls.
+removeExt :: Item String -> Compiler (Item String)
+removeExt item = do
+    route <- getRoute $ itemIdentifier item
+    return $ case route of
+        Nothing -> item
+        Just r  -> fmap (withInternalUrls f) item
+    where
+        f = ap fromMaybe (stripSuffix ".html")
 
 --------------------------------------------------------------------------------
 

@@ -2,7 +2,7 @@
 title:  "Collision Detection: GJK &amp; EPA"
 date:  2020-03-18
 category:  Articles
-csl: csl/chicago.csl
+csl: csl/acm-siggraph.csl
 tags: geometry, linear-algebra, game-dev, graphics
 tools: typescript
 unpublished: True

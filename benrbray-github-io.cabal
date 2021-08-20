@@ -15,6 +15,7 @@ executable site
                   , data-default
                   , time, time-locale-compat
                   , containers
+                  , extra
                   -- these can be removed along with Biblio.hs
                   -- once my pull request to Hakyll is merged
                   , bytestring

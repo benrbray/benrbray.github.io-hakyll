@@ -43,3 +43,7 @@ Pandoc Linked Titles
 CSL
 
 * CSL @ GitHub, [Feature request: hyperlinks on text](https://github.com/citation-style-language/documentation/issues/76)
+
+Other
+
+* Brouwers-Harries, [Last (git) modification time in Hakyll](https://clearairturbulence.co.uk/writing/last-git-modification-time-in-hakyll.html)
