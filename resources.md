@@ -59,10 +59,11 @@ Convex Geometry
 * [Separating & Supporting Hyperplanes](/static/notes/separating-hyperplane-thm_jun17.pdf) <span class="resource-info">(6 June 2017)</span>
 * [Caratheodory, Radon, and Helly Theorems](/static/notes/caratheodory-radon-helly_jun17.pdf) <span class="resource-info">(21 June 2017)</span>
 
-Linear Algebra
+Linear and Abstract Algebra
 
 * [Tensor Algebra](/static/notes/tensor-algebra_5aug19.pdf) <span class="resource-info">(05 Aug 2019)</span>
 * [Matrix Inversion Lemma](/static/notes/matrix-inversion-lemma_12jul19.pdf) <span class="resource-info">(12 July 2019)</span>
+* [Modules](/static/notes/abstract-algebra_modules_13may2020.pdf) <span class="resource-info">(13 May 2020)</span>
 
 Machine Learning / Statistics
 

@@ -62,9 +62,14 @@ main = do
   -- handle urls differently in watch mode
   isPublish <- notElem "watch" <$> getArgs
   let adjustUrls = bool pure removeExt isPublish >=> relativizeUrls
+
+  -- hakyll configuration
+  let config = defaultConfiguration {
+                 destinationDirectory = if isPublish then "docs" else "_site"
+               }
   
   -- compile website
-  hakyll $ do
+  hakyllWith config $ do
 
     match "images/**" $ do
         route   idRoute

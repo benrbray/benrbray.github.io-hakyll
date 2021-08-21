@@ -4,7 +4,7 @@ date:  2015-11-26
 category:  Machine Learning
 katex_macros: probability.katex
 pdf_url: /static/notes/eecs445-f16-em-notes.pdf
-summary: These notes provide a theoretical treatment of **Expectation-Maximization**, an iterative parameter estimation algorithm used to find local maxima of the likelihood function in the presence of hidden variables.  Introductory textbooks (MLAPP, PRML) typically state the algorithm without explanation and expect students to work blindly through derivations.  We find this approach to be unsatisfying, and instead choose to tackle the theory head-on, followed by plenty of examples.  Following (Neal &amp; Hinton 1998), we view expectation-maximization as coordinate ascent on the **Evidence Lower Bound**.  This perspective takes much of the mystery out of the algorithm and allows us to easily derive variants like **Hard EM** and **Variational Inference**.
+summary: <b>Expectation Maximization</b> is an iterative algorithm used for maximum likelihood estimation on latent variable models.  Following (Neal &amp; Hinton 1998), we present expectation-maximization as coordinate ascent on the <b>Evidence Lower Bound</b>.  This perspective takes much of the mystery out of the algorithm and allows us to easily derive variants like <b>Hard EM</b> and <b>Variational Inference</b>.
 ---
 
 <style>
