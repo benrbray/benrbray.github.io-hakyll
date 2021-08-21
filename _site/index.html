@@ -30,8 +30,8 @@
 	</header>
 	
 	<div id="page">
-		<article id="content">
-		<style>
+	<article id="content">
+	<style>
 /* About Me */
 
 #about-box {
@@ -127,17 +127,34 @@ h2 {
 	margin-top: 2em;
 }
 
-.github-pr {
+/* ---- */
+
+.gridlist {
 	display: grid;
 	margin: 0.4em 0;
 	grid-template-columns: 5.5em 1fr;
 	grid-template-areas: "badge title";
 }
 
-.github-pr-badge {
+.gridlist-badge {
 	grid-area: badge;
-	color: white;
 }
+
+.gridlist-title {
+	grid-area: title;
+}
+
+/* ---- */
+
+.npm-package img {
+	display: block;
+}
+
+.npm-package .gridlist-title {
+	font-family: var(--code-font);
+}
+
+/* ---- */
 
 .github-pr-badge > span {
 	display: inline-block;
@@ -148,6 +165,7 @@ h2 {
 	font-size: 12px;
 	text-align: center;
 	line-height: 24px;
+	color: white;
 }
 
 .github-pr-open   { background-color: #28a745; }
@@ -161,10 +179,6 @@ h2 {
 .github-pr-badge img {
 	width: 1em;
 	vertical-align: text-bottom;
-}
-
-.github-pr-title {
-	grid-area: title;
 }
 
 .github-pr-title a {
@@ -236,7 +250,7 @@ h2 {
 		<col>
 	</colgroup><tr>
 		<td><b>Spring 2020</b></td>
-		<td>Teaching assistant for ISYE 6740: Computational Data Analysis with Prof. Yao Xie</td>
+		<td>Teaching assistant for ISYE 6740: Comp Data Analysis with Prof. Yao Xie</td>
 	</tr>
 	<tr>
 		<td><b>Fall 2019</b></td>
@@ -245,7 +259,7 @@ h2 {
 	</tr>
 	<tr>
 		<td><b>August 2019</b></td>
-		<td>Received <b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
+		<td><b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
 	</tr>
 	<tr>
 		<td><b>July 2019</b></td>
@@ -270,7 +284,7 @@ h2 {
 </table>
 
 <!-- Projects ----------------------------------------------------------------->
-<h2>Recent Posts (<a href="./archive.html">View Archive</a>)</h2>
+<h2>Recent Posts (<a href="./blog.html">View Archive</a>)</h2>
 
     <div class="post-box unpublished">
         <a class="post-title" href="./posts/hakyll-setup.html">Hakyll Configuration</a>
@@ -290,36 +304,119 @@ h2 {
         A quick reference for understanding the <b>Hask</b> category of Haskell functions between data types.
     </div>
 
-    <div class="post-box unpublished">
-        <a class="post-title" href="./posts/algorithms/backbite.html">Backbite Algorithm for Sampling Hamiltonian Paths</a>
-        <span class="post-date">March 23, 2020</span>
-        A Hamiltonian graph may have more than one Hamiltonian path.  Suppose we have a graph $G=(V,E)$ that we <b>know</b> is Hamiltonian, perhaps because we already have a Hamiltonian path $p$.  Is it possible to sample a random Hamiltonian path uniformly at random from $G$?
-    </div>
-
-    <div class="post-box unpublished">
-        <a class="post-title" href="./posts/physics/collisions-gjk.html">Collision Detection: GJK &amp; EPA</a>
-        <span class="post-date">March 18, 2020</span>
-        The Gilbert–Johnson–Keerthi distance algorithm is a method of determining the minimum distance between two convex sets. Unlike many other distance algorithms, it does not require that the geometry data be stored in any specific format, but instead relies solely on a support function to iteratively generate closer simplices to the correct answer using the configuration space obstacle (CSO) of two convex shapes, more commonly known as the Minkowski difference.
+    <div class="post-box ">
+        <a class="post-title" href="./posts/expectation-maximization.html">Expectation Maximization</a>
+        <span class="post-date">November 26, 2015</span>
+        These notes provide a theoretical treatment of **Expectation-Maximization**, an iterative parameter estimation algorithm used to find local maxima of the likelihood function in the presence of hidden variables.  Introductory textbooks (MLAPP, PRML) typically state the algorithm without explanation and expect students to work blindly through derivations.  We find this approach to be unsatisfying, and instead choose to tackle the theory head-on, followed by plenty of examples.  Following (Neal &amp; Hinton 1998), we view expectation-maximization as coordinate ascent on the **Evidence Lower Bound**.  This perspective takes much of the mystery out of the algorithm and allows us to easily derive variants like **Hard EM** and **Variational Inference**.
     </div>
 
 
+<!-- Draft Posts -->
 
+<h2>Draft Posts</h2>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/backbite.html">Backbite Algorithm for Sampling Hamiltonian Paths</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/collisions-gjk.html">Collision Detection: GJK &amp; EPA</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/newton-as-fpi.html">Newton's Method is Newton's Method</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/gradients-row-vectors.html">Gradients are Row Vectors (and you can too!)</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/rmt.html">Algorithms for Random Discrete Structures</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/collisions-minkowski.html">Collision Detection: Minkowski Sum</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/sampling.html">Generating Random Samples</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/posts/collisions-sat.html">Collision Detection: Separating Axis Theorem</a>
+</div>
+
+
+
+<!-- Draft Projects -->
+
+<h2>Draft Projects</h2>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/projects/collisions.html">Real-time Game Physics</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/projects/hough-transform.html">Hough Transform</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/projects/molecules.html">Molecules</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/projects/rigid-body-dynamics.html">Rigid Body Dynamics</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/projects/incompressible-fluid-simulation.html">Incompressible Fluid Simulation</a>
+</div>
+
+<div class="post-box unpublished">
+	<a class="post-title" href="./unpublished/projects/maze.html">Maze Generation</a>
+</div>
+
+
+
+<!-- Open Source -------------------------------------------------------------->
 <h2>Open Source</h2>
 
 <p>I maintain the following open-source `npm` packages:</p>
 
-@benrbray/prosemirror-math
-@benrbray/remark-cite
+<div class="gridlist npm-package">
+	<div class="gridlist-badge">
+	<a ref="https://www.npmjs.com/package/@benrbray/prosemirror-math">
+		<img src="https://img.shields.io/npm/v/@benrbray/prosemirror-math?style=flat-square">
+	</a>
+	</div>
+	<div class="gridlist-title">
+	<a href="https://www.npmjs.com/package/@benrbray/prosemirror-math">
+		<div>@benrbray/prosemirror-math</div>
+	</a>
+	</div>
+</div>
+
+<div class="gridlist npm-package">
+	<div class="gridlist-badge">
+	<a href="https://www.npmjs.com/package/@benrbray/remark-cite">
+		<img src="https://img.shields.io/npm/v/@benrbray/remark-cite?style=flat-square">
+	</a>
+	</div>
+	<div class="gridlist-title"><a href="https://www.npmjs.com/package/@benrbray/remark-cite">
+		<div>@benrbray/remark-cite</div>
+	</a></div>
+</div>
 
 <p>I have also made a few small contributions to open-source libraries:</p>
 
-<div class="github-pr">
-	<div class="github-pr-badge">
+<div class="gridlist github-pr">
+	<div class="gridlist-badge github-pr-badge">
 		<span class="github-pr-merged">
 			<img src="./images/icons/git-merge-16.svg" width="14" height="14">
 		</span>
 	</div>
-	<div class="github-pr-title">
+	<div class="gridlist-title github-pr-title">
 		<a href="https://github.com/jgm/citeproc/pull/88">
 			Support Hyperlinked Titles per Draft of CSL v1.0.2 Spec
 			<span class="github-pr-subtitle">jgm/citeproc#88</span>
@@ -327,7 +424,7 @@ h2 {
 	</div>
 </div>
 
-<div class="github-pr">
+<div class="gridlist github-pr">
 	<div class="github-pr-badge">
 		<span class="github-pr-open">
 			<img src="./images/icons/git-pull-request-16.svg" width="14" height="14">
@@ -341,7 +438,7 @@ h2 {
 	</div>
 </div>
 
-<div class="github-pr">
+<div class="gridlist github-pr">
 	<div class="github-pr-badge">
 		<span class="github-pr-open">
 			<img src="./images/icons/git-pull-request-16.svg" width="14" height="14">
@@ -355,7 +452,7 @@ h2 {
 	</div>
 </div>
 
-<div class="github-pr">
+<div class="gridlist github-pr">
 	<div class="github-pr-badge">
 		<span class="github-pr-merged">
 			<img src="./images/icons/git-merge-16.svg" width="14" height="14">
@@ -369,6 +466,7 @@ h2 {
 	</div>
 </div>
 
+<!-- Projects ----------------------------------------------------------------->
 <h2>Projects</h2>
 <div class="project-container">
 
@@ -394,50 +492,6 @@ h2 {
 		</div>
 	</a>
 
-	<a class="project-box  unpublished" href="./projects/collisions.html">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/piano-cables-thumb.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Real-time Game Physics</p>
-		</div>
-	</a>
-
-	<a class="project-box  unpublished priority-1" href="./projects/hough-transform.html">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/misc/rect2.PNG" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Hough Transform</p>
-		</div>
-	</a>
-
-	<a class="project-box  unpublished priority-1" href="./projects/molecules.html">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/molecules.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Molecules</p>
-		</div>
-	</a>
-
-	<a class="project-box  unpublished" href="./projects/rigid-body-dynamics.html">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/misc/rect4.PNG" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Rigid Body Dynamics</p>
-		</div>
-	</a>
-
 	<a class="project-box " href="./projects/dhgp.html">
 		<!-- Thumbnail -->
 		<div class="project-thumb">
@@ -446,28 +500,6 @@ h2 {
 		<!-- Title -->
 		<div class="project-title">
 			<p>Digital Humanities &amp; German&nbsp;Periodicals</p>
-		</div>
-	</a>
-
-	<a class="project-box  unpublished" href="./projects/incompressible-fluid-simulation.html">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/misc/rect9.PNG" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Incompressible Fluid Simulation</p>
-		</div>
-	</a>
-
-	<a class="project-box  unpublished priority-1" href="./projects/maze.html">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/maze_thumb.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Maze Generation</p>
 		</div>
 	</a>
 
@@ -518,8 +550,8 @@ h2 {
 </div>
 
 </div>
-		</article>
-	</div>
+	</article>
+</div>
 
 	<footer id="page-footer">
 		<span style="float: left; vertical-align: middle">
@@ -527,7 +559,7 @@ h2 {
 			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
 		</span>
 		<span style="float: right">
-			Generated August 20, 2021
+			Generated August 21, 2021
 		</span>
 	</footer>
 <!--------------------------------------------------------->

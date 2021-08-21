@@ -9,10 +9,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Real-time Game Physics / Benjamin R. Bray</title>
-	<link rel="stylesheet" href="../css/style.css" />
-	<link rel="stylesheet" href="../css/article.css" />
-	<link rel="stylesheet" href="../css/pandoc-syntax.css" />
-	<link rel="stylesheet" href="../katex/katex.min.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="../../css/article.css" />
+	<link rel="stylesheet" href="../../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../../katex/katex.min.css" />
 </head>
 
 <!---- BODY ----------------------------------------------->
@@ -20,22 +20,20 @@
 	<header id="header-box">
 		<nav id="header">
 			<ul id="header-nav">
-				<li><a id="header-name" href="../">Benjamin R. Bray</a></li>
-				<li><a href="../blog.html">WRITING</a></li>
-				<li><a href="../projects.html">PROJECTS</a></li>
-				<li><a href="../resources.html">RESOURCES</a></li>
-				<li><a href="../resume.pdf">RESUME</a></li>
+				<li><a id="header-name" href="../../">Benjamin R. Bray</a></li>
+				<li><a href="../../blog.html">WRITING</a></li>
+				<li><a href="../../projects.html">PROJECTS</a></li>
+				<li><a href="../../resources.html">RESOURCES</a></li>
+				<li><a href="../../resume.pdf">RESUME</a></li>
 			</ul>
 		</nav>
 	</header>
 	
-	<div id="page">
-		<article id="content">
-		<div id="pre-content">
+	<div id="pre-content">
     <!-- Banner -->
     
     <section class="page-banner">
-        <img src="../images/thumbnails/piano-cables.jpg" />
+        <img src="../../images/thumbnails/piano-cables.jpg" />
         
         <div class="banner-comment">Strings inside a Straube Playtona Player Piano (ca 1916)</div>
         
@@ -55,8 +53,8 @@
             </div>
             <!-- Tags / Tools -->
             <nav class="article-tags">
-                <a href="../tags/geometry.html" class="tag">geometry</a> <a href="../tags/game-dev.html" class="tag">game-dev</a> <a href="../tags/linear-algebra.html" class="tag">linear-algebra</a>
-                <a href="../tools/typescript.html" class="tool">typescript</a>
+                
+                
             </nav>
         </div>
         <div class="article-buttons">
@@ -71,13 +69,19 @@
 
     <!-- Body -->
     <section>
-        <h1 id="articles">Articles</h1>
+        <div class="toc"><h2>Table of Contents</h2>
+<ul>
+<li><a href="#articles">Articles</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+<h1 id="articles">Articles</h1>
 <p>Collision Detection</p>
 <ul>
 <li>Part 1: Convex Geometry</li>
-<li><a href="../posts/2018/collision-detection-minkowski-sum">Part 2: Minkowski Sum</a></li>
-<li><a href="../posts/2017/collision-detection-separating-axis-theorem">Part 3: Separating Axis Theorem</a></li>
-<li><a href="../posts/2020/collision-detection-gjk-epa">Part 4: Gilbert-Johnson-Keerthi Algorithm</a></li>
+<li><a href="../../posts/2018/collision-detection-minkowski-sum">Part 2: Minkowski Sum</a></li>
+<li><a href="../../posts/2017/collision-detection-separating-axis-theorem">Part 3: Separating Axis Theorem</a></li>
+<li><a href="../../posts/2020/collision-detection-gjk-epa">Part 4: Gilbert-Johnson-Keerthi Algorithm</a></li>
 <li>Part 5: Expanding Polytope Algorithm</li>
 </ul>
 <p>Real-time Game Physics</p>
@@ -100,7 +104,7 @@
 <p>Convex Geometry</p>
 <ul>
 <li>StackExchange, <a href="https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon?page=1&amp;tab=active#tab-top">How to Determine Whether 2D Point is within Polygon</a></li>
-<li>CGAL, <a href="https://doc.cgal.org/latest/Minkowski_sum_2/">“Minkowski Sums”</a></li>
+<li>CGAL, <a href="https://doc.cgal.org/latest/Minkowski_sum_2/">"Minkowski Sums"</a></li>
 <li>Math StackExchange, <a href="https://math.stackexchange.com/questions/985448/proof-minkowski-sum-polytope-implies-a-and-b-polytopes">Proof: Minkowski sum polytope implies A and B polytopes</a></li>
 </ul>
 <p>Collisions</p>
@@ -109,8 +113,8 @@
 <li>StackExchange, <a href="https://stackoverflow.com/questions/28265431/how-to-interpolate-multiple-high-speed-polygon-collisions-2d">How to interpolate multiple high speed polygon collisions (2D)?</a></li>
 <li>Hamelot, <a href="https://hamelot.io/dynamics/material-point-method-mpm-reference/">Material Point Method</a></li>
 <li>Allen Chou, <a href="http://allenchou.net/2013/12/game-physics-collision-detection-csos-support-functions/">Collision Detection - CSO &amp; Support Function</a></li>
-<li>Neumayr &amp; Otter, <a href="https://modiasim.github.io/Modia3D.jl/resources/documentation/CollisionHandling_Neumayr_Otter_2017.pdf">“Collision Handling with Variable-Step Integrators”</a></li>
-<li>GameDev.net, <a href="https://www.gamedev.net/forums/topic/607711-penetration-depth-and-direction/">“Penetration Depth and Direction”</a></li>
+<li>Neumayr &amp; Otter, <a href="https://modiasim.github.io/Modia3D.jl/resources/documentation/CollisionHandling_Neumayr_Otter_2017.pdf">"Collision Handling with Variable-Step Integrators"</a></li>
+<li>GameDev.net, <a href="https://www.gamedev.net/forums/topic/607711-penetration-depth-and-direction/">"Penetration Depth and Direction"</a></li>
 <li>MyPhysicsLab, <a href="https://www.myphysicslab.com/engine2D/collision-methods-en.html">Multiple Simultaneous Collisions</a></li>
 </ul>
 <p>Misc</p>
@@ -161,12 +165,11 @@
 <li>XenoCollide, <a href="http://xenocollide.snethen.com/">Homepage</a></li>
 <li>Chris Pollett, <a href="http://www.cs.sjsu.edu/faculty/pollett/masters/Semesters/Spring12/josh/?mpr_report.html">Minkowski Portal Refinement</a></li>
 </ul>
+
     </section>
 </article>
 </div>
 
-		</article>
-	</div>
 
 	<footer id="page-footer">
 		<span style="float: left; vertical-align: middle">
@@ -174,7 +177,7 @@
 			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
 		</span>
 		<span style="float: right">
-			Generated August 20, 2021
+			Generated August 21, 2021
 		</span>
 	</footer>
 <!--------------------------------------------------------->

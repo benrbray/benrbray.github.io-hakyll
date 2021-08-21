@@ -29,9 +29,7 @@
 		</nav>
 	</header>
 	
-	<div id="page">
-		<article id="content">
-		<div id="pre-content">
+	<div id="pre-content">
     <!-- Banner -->
     
 </div>
@@ -48,7 +46,7 @@
             </div>
             <!-- Tags / Tools -->
             <nav class="article-tags">
-                <a href="../tags/algorithms.html" class="tag">algorithms</a>
+                
                 
             </nav>
         </div>
@@ -72,7 +70,10 @@
 
     <!-- Body -->
     <section>
-        <style>
+        <div class="toc"><h2>Table of Contents</h2>
+
+</div>
+<style>
 figure {
   position: relative;
 }
@@ -114,7 +115,7 @@ figure {
 </figure>
 <p>Seam carving was first introduced by <strong>[Avidan &amp; Shamir 2007]</strong> at SIGGRAPH. Due to its simplicity and effectiveness, the algorithm has since made its way into computer science textbooks as well as commercial photo editing software. To me, this technique is quite refreshing, and serves as a reminder that not all problems require a deep neural network!</p>
 <blockquote class="citation">
-Avidan, Shai, and Ariel Shamir. <a href="http://www.faculty.idc.ac.il/arik/SCWeb/imret/index.html">“Seam carving for content-aware image resizing.”</a> In ACM SIGGRAPH 2007 papers, pp. 10-es. 2007.
+Avidan, Shai, and Ariel Shamir. <a href="http://www.faculty.idc.ac.il/arik/SCWeb/imret/index.html">"Seam carving for content-aware image resizing."</a> In ACM SIGGRAPH 2007 papers, pp. 10-es. 2007.
 </blockquote>
 <p>Typically, seam carving implementations alternate between taking horizontal and vertical slices to reduce the height and width of an image. For width reduction, the algorithm works in several phases:</p>
 <figure id="seam-algorithm">
@@ -132,12 +133,11 @@ Avidan, Shai, and Ariel Shamir. <a href="http://www.faculty.idc.ac.il/arik/SCWeb
 <img src="../static/seam-carving/results/balloons-seams.png">
 </figure>
 <p>Vertical resizing follows an analogous procedure. To increase the dimensions of an image, low-energy seams are <em>duplicated</em> instead of removed. Further variations exist for efficiently removing many seams simultanously, for intelligently cropping after no low-energy seams remain, and even for <a href="https://www.youtube.com/watch?v=Ug2aDccYN3c">seam-carving videos</a>!</p>
+
     </section>
 </article>
 </div>
 
-		</article>
-	</div>
 
 	<footer id="page-footer">
 		<span style="float: left; vertical-align: middle">
@@ -145,7 +145,7 @@ Avidan, Shai, and Ariel Shamir. <a href="http://www.faculty.idc.ac.il/arik/SCWeb
 			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
 		</span>
 		<span style="float: right">
-			Generated August 20, 2021
+			Generated August 21, 2021
 		</span>
 	</footer>
 <!--------------------------------------------------------->

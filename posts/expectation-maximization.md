@@ -2,7 +2,7 @@
 title:  Expectation Maximization
 date:  2015-11-26
 category:  Machine Learning
-katex: True
+katex_macros: probability.katex
 pdf_url: /static/notes/eecs445-f16-em-notes.pdf
 summary: These notes provide a theoretical treatment of **Expectation-Maximization**, an iterative parameter estimation algorithm used to find local maxima of the likelihood function in the presence of hidden variables.  Introductory textbooks (MLAPP, PRML) typically state the algorithm without explanation and expect students to work blindly through derivations.  We find this approach to be unsatisfying, and instead choose to tackle the theory head-on, followed by plenty of examples.  Following (Neal &amp; Hinton 1998), we view expectation-maximization as coordinate ascent on the **Evidence Lower Bound**.  This perspective takes much of the mystery out of the algorithm and allows us to easily derive variants like **Hard EM** and **Variational Inference**.
 ---
@@ -167,12 +167,12 @@ In the M-Step, the entropy term of the evidence lower bound $\mathcal{L}(\varthe
 To prove convergence of this algorithm, we show that the data likelihood $\ell(\theta|\X)$ increases after each update.
 
 <!-- Theorem:  Data likelihood increases with each update -->
-<div class="theorem">
-<span class="label">Theorem.</span> After a single iteration of Expectation Maximization, the observed data likelihood of the estimated parameters has not decreased, that is,
+:::: {.container data-name=theorem} 
+After a single iteration of Expectation Maximization, the observed data likelihood of the estimated parameters has not decreased, that is,
     $$
     \ell(\theta_t | \X) \leq \ell(\theta_{t+1} | \X)
     $$
-</div>
+::::
 
 This result is a simple consequence of all the hard work we have put in so far:
 
@@ -189,9 +189,9 @@ $$\begin{aligned}
 It is also possible to show that Expectation-Maximization converges to something *useful*.  
 
 <!-- Theorem: Local Maximum of ELBO is Local Maximum of Likelihood -->
-<div class="theorem">
-<span class="label">Theorem.</span> (Neal \& Hinton 1998, Thm. 2) Every local maximum of the evidence lower bound $\mathcal{L}(q, \theta)$ is a local maximum of the data likelihood $\ell(\theta | \X)$.
-</div>
+:::: {.container data-name=theorem}
+(Neal \& Hinton 1998, Thm. 2) Every local maximum of the evidence lower bound $\mathcal{L}(q, \theta)$ is a local maximum of the data likelihood $\ell(\theta | \X)$.
+::::
 
 Starting from an initial guess $\theta_0$, We run this procedure until some stopping criterion is met and obtain a sequence $\{ (\vartheta_t, \theta_t) \}_{t=1}^T$ of parameter estimates.
 

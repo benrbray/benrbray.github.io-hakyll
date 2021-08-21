@@ -98,17 +98,34 @@ h2 {
 	margin-top: 2em;
 }
 
-.github-pr {
+/* ---- */
+
+.gridlist {
 	display: grid;
 	margin: 0.4em 0;
 	grid-template-columns: 5.5em 1fr;
 	grid-template-areas: "badge title";
 }
 
-.github-pr-badge {
+.gridlist-badge {
 	grid-area: badge;
-	color: white;
 }
+
+.gridlist-title {
+	grid-area: title;
+}
+
+/* ---- */
+
+.npm-package img {
+	display: block;
+}
+
+.npm-package .gridlist-title {
+	font-family: var(--code-font);
+}
+
+/* ---- */
 
 .github-pr-badge > span {
 	display: inline-block;
@@ -119,6 +136,7 @@ h2 {
 	font-size: 12px;
 	text-align: center;
 	line-height: 24px;
+	color: white;
 }
 
 .github-pr-open   { background-color: #28a745; }
@@ -132,10 +150,6 @@ h2 {
 .github-pr-badge img {
 	width: 1em;
 	vertical-align: text-bottom;
-}
-
-.github-pr-title {
-	grid-area: title;
 }
 
 .github-pr-title a {
@@ -213,7 +227,7 @@ h2 {
 		<col>
 	</colgroup><tr>
 		<td><b>Spring 2020</b></td>
-		<td>Teaching assistant for ISYE 6740: Computational Data Analysis with Prof. Yao Xie</td>
+		<td>Teaching assistant for ISYE 6740: Comp Data Analysis with Prof. Yao Xie</td>
 	</tr>
 	<tr>
 		<td><b>Fall 2019</b></td>
@@ -222,7 +236,7 @@ h2 {
 	</tr>
 	<tr>
 		<td><b>August 2019</b></td>
-		<td>Received <b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
+		<td><b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
 	</tr>
 	<tr>
 		<td><b>July 2019</b></td>
@@ -248,25 +262,67 @@ h2 {
 </table>
 
 <!-- Projects ----------------------------------------------------------------->
-<h2>Recent Posts (<a href="/archive.html">View Archive</a>)</h2>
+<h2>Recent Posts (<a href="/blog.html">View Archive</a>)</h2>
 $partial("templates/post-list.html")$
 
+<!-- Draft Posts -->
+$if(draftPosts)$
+<h2>Draft Posts</h2>
+$for(draftPosts)$
+<div class="post-box unpublished">
+	<a class="post-title" href="$url$">$title$</a>
+</div>
+$endfor$
+$endif$
+
+<!-- Draft Projects -->
+$if(draftProjects)$
+<h2>Draft Projects</h2>
+$for(draftProjects)$
+<div class="post-box unpublished">
+	<a class="post-title" href="$url$">$title$</a>
+</div>
+$endfor$
+$endif$
+
+<!-- Open Source -------------------------------------------------------------->
 <h2>Open Source</h2>
 
 <p>I maintain the following open-source `npm` packages:</p>
 
-@benrbray/prosemirror-math
-@benrbray/remark-cite
+<div class="gridlist npm-package">
+	<div class="gridlist-badge">
+	<a ref="https://www.npmjs.com/package/@benrbray/prosemirror-math">
+		<img src="https://img.shields.io/npm/v/@benrbray/prosemirror-math?style=flat-square">
+	</a>
+	</div>
+	<div class="gridlist-title">
+	<a href="https://www.npmjs.com/package/@benrbray/prosemirror-math">
+		<div>@benrbray/prosemirror-math</div>
+	</a>
+	</div>
+</div>
+
+<div class="gridlist npm-package">
+	<div class="gridlist-badge">
+	<a href="https://www.npmjs.com/package/@benrbray/remark-cite">
+		<img src="https://img.shields.io/npm/v/@benrbray/remark-cite?style=flat-square">
+	</a>
+	</div>
+	<div class="gridlist-title"><a href="https://www.npmjs.com/package/@benrbray/remark-cite">
+		<div>@benrbray/remark-cite</div>
+	</a></div>
+</div>
 
 <p>I have also made a few small contributions to open-source libraries:</p>
 
-<div class="github-pr">
-	<div class="github-pr-badge">
+<div class="gridlist github-pr">
+	<div class="gridlist-badge github-pr-badge">
 		<span class="github-pr-merged">
 			<img src="/images/icons/git-merge-16.svg" width="14" height="14">
 		</span>
 	</div>
-	<div class="github-pr-title">
+	<div class="gridlist-title github-pr-title">
 		<a href="https://github.com/jgm/citeproc/pull/88">
 			Support Hyperlinked Titles per Draft of CSL v1.0.2 Spec
 			<span class="github-pr-subtitle">jgm/citeproc#88</span>
@@ -274,7 +330,7 @@ $partial("templates/post-list.html")$
 	</div>
 </div>
 
-<div class="github-pr">
+<div class="gridlist github-pr">
 	<div class="github-pr-badge">
 		<span class="github-pr-open">
 			<img src="/images/icons/git-pull-request-16.svg" width="14" height="14">
@@ -288,7 +344,7 @@ $partial("templates/post-list.html")$
 	</div>
 </div>
 
-<div class="github-pr">
+<div class="gridlist github-pr">
 	<div class="github-pr-badge">
 		<span class="github-pr-open">
 			<img src="/images/icons/git-pull-request-16.svg" width="14" height="14">
@@ -302,7 +358,7 @@ $partial("templates/post-list.html")$
 	</div>
 </div>
 
-<div class="github-pr">
+<div class="gridlist github-pr">
 	<div class="github-pr-badge">
 		<span class="github-pr-merged">
 			<img src="/images/icons/git-merge-16.svg" width="14" height="14">
@@ -316,6 +372,7 @@ $partial("templates/post-list.html")$
 	</div>
 </div>
 
+<!-- Projects ----------------------------------------------------------------->
 <h2>Projects</h2>
 $partial("templates/project-list.html")$
 

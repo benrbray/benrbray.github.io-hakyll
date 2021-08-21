@@ -113,19 +113,19 @@ p {
 	line-height: var(--line-height);
 }
 
-section > * {
-	margin-left: 1em;
-	margin-right: 1em;
+#content section > * {
+	margin-left: 1rem;
+	margin-right: 1rem;
 }
 
-section > .container {
+#content section > .container {
 	margin-left: 0;
 	margin-right: 0;
 }
 
-section > .container[data-name="proof"] {
-	margin-left: 1em;
-	margin-right: 1em;
+#content section > .container[data-name="proof"] {
+	margin-left: 1rem;
+	margin-right: 1rem;
 }
 
 blockquote {
@@ -142,6 +142,7 @@ blockquote {
 
 .katex-display {
 	overflow-x: auto;
+	overflow-y: hidden;
 }
 
 /* ---- Inline Styles ----------------------------------- */

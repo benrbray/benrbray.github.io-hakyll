@@ -20,6 +20,7 @@ import Data.Maybe (fromMaybe)
 import Data.List (intersperse, sortBy, elem, isSuffixOf)
 import Data.List.Extra (stripSuffix)
 import Data.Functor.Identity
+import Data.Functor ((<&>))
 import qualified Data.Time as Time
 import Data.Time.Locale.Compat (TimeLocale, defaultTimeLocale)
 -- control
@@ -39,11 +40,18 @@ import qualified Biblio as Bib
 --------------------------------------------------------------------------------
 
 -- reusable globs, to prevent typos
+
 postGlob :: Pattern
 postGlob = "posts/**"
 
 projectGlob :: Pattern
 projectGlob = "projects/**"
+
+postDraftGlob :: Pattern
+postDraftGlob = "unpublished/posts/**"
+
+projDraftGlob :: Pattern
+projDraftGlob = "unpublished/projects/**"
 
 --------------------------------------------------------------------------------
 
@@ -91,6 +99,7 @@ main = do
     match (fromList ["resources.md"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html"    ctx
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= adjustUrls
 
@@ -106,7 +115,8 @@ main = do
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/tag.html" tagCtx
-                >>= loadAndApplyTemplate "templates/default.html" tagCtx
+                >>= loadAndApplyTemplate "templates/page.html"    ctx
+                >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= adjustUrls
 
     -- give each tag its own page
@@ -125,27 +135,36 @@ main = do
                 >>= adjustUrls
 
     -- posts
-    match postGlob $ do
-        route $ setExtension "html"
-        compile $ do
-            -- check file metadata for bib/csl files
-            item <- getUnderlying
-            cslFile <- fromMaybe "csl/acm-siggraph.csl" <$> getMetadataField item "csl"
-            bibFile <- fromMaybe "bib/refs.bib" <$> getMetadataField item "bib"
-            -- compile
-            getResourceBody
-                >>= Bib.pandocBiblioCompilerWith readerOpts cslFile bibFile
-                >>= renderMath
-                >>= loadAndApplyTemplate "templates/post.html"    ctx
-                >>= loadAndApplyTemplate "templates/default.html" ctx
-                >>= adjustUrls
+
+    let postCompiler = renderMath
+                   >=> loadAndApplyTemplate "templates/post.html"    ctx
+                   >=> loadAndApplyTemplate "templates/default.html" ctx
+                   >=> adjustUrls
+
+    let postRules = do
+          route $ setExtension "html"
+          compile $ do
+              -- check file metadata for bib/csl files
+              item <- getUnderlying
+              cslFile <- fromMaybe "csl/acm-siggraph.csl" <$> getMetadataField item "csl"
+              bibFile <- fromMaybe "bib/refs.bib" <$> getMetadataField item "bib"
+              -- compile
+              getResourceBody
+                  >>= Bib.pandocBiblioCompilerWith readerOpts cslFile bibFile
+                  >>= postCompiler
+
+    match postGlob postRules
+    match postDraftGlob postRules
 
     match projectGlob $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    ctx
-            >>= loadAndApplyTemplate "templates/default.html" ctx
-            >>= adjustUrls
+        compile $ getResourceBody >>= readPandocWith readerOpts >>= postCompiler
+
+    match projDraftGlob $ do
+        route $ setExtension "html"
+        compile $ getResourceBody >>= readPandocWith readerOpts >>= postCompiler
+
+    -- static pages
 
     create ["blog.html"] $ do
         route idRoute
@@ -158,6 +177,7 @@ main = do
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/page.html"    archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= adjustUrls
 
@@ -167,28 +187,39 @@ main = do
             projects <- recentFirst =<< loadAll projectGlob
             let archiveCtx =
                     listField "posts" ctx (return projects) `mappend`
-                    constField "title" "Archives"              `mappend`
+                    constField "title" "Blog"           `mappend`
                     ctx
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/page.html"    archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= adjustUrls
-
 
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts    <- recentFirst =<< loadAll postGlob
-            projects <- recentFirst =<< loadAll projectGlob
-            let indexCtx =
-                    listField "posts"    ctx (return (take 5 posts)) `mappend`
-                    listField "projects" ctx (return projects)       `mappend`
-                    ctx
+            posts         <- recentFirst =<< loadAll postGlob
+            projects      <- recentFirst =<< loadAll projectGlob
+            draftPosts    <- recentFirst =<< loadAll postDraftGlob
+            draftProjects <- recentFirst =<< loadAll projDraftGlob
+
+            let draftCtx =
+                    listField "draftPosts"    ctx (return draftPosts) `mappend`
+                    listField "draftProjects" ctx (return draftProjects)
+
+            let pubCtx =
+                    listField "posts"         ctx (return (take 5 posts)) `mappend`
+                    listField "projects"      ctx (return projects)
+
+            let indexCtx = (if isPublish then pubCtx
+                            else draftCtx `mappend` pubCtx)       `mappend`
+                            ctx
 
             getResourceBody
                 >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= loadAndApplyTemplate "templates/page.html"    ctx
+                >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= adjustUrls
 
     match "templates/*" $ compile templateBodyCompiler

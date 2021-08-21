@@ -7,11 +7,11 @@ summary:  Many applications require the random sampling of matrices with prescri
 
 # Introduction
 
-Randomness[ref]footnote[/ref] plays a critical role in computer science and applied mathematics.  In the sciences, randomness allows researchers to study average-case behavior of physical models which would otherwise be too complex or time-consuming to simulate exactly.  In computing, randomized algorithms have become essential tools for approximating NP-Hard problems.
+Randomness plays a critical role in computer science and applied mathematics.  In the sciences, randomness allows researchers to study average-case behavior of physical models which would otherwise be too complex or time-consuming to simulate exactly.  In computing, randomized algorithms have become essential tools for approximating NP-Hard problems.
 
 In this post, we will survey strategies for designing algorithms to randomly generate objects with nontrivial structure from a prescribed distribution.  For example, we may wish to choose elements uniformly at random from a group or generate a set of random unitary matrices whose behavior is somehow representative of the class of unitary matrices generally.  The samples are intended for use as input to a known model or algorithm.
 
-We must take care to distinguish between the three different types of random sampling that are commonly employed.  Genuine *uniformly random* samples are easiest to generate, due to independence, but individual realizations will naturally have regions of low and high density.  Our intuitive understanding of uniformity is more like *uniformly spaced* samples, where the goal is to maximize coverage and avoid redundancy.  In the extreme, we may want to sample *rare events* to study the worst-case behavior of a system.  These differences are shown informally in Figure \ref{fig:kinds-of-randomness}.
+It is useful to distinguish between three different kinds of random sampling:  Genuine *uniformly random* samples are easiest to generate, due to independence, but individual realizations will naturally have regions of low and high density.  Our intuitive understanding of uniformity is more like *uniformly spaced* samples, where the goal is to maximize coverage and avoid redundancy.  In the extreme, we may want to sample *rare events* to study the worst-case behavior of a system.  These differences are shown informally in Figure \ref{fig:kinds-of-randomness}.
 
 It also helps to keep the reverse problem in mind:  how does a deterministic algorithm behave when fed random inputs?
 
@@ -42,30 +42,30 @@ A *matrix ensemble* is a family of matrices together with a probability distribu
 Note that these processes do not necessarily produce orthogonal or unitary matrices; the name comes from the orthogonal / unitary invariance of the corresponding probability measures, as in the following lemma:
 
 <!-- Lemma -->
-<div class="theorem">
-<span class="label">Lemma.</span> (c.f. Mezzadri 2006)
+::: { .container data-name=lemma }
+(c.f. Mezzadri 2006)
 The measure $d\mu_G$ of the Gaussian Unitary Ensemble is invariant under left and right multiplication of $Z$ by arbitrary unitary matrices,
     $$
     d\mu_G(UZ) = d\mu_G(ZV) = d\mu_G(Z) \text{ for all } U,V \in \mathrm{U}_n(\mathbb{C})
     $$
-</div>
+:::
 
 ## Eigenvalues and The Circular Law
 
 The eigenvalues of a random matrix are themselves random, and it is natural to ask with what distribution.  One might suspect that the particular choice of distribution for the matrix entries would determine the asymptotic behavior; however, the *universality principle* (Tao 2010) states that the choice does not matter in the limit, effectively absolving us of our guilt for not choosing a more complicated distribution than the standard normal.  The eigenvalue distribution of matrices with independent Gaussian entries has long been known to obey the *circular law*, and universality immediately gives the following theorem.  A related *semicircular law* is known for random Hermitian matrices. 
 
 <!-- Theorem: Circular Law -->
-<div class="theorem">
-<span class="label">Theorem.</span> (Tao 2008) Let $x$ be a complex random variable of mean zero and unit variance.  Let $M_n \in \mathbb{C}^{n \times n}$ be a random matrix whose entries are i.i.d. copies of $x$.  In the limit $n \rightarrow \infty$, the empirical distribution of the eigenvalues of $\frac{1}{\sigma \sqrt{n}} M_n$ converges (both in probability almost surely) to the uniform distribution over the complex unit disk.
-</div>
+:::: {.container data-name=theorem} ::::
+(Tao 2008) Let $x$ be a complex random variable of mean zero and unit variance.  Let $M_n \in \mathbb{C}^{n \times n}$ be a random matrix whose entries are i.i.d. copies of $x$.  In the limit $n \rightarrow \infty$, the empirical distribution of the eigenvalues of $\frac{1}{\sigma \sqrt{n}} M_n$ converges (both in probability almost surely) to the uniform distribution over the complex unit disk.
+::::::::::::::::::::::::::::::::::::::::
 
 The circular law is verified empirically in Figure \ref{fig:goe-gue-eigs} for the Gaussian ensembles.  For the real case on the right, there is an unexpected concentration of eigenvalues exactly on the real line, suggesting that the eigenvalue distribution is *not absolutely continuous* with respect to Lebesgue measure.  The joint eigenvalue density for the GOE was worked out explicitly by (Edelman 1997) and integrated, leading to the following computation:
 
 <!-- Theorem:  Probability that GOE has real eigenvalues -->
-<div class="theorem">
-<span class="label">Theorem.</span> (Edelman 1997)
+:::: {.container data-name=theorem} ::::
+(Edelman 1997)
 Let $M \in \mathbb{R}^{n \times n}$ have independent standard normal entries.  The probability that $M$ has $k$ eigenvalues has the form $r + s\sqrt{2}$ for some rational $r,s \in \mathbb{Q}$.  In particular, the probability that a random matrix has all real eigenvalues is $1 / 2^{n(n-1)/4}$.
-</div>
+::::::::::::::::::::::::::::::::::::::::
 
 ## Random Structured Matrices
 
@@ -86,17 +86,17 @@ Some applications call for matrices with additional structure.  For example, it 
 </style>
 
 <table id="clever-table"style="margin: 0 auto;">
-    <colgroup>
-        <col style="width: 50%">
-        <col style="width: 50%">
-    </colgroup>
-    <tr><td>Real</td><td>A = randn(n,n)<td></tr>
-    <tr><td>Complex</td><td>B = randn(n,n) + 1j * randn(n,n)<td></tr>
-    <tr><td>Diagonal</td><td>D = diag(diag(A))<td></tr>
-    <tr><td>Symmetric</td><td>S = A + A.T<td></tr>
-    <tr><td>Orthogonal</td><td>Q,_ = qr(A)<td></tr>
-    <tr><td>Upper-triangular</td><td>_,R = qr(A)<td></tr>
-    <tr><td>Lower-triangular</td><td>L = chol(A)<td></tr>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tr><td>Real</td><td>A = randn(n,n)<td></tr>
+<tr><td>Complex</td><td>B = randn(n,n) + 1j * randn(n,n)<td></tr>
+<tr><td>Diagonal</td><td>D = diag(diag(A))<td></tr>
+<tr><td>Symmetric</td><td>S = A + A.T<td></tr>
+<tr><td>Orthogonal</td><td>Q,_ = qr(A)<td></tr>
+<tr><td>Upper-triangular</td><td>_,R = qr(A)<td></tr>
+<tr><td>Lower-triangular</td><td>L = chol(A)<td></tr>
 </table>
 
 
@@ -117,10 +117,9 @@ where $T_n(\mathbb{C})$ is the group of invertible upper triangular matrices.  D
 To ensure that the QR decomposition with random input produces a unitary matrix distributed according to the Haar measure, we must choose a variation of the map above which is not only single valued but also one-to-one.  We need the following lemma.  Let $\Lambda_n(\mathbb{C})$ denote the group of unitary diagonal matrices.
 
 <!-- Lemma -->
-<div class="theorem">
-<span class="label">Lemma.</span>
+:::: {.container data-name=lemma} ::::
 Let $Z \in \mathbb{C}^{n \times n}$ have two valid QR decompositions $Z = Q_1 R_1 = Q_2 R_2$.  Then, there is $\Lambda \in \Lambda_n(\mathbb{C})$ such that $Q_2 = Q_2 \Lambda^{-1}$ and $R_2 = \Lambda R_1$.
-</div>
+::::::::::::::::::::::::::::::::::::::
 
 Consider the quotient group $\Gamma_n(\mathbb{C}) = T_n(\mathbb{C}) / \Lambda_n(\mathbb{C})$.  Our corrected algorithm will be a one-to-one map
     $$
@@ -131,20 +130,6 @@ The upper-rectangular matrix returned by the corrected algorithm will be a repre
     Z \mapsto (Q, \gamma) \implies UZ \mapsto (UQ, \gamma) \text{ for all } U \in \mathrm{U}_n(\mathbb{C})
     $$
 then by Lemma \ref{lemma:gue-invariance}, the algorithm $\widehat{\mathrm{QR}}$ with input from a Gaussian Unitary Ensemble will be distributed according to the Haar measure on $U_n(\mathbb{C})$.  It can be shown that the unitary invariance property holds when representatives for $\Gamma_n(\mathbb{C})$ are chosen from the set of upper triangular matrices with real, positive entries.  This suggests the following correction to the naive algorithm.  The results are shown on the right in Figure \ref{fig:random-unitary-histogram}.
-
-<style>
-.highlight {
-    padding: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    margin: 10px 0;
-}
-
-.highlight pre {
-    margin: 0;
-    font-size: 12px;
-}
-</style>
 
 ```python3
 def haar_measure(n):
