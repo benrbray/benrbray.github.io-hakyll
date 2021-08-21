@@ -146,6 +146,7 @@ main = do
     -- posts
 
     let postCompiler = renderMath
+                   >=> saveSnapshot "postContent" -- for rss feeds
                    >=> loadAndApplyTemplate "templates/post.html"    ctx
                    >=> loadAndApplyTemplate "templates/default.html" ctx
                    >=> adjustUrls
@@ -164,6 +165,13 @@ main = do
 
     match postGlob postRules
     match postDraftGlob postRules
+
+    -- projects
+
+    let projCompiler = renderMath
+                   >=> loadAndApplyTemplate "templates/post.html"    ctx
+                   >=> loadAndApplyTemplate "templates/default.html" ctx
+                   >=> adjustUrls
 
     match projectGlob $ do
         route $ setExtension "html"
@@ -232,6 +240,28 @@ main = do
                 >>= adjustUrls
 
     match "templates/*" $ compile templateBodyCompiler
+
+    -- feeds
+    -- https://jaspervdj.be/hakyll/tutorials/05-snapshots-feeds.html
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = ctx `mappend` bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots postGlob "postContent"
+            renderAtom feedConfig feedCtx posts
+
+
+--------------------------------------------------------------------------------
+
+-- rss feed
+feedConfig :: FeedConfiguration
+feedConfig = FeedConfiguration
+    { feedTitle = "Benjamin R. Bray / Blog"
+    , feedDescription = "Math & Programming Blog"
+    , feedAuthorName = "Benjamin R. Bray"
+    , feedAuthorEmail = "benrbray@gmail.com"
+    , feedRoot = "https://benrbray.com/"
+    }
 
 --------------------------------------------------------------------------------
 

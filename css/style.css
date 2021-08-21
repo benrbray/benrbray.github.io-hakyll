@@ -308,7 +308,7 @@ ul li {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   /* prevents border wiggle https://stackoverflow.com/a/11661286/1444650 */
-  overflow: auto;
+  overflow-x: auto;
   box-sizing: border-box;
   background-color: unset;
   color: var(--color-text-faint);

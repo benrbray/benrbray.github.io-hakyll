@@ -2,6 +2,7 @@
 title:  Expectation Maximization
 date:  2015-11-26
 category:  Machine Learning
+tags: machine-learning, statistics
 katex_macros: probability.katex
 pdf_url: /static/notes/eecs445-f16-em-notes.pdf
 summary: <b>Expectation Maximization</b> is an iterative algorithm used for maximum likelihood estimation on latent variable models.  Following (Neal &amp; Hinton 1998), we present expectation-maximization as coordinate ascent on the <b>Evidence Lower Bound</b>.  This perspective takes much of the mystery out of the algorithm and allows us to easily derive variants like <b>Hard EM</b> and <b>Variational Inference</b>.
