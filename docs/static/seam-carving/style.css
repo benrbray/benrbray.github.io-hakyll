@@ -1,0 +1,159 @@
+* {
+	font-family: "Segoe UI", sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #eee;
+}
+
+h4 {
+	font-size: 14px;
+	text-align: center;
+	margin: 2px 0 5px 0;
+}
+
+#wrapper {
+	max-width:  800px;
+	margin: 0 auto;
+}
+
+/* Input Matrix --------------------------------------------------------------*/
+
+.input-matrix {
+	width: 100%;
+	margin: 10px auto;
+	border-collapse: collapse;
+	border: 2px solid black;
+}
+
+.input-matrix td {
+	border: 1px solid gray;
+}
+
+.input-matrix input {
+	display: block;
+	width: 100%;
+	margin: 0;
+	border: 0;
+	text-align: center;
+}
+
+/* Primary Column ------------------------------------------------------------*/
+
+.main-wrap {
+	float: left;
+	width: 100%;
+}
+
+.main-col {
+	margin-left: 180px;
+	padding: 0 10px;
+	text-align: center;
+}
+
+.canvas-wrap {
+	font-size: 0;
+	margin: 0 0 5px 0;
+}
+
+#image-container {
+	display: inline-block;
+	position: relative;
+}
+
+canvas {
+	border: 2px solid black;
+	background-color: #300;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+#drawCanvas {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0.5;
+	background: none;
+}
+
+#load-container {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255,255,255,0.5);
+}
+
+#loadbar {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 80%;
+	height: 20px;
+	margin-top: -10px;
+	margin-left: -40%;
+	border: 2px solid black;
+}
+
+#loadbar div {
+	height: 100%;
+	width: 0;
+	background-color: black;
+}
+
+/* Secondary Column (Sidebar, Left) ------------------------------------------*/
+
+.side-wrap {
+	position: relative;
+	float: left;
+	width: 160px;
+	margin-left: -100%;
+	padding: 10px;
+}
+
+.side-col {
+	position: fixed;
+	width: 170px;
+}
+
+select, .side-col > button {
+	display: block;
+	width: 100%;
+	height: 25px;
+	margin: 0 0 10px 0;
+}
+
+.side-col > label {
+	width: 100%;
+	height: 25px;
+	margin: 0 0 10px 0;
+}
+
+.side-col > .checkbox {
+	width: 100%;
+	height: 25px;
+}
+
+#seam-slider {
+	width: 100%;
+}
+
+/* Checkbox ------------------------------------------------------------------*/
+
+.checkbox {
+	display: block;
+	position: relative;
+	width: 100%;
+}
+
+.checkbox input {
+	transform: scale(1.3);
+	-webkit-transform: scale(1.3);
+	margin-right: 6px;
+}

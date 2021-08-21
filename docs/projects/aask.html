@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>AdamBots Automated&nbsp;Scouting&nbsp;Kit / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/article.css" />
+	<link rel="stylesheet" href="../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="../">Benjamin R. Bray</a></li>
+				<li><a href="../blog">WRITING</a></li>
+				<li><a href="../projects">PROJECTS</a></li>
+				<li><a href="../resources">RESOURCES</a></li>
+				<li><a href="../resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="pre-content">
+    <!-- Banner -->
+    
+    <section class="page-banner">
+        <img src="../images/thumbnails/aask_long.png" />
+        
+    </section>
+    
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">AdamBots Automated&nbsp;Scouting&nbsp;Kit</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted  on June  1, 2014 / Updated June  1, 2014
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                
+                
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            
+            <a class="article-button demo" href="../static/aask/aask">
+                <div>LIVE DEMO</div>
+            </a>
+            
+            <!-- GitHub URL -->
+            
+            <a class="article-button github" href="https://github.com/benrbray/adambots-automated-scouting-kit">
+                <div>GITHUB</div>
+            </a>
+            
+            <!-- PDF URL -->
+            
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        <div class="toc"><h2>Table of Contents</h2>
+<ul>
+<li><a href="#first-robotics-competition">FIRST Robotics Competition</a>
+<ul>
+<li><a href="#scouting-alliance-selection">Scouting &amp; Alliance Selection</a></li>
+</ul></li>
+<li><a href="#adambots-automated-scouting-kit">AdamBots Automated Scouting Kit</a></li>
+<li><a href="#mathematical-details">Mathematical Details</a>
+<ul>
+<li><a href="#data-format">Data Format</a></li>
+<li><a href="#modeling-assumptions">Modeling Assumptions</a>
+<ul>
+<li><a href="#match-prediction">Match Prediction</a></li>
+<li><a href="#rank-prediction">Rank Prediction</a></li>
+</ul></li>
+<li><a href="#computations">Computations</a>
+<ul>
+<li><a href="#offensive-power-rating">Offensive Power Rating</a></li>
+<li><a href="#defensive-power-rating">Defensive Power Rating</a></li>
+<li><a href="#calculated-contribution-to-winning-margin">Calculated Contribution to Winning Margin</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div>
+<style>
+table.frcdata {
+  margin: 0 auto 1em auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table.frcdata th {
+  padding: 0.3em;
+}
+
+table.frcdata td {
+  padding: 0.3em;
+}
+
+table.frcdata .red {
+  background-color: #f2dede;
+}
+
+table.frcdata .blue {
+  background-color: #c4e3f3;
+}
+
+#frc-matches td:first-child {
+  text-align: left;
+}
+
+#frc-matches td:last-child {
+  text-align: right;
+}
+</style>
+<h1 id="first-robotics-competition">FIRST Robotics Competition</h1>
+<p>For six weeks each winter, high-school students in more than 25 countries devote their evenings, nights, and weekends to build game-playing robots as part of the <strong>FIRST Robotics Competition (FRC)</strong>. The robots are designed, built, and programmed by students, with guidance from industry professionals (<em>aka parents</em>!) who volunteer their time.</p>
+<p>To encourage innovation, the rules of the game change each year. Starting from January, students are allowed six weeks to design, build, program, and test their robots before competitions begin in March. During competition season, many teams compete weekly or biweekly in their region for a chance to advance to the world championships in April.</p>
+<p>During the 2011-2013 seasons, I was a member of the <a href="https://www.adambots.com/">AdamBots (Team #245)</a>, where I led a group of students in programming our team's robot. Once build season is over, no major changes are allowed to the robot, including code, so <a href="http://www.curtisfenner.com/">Curtis Fenner</a> and I searched for a way to use our programming skills to help give our team a <strong>strategic edge</strong> during competition season. The result was <strong>AdamBots Automated Scouting Kit</strong>!</p>
+<h2 id="scouting-alliance-selection">Scouting &amp; Alliance Selection</h2>
+<p>Each competition consists of a series <strong>qualification matches</strong> between two alliances, <span style="color:red">red</span> and <span style="color:blue">blue</span>, consisting of three randomly-assigned teams each. Robots on the same alliance work together to defeat robots on the opposing alliance. At the end of each match, the score of each alliance as a whole is reported. Following the qualification matches, teams with a high enough aggregate score advance to the <strong>elimination rounds</strong> and are allowed to choose permanent alliance partners.</p>
+<p>The simplest alliance selection strategy would be to choose two teams which have accumulated the most points during the qualification rounds. However, since FIRST only reports aggregate alliance scores, this strategy is not ideal; good robots may have been dragged down by consistently underperforming partners.</p>
+<p>In preparation for alliance selection, many teams employ <strong>scouts</strong> to take handwritten notes about the performance of other teams during the qualification matches. Scouts make note of robots with special abilities, adept human operators, or frequent mechanical failures. Scouts on our team also attempted to manually track the points contributed by each individual alliance member, in order to estimate the expected score contributed by a potential alliance partner. However, six teams particpate in each match, requiring <em>six scouts</em> for accurate reporting. At some events, there may even be two or three matches happening simultaneously. Predictably, this form of manual scouting was labor intensive and error prone!</p>
+<h1 id="adambots-automated-scouting-kit">AdamBots Automated Scouting Kit</h1>
+<p>Our automated scouting kit analyzes real-time competition data published by FIRST and displays the results on a web page that can be accessed during and after each competition. We perform several computations to estimate the performance of each team individually, based on aggregate alliance scores:</p>
+<ul>
+<li><strong>Auton Score:</strong> Estimated points scored, on average, during the autonomous phase.</li>
+<li><strong>Climb Score:</strong> Estimated points scored, on average, by climbing the pyramid.</li>
+<li><strong>Teleop Score:</strong> Estimated points scored, on average, during the human-operated phase.</li>
+<li><strong>Offensive Power Rating (OPR):</strong> An estimate of the total points scored, on average. This number represents the offensive utility of a team.</li>
+<li><strong>Defensive Power Rating (DPR):</strong> An estimate of the defensive utility of a team. May be interpreted as the number of points that a team takes away from its opposing alliance, on average.</li>
+<li><strong>Calculated Contribution to Winning Margin (CCWM):</strong> An estimate of the number of points a team contributes to the winning margin of its alliance. May be negative if the team consistently loses!</li>
+</ul>
+<p>Based on these computations, we also provide:</p>
+<ul>
+<li>Predictions of all past and future match scores, based on the official schedule.</li>
+<li>Predictions for hypothetical matches between potential alliance partners.</li>
+<li>A correlation matrix for all of our computed metrics.</li>
+<li>A graph of the winning and losing scores over time.</li>
+<li>A histogram of the OPR and CCWM of all participating teams.</li>
+</ul>
+<p>Originally, AASK scraped competition data from the FIRST website, but unfortunately the old match data is no longer available. Instead, the <a href="../static/aask/aask">demo hosted here</a> runs with cached match data from the 2013 World Championship. See below for a screenshot, followed by an explanation of the mathematical details.</p>
+<p><img src="../static/aask/img/aask_ex1.png" /></p>
+<h1 id="mathematical-details">Mathematical Details</h1>
+<h2 id="data-format">Data Format</h2>
+<p>Suppose we have data about <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> teams competing in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> matches. During each match, two alliances of three teams each compete to score the most points. During competition, FIRST publishes a real-time <strong>match results</strong> table containing total alliance scores for each match. For example:</p>
+<!-- Example Scores -->
+<table id="frc-matches" class="frcdata">
+<colgroup>
+<col>
+<col class="red" />
+<col class="blue" />
+<col>
+</colgroup>
+<thead>
+<tr>
+<th>
+Red Alliance
+</th>
+<th>
+Red Score
+</th>
+<th>
+Blue Score
+</th>
+<th>
+Blue Alliance
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Team 48, 49, 50
+</td>
+<td>
+71
+</td>
+<td>
+174
+</td>
+<td>
+Team 51, 52, 53
+</td>
+</tr>
+<tr>
+<td>
+Team 54, 55, 56
+</td>
+<td>
+70
+</td>
+<td>
+122
+</td>
+<td>
+Team 57, 58, 59
+</td>
+</tr>
+<tr>
+<td>
+Team 60, 61, 17
+</td>
+<td>
+160
+</td>
+<td>
+186
+</td>
+<td>
+Team 62, 63, 16
+</td>
+</tr>
+<tr>
+<td>
+Team 13, 5, 34
+</td>
+<td>
+92
+</td>
+<td>
+105
+</td>
+<td>
+Team 28, 14, 18
+</td>
+</tr>
+<tr>
+<td>
+Team 9, 0, 36
+</td>
+<td>
+113
+</td>
+<td>
+89
+</td>
+<td>
+Team 10, 23, 28
+</td>
+</tr>
+</tbody>
+</table>
+<p>During the 2013 season, each match consisted of three phases: Autonomus Period (AP), Climb Period (CP), and Teleoperated Period (TP). Points scored during each individual phase by an alliance are recorded for each match, but <em>not reported publicly</em>. Instead, for each team, the <strong>rankings</strong> table reports the aggregate points earned as part of an alliance during each phase, summed across all matches played so far. This table also contains the Win/Tie/Loss record and qualificaiton score for each team.</p>
+<table id="frc-rankings" class="frcdata">
+<colgroup>
+<col />
+<col style="background-color: #e0e0e0" />
+<col />
+<col style="background-color: #e0e0e0" />
+<col style="background-color: #e0e0e0" />
+<col style="background-color: #e0e0e0" />
+<col />
+</colgroup>
+<thead>
+<tr>
+<th>
+Rank
+</th>
+<th>
+Team
+</th>
+<th>
+QS
+</th>
+<th>
+AP
+</th>
+<th>
+CP
+</th>
+<th>
+TP
+</th>
+<th>
+Record
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+1
+</td>
+<td>
+118
+</td>
+<td>
+16.0
+</td>
+<td>
+394
+</td>
+<td>
+170
+</td>
+<td>
+636
+</td>
+<td>
+8-0-0
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+1114
+</td>
+<td>
+14.0
+</td>
+<td>
+336
+</td>
+<td>
+320
+</td>
+<td>
+636
+</td>
+<td>
+7-1-0
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<td>
+2169
+</td>
+<td>
+14.0
+</td>
+<td>
+304
+</td>
+<td>
+210
+</td>
+<td>
+679
+</td>
+<td>
+7-1-0
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<td>
+1425
+</td>
+<td>
+14.0
+</td>
+<td>
+300
+</td>
+<td>
+220
+</td>
+<td>
+758
+</td>
+<td>
+7-1-0
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<td>
+2630
+</td>
+<td>
+13.0
+</td>
+<td>
+250
+</td>
+<td>
+130
+</td>
+<td>
+794
+</td>
+<td>
+6-1-1
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<td>
+1241
+</td>
+<td>
+12.0
+</td>
+<td>
+330
+</td>
+<td>
+170
+</td>
+<td>
+644
+</td>
+<td>
+6-0-2
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="modeling-assumptions">Modeling Assumptions</h2>
+<p>Many factors contribute to the overall performance of a team, and the complex interactions between allied and opposing teams are difficult to model directly. For simplicity, we assume that each team <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> possesses an intrinsic <strong>offensive power rating (OPR)</strong>, denoted <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\theta_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, representing the number of points a team contributes, <em>on average</em>, to the total score of it alliance.</p>
+<h3 id="match-prediction">Match Prediction</h3>
+<p>Under our model, the score of an alliance during each qualification match is determined by adding up the OPR of each alliance member. More precisely, if the <span style="color:red">red</span> alliance for a match consists of teams <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span>, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span>, and the <span style="color:blue">blue</span> alliance consists of teams <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span>, we predict the following match outcome:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.2500em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mstyle mathcolor="red"><mi>r</mi><mi>e</mi><mi>d</mi></mstyle></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><msub><mi>θ</mi><mi>a</mi></msub><mo>+</mo><msub><mi>θ</mi><mi>b</mi></msub><mo>+</mo><msub><mi>θ</mi><mi>c</mi></msub></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi></mrow><mstyle mathcolor="blue"><mi>b</mi><mi>l</mi><mi>u</mi><mi>e</mi></mstyle></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><msub><mi>θ</mi><mi>x</mi></msub><mo>+</mo><msub><mi>θ</mi><mi>y</mi></msub><mo>+</mo><msub><mi>θ</mi><mi>z</mi></msub></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+\mathrm{Score}_{\color{red}red} &amp;= \theta_a + \theta_b + \theta_c \\
+\mathrm{Score}_{\color{blue}blue} &amp;= \theta_x + \theta_y + \theta_z
+\end{aligned}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0000000000000004em;vertical-align:-1.2500000000000002em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm">Score</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="color:red;">re</span><span class="mord mathnormal mtight" style="color:red;">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord mathrm">Score</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="color:blue;">b</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;color:blue;">l</span><span class="mord mathnormal mtight" style="color:blue;">u</span><span class="mord mathnormal mtight" style="color:blue;">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<h3 id="rank-prediction">Rank Prediction</h3>
+<p>Let's see how this model can be used to predict the outcomes of the qualification rounds as a whole. Suppose we have the following match schedule for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">T=6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> teams playing <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">M=6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> matches. Further, suppose we already know the offensive power rating for every team, which we store in a vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\theta \in \R^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span>.</p>
+<table class="frcdata">
+<colgroup>
+<col>
+<col class="red" />
+<col class="blue" />
+</colgroup>
+<thead>
+<tr>
+<th>
+Match
+</th>
+<th>
+Red Alliance
+</th>
+<th>
+Blue Alliance
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+1
+</td>
+<td>
+Team 0, 1, 2
+</td>
+<td>
+Team 3, 4, 5
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+Team 1, 3, 5
+</td>
+<td>
+Team 0, 2, 4
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<td>
+Team 0, 1, 3
+</td>
+<td>
+Team 2, 4, 5
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<td>
+Team 1, 3, 4
+</td>
+<td>
+Team 0, 2, 5
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<td>
+Team 0, 4, 5
+</td>
+<td>
+Team 1, 2, 3
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<td>
+Team 1, 4, 3
+</td>
+<td>
+Team 0, 2, 5
+</td>
+</tr>
+</tbody>
+</table>
+<table class="frcdata">
+<tr>
+<th>
+Team
+</th>
+<td>
+0
+</td>
+<td>
+1
+</td>
+<td>
+2
+</td>
+<td>
+3
+</td>
+<td>
+4
+</td>
+<td>
+5
+</td>
+</tr>
+<tr>
+<th>
+OPR
+</th>
+<td>
+0.28
+</td>
+<td>
+5.91
+</td>
+<td>
+9.96
+</td>
+<td>
+3.23
+</td>
+<td>
+4.61
+</td>
+<td>
+5.17
+</td>
+</tr>
+</table>
+<p>To predict the aggregate score for a single team during the qualification rounds, we add up the OPRs for the teams it has allied with. For example, team 3 participated in all six matches, playing with team 0 once, team 1 five times, team 2 once, team 4 three times, and team 5 twice. Therefore, we predict the total score accumulated by team 3 during the qualification rounds to be: <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>y</mi><mn>3</mn></msub><mo>=</mo><mn>1</mn><msub><mi>θ</mi><mn>0</mn></msub><mo>+</mo><mn>5</mn><msub><mi>θ</mi><mn>1</mn></msub><mo>+</mo><mn>1</mn><msub><mi>θ</mi><mn>2</mn></msub><mo>+</mo><mn>6</mn><msub><mi>θ</mi><mn>3</mn></msub><mo>+</mo><mn>3</mn><msub><mi>θ</mi><mn>4</mn></msub><mo>+</mo><mn>2</mn><msub><mi>θ</mi><mn>5</mn></msub></mrow><annotation encoding="application/x-tex">
+y_3 = 1 \theta_0 + 5 \theta_1 + 1 \theta_2 + 6 \theta_3 + 3 \theta_4 + 2 \theta_5
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord">5</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord">6</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord">3</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>We can do this for each team to compute a vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">y \in \R^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span> of qualification scores. Note that the above computation looks suspiciously like a dot product, suggesting that we can compute qualification scores using matrix-vector multiplication. Define the <strong>alliance matrix</strong> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>T</mi><mo>×</mo><mi>T</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A \in \R^{T \times T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="mbin mtight">×</span><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span> to have entries <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>t</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ts}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> indicating the number of matches for which team <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> allied with team <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">s</span></span></span></span>. Below is the alliance matrix for our sample schedule.</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo fence="true">[</mo><mtable rowspacing="0.1600em" columnalign="center center center center center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>4</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>5</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>4</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>5</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+A = \begin{bmatrix}
+  6 &amp; 2 &amp; 4 &amp; 1 &amp; 2 &amp; 3 \\
+  2 &amp; 6 &amp; 2 &amp; 5 &amp; 2 &amp; 1 \\
+  4 &amp; 2 &amp; 6 &amp; 1 &amp; 2 &amp; 3 \\
+  1 &amp; 5 &amp; 1 &amp; 6 &amp; 3 &amp; 2 \\
+  2 &amp; 2 &amp; 2 &amp; 3 &amp; 6 &amp; 3 \\
+  3 &amp; 1 &amp; 3 &amp; 2 &amp; 3 &amp; 6
+\end{bmatrix}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:7.200099999999999em;vertical-align:-3.3500499999999995em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.8500499999999995em;"><span style="top:-2.91103em;"><span class="pstrut" style="height:5.616059999999999em;"></span><span class="delimsizinginner delim-size4"><span>⎣</span></span></span><span style="top:-4.05803em;"><span class="pstrut" style="height:5.616059999999999em;"></span><span style="height:3.616059999999999em;width:0.667em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.667em" height="3.616059999999999em" style="width:0.667em" viewBox="0 0 667 3616" preserveAspectRatio="xMinYMin"><path d="M319 0 H403 V3616 H319z M319 0 H403 V3616 H319z"></path></svg></span></span><span style="top:-8.31111em;"><span class="pstrut" style="height:5.616059999999999em;"></span><span class="delimsizinginner delim-size4"><span>⎡</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.3500499999999995em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.850000000000001em;"><span style="top:-6.010000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-4.810000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.6100000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-1.2100000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-0.009999999999999953em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.850000000000001em;"><span style="top:-6.010000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-4.810000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-3.6100000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span><span style="top:-1.2100000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-0.009999999999999953em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.850000000000001em;"><span style="top:-6.010000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-4.810000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.6100000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-1.2100000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-0.009999999999999953em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.850000000000001em;"><span style="top:-6.010000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-4.810000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span><span style="top:-3.6100000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-1.2100000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-0.009999999999999953em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.850000000000001em;"><span style="top:-6.010000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-4.810000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.6100000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-1.2100000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-0.009999999999999953em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.850000000000001em;"><span style="top:-6.010000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-4.810000000000001em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-3.6100000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-1.2100000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-0.009999999999999953em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.8500499999999995em;"><span style="top:-2.91103em;"><span class="pstrut" style="height:5.616059999999999em;"></span><span class="delimsizinginner delim-size4"><span>⎦</span></span></span><span style="top:-4.05803em;"><span class="pstrut" style="height:5.616059999999999em;"></span><span style="height:3.616059999999999em;width:0.667em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.667em" height="3.616059999999999em" style="width:0.667em" viewBox="0 0 667 3616" preserveAspectRatio="xMinYMin"><path d="M263 0 H347 V3616 H263z M263 0 H347 V3616 H263z"></path></svg></span></span><span style="top:-8.31111em;"><span class="pstrut" style="height:5.616059999999999em;"></span><span class="delimsizinginner delim-size4"><span>⎤</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.3500499999999995em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>The alliance matrix is symmetric (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>t</mi><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>a</mi><mrow><mi>s</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ts} = a_{st}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>) with nonnegative entries. The diagonal entries <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>t</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{tt}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">tt</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> count the number of matches Team <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> has played. Qualification scores <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">y \in \R^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span> can be computed by multiplying the OPR vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\theta \in \R^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span> by the alliance matrix <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>T</mi><mo>×</mo><mi>T</mi></mrow></msup></mrow><annotation encoding="application/x-tex">A \in \R^{T \times T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="mbin mtight">×</span><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span> as follows: <span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>A</mi><mi>θ</mi><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">
+A\theta = y
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></span></p>
+<h2 id="computations">Computations</h2>
+<h3 id="offensive-power-rating">Offensive Power Rating</h3>
+<p>Since we know both the alliance matrix <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span></span></span></span> and the qualification scores <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>, we can estimate the offensive power ratings <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> by solving a <strong>system of linear equations</strong>. Before enough matches have been played, the solution will not be unique, and we use <strong>Gauss-Seidel</strong> to report a least-squares estimate. Since the score breaks down into three phases, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>y</mi><mrow><mi>A</mi><mi>P</mi></mrow></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>C</mi><mi>P</mi></mrow></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>T</mi><mi>P</mi></mrow></msub></mrow><annotation encoding="application/x-tex">y = y_{AP} + y_{CP} + y_{TP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">CP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">TP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, we also estimate OPR scores <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mrow><mi>A</mi><mi>P</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\theta_{AP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mrow><mi>C</mi><mi>P</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\theta_{CP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">CP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mrow><mi>T</mi><mi>P</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\theta_{TP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">TP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> for each phase.</p>
+<h3 id="defensive-power-rating">Defensive Power Rating</h3>
+<p>The <strong>defensive power rating (DPR)</strong> for a team is calculated by iterating through the list of completed matches and using the calculated OPR values to predict the outcome of each match. For each match, for both alliances, the difference between this expected outcome and the true outcome of the match is credited to the defensive utility of the opposing alliance. For each team, we sum up these differences and solve a linear system similar to the one above using this new tabulated data. Note that a team's DPR can be negative!</p>
+<h3 id="calculated-contribution-to-winning-margin">Calculated Contribution to Winning Margin</h3>
+<p>The <strong>calculated contribution to winning margin (CCWM)</strong> for each team is calculated by summing up the alliance score difference for each team for each match and solving our favorite system of linear equations for the x vector with these margins in our b vector. Note that CCWM can be negative for a team if its allies consistently do worse than expected!</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>As they say, all models are wrong--and ours is especially wrong! In particular, a team's ability to score points is assumed to be independent of the defensive prowess of the opposing team. Nevertheless, we found that OPR successfully predicts the winner for between 80-90% of matches. Incorporating DPR yields a marginal improvement.</p>
+<p>Our scouts used AASK throughout the 2013 season to automate data collection and to inform the alliance selection process. During competitions, it was always exciting to compare early predictions against the final results. By comparing against data collected manually, we also noticed some interesting patterns:</p>
+<ul>
+<li>Due to the structure of the game, robots tend not to collaborate or interfere too much with one another during the autonomous and climbing phases of the game. As a result, AASK is remarkably accurate at predicting scores for these two phases.</li>
+<li>Scores were generally higher on the second day of competitions than on the first, which we attribute to drivers' skill improving as they get more practice on the field.</li>
+</ul>
+
+    </section>
+</article>
+</div>
+
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated August 21, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

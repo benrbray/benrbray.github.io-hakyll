@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Home / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="stylesheet" href="./css/article.css" />
+	<link rel="stylesheet" href="./css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="./katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="./">Benjamin R. Bray</a></li>
+				<li><a href="./blog">WRITING</a></li>
+				<li><a href="./projects">PROJECTS</a></li>
+				<li><a href="./resources">RESOURCES</a></li>
+				<li><a href="./resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="page">
+	<article id="content">
+	<style>
+/* About Me */
+
+#about-box {
+	display: grid;
+	grid-row-gap: 0.5rem;
+	grid-column-gap: 1.0rem;
+	align-items: center;
+
+	max-width: var(--max-width);
+	min-width: var(--min-width);
+
+	margin: 0 auto;
+	box-sizing: border-box;
+	padding: 1em;
+}
+
+#about-container {
+	background-color: #dfedff;
+	/*#dedede*/
+	;
+}
+
+@media (min-width: 40rem) {
+	#about-box {
+		grid: auto 1fr / auto 1fr;
+		grid-template-areas:
+			"img text"
+			"info text";
+	}
+
+	#ben-photo {
+		justify-self: center;
+	}
+}
+
+@media (max-width: 40rem) {
+	#about-box {
+		grid: auto 1fr / 1fr 1fr;
+		grid-template-areas:
+			"img info"
+			"text text";
+	}
+
+	#about-info {
+		align-self: center;
+	}
+
+	#ben-photo {
+		justify-self: right;
+	}
+}
+
+#about-info {
+	grid-area: info;
+	list-style: none;
+	margin: 0 0 0 1em;
+	padding: 0;
+}
+
+#about-info li.social a {
+	font-weight: 100;
+	font-family: monospace;
+	color: #444;
+}
+
+#about-info li.social img {
+	display: inline-block;
+	max-width: 14px;
+	max-height: 14px;
+	margin-right: 0.5em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#ben-photo {
+	grid-area: img;
+	width: 140px;
+	height: 140px;
+	border: 2px solid #5a97e6;
+	border-radius: 50%;
+}
+
+#about-text {
+	grid-area: text;
+}
+
+#about-text p:first-child {
+	margin-top: 0;
+}
+
+h2 {
+	font-size: 1.4em;
+	margin-top: 2em;
+}
+
+/* ---- */
+
+.gridlist {
+	display: grid;
+	margin: 0.4em 0;
+	grid-template-columns: 5.5em 1fr;
+	grid-template-areas: "badge title";
+}
+
+.gridlist-badge {
+	grid-area: badge;
+}
+
+.gridlist-title {
+	grid-area: title;
+}
+
+/* ---- */
+
+.npm-package img {
+	display: block;
+}
+
+.npm-package .gridlist-title {
+	font-family: var(--code-font);
+}
+
+/* ---- */
+
+.github-pr-badge > span {
+	display: inline-block;
+	padding: 0 10px;
+	width: 5em;
+	border-radius: 2em;
+	font-family: var(--sans-font);
+	font-size: 12px;
+	text-align: center;
+	line-height: 24px;
+	color: white;
+}
+
+.github-pr-open   { background-color: #28a745; }
+.github-pr-draft  { background-color: #6a737d; }
+.github-pr-merged { background-color: #6f42c1; }
+
+.github-pr-open::after   { content: "Open";   display: inline; }
+.github-pr-draft::after  { content: "Draft";  display: inline; }
+.github-pr-merged::after { content: "Merged"; display: inline; }
+
+.github-pr-badge img {
+	width: 1em;
+	vertical-align: text-bottom;
+}
+
+.github-pr-title a {
+	color: var(--color-text);
+	font-weight: bold;
+}
+
+.github-pr-title a:hover, .github-pr-title a:hover .github-pr-subtitle {
+	color: var(--color-link);
+}
+
+.github-pr-subtitle {
+	color: gray;
+	font-weight: normal;
+	font-family: var(--code-font);
+}
+</style>
+
+<div id="page">
+
+<!-- ABOUT ME -->
+<div id="about-container">
+	<div id="about-box">
+		<img alt="photo of me, with a blurry space needle in the background!" id="ben-photo" src="./images/ben-160px.jpg" />
+		<ul id="about-info">
+			<li class="social">
+				<img alt="resume" src="./images/icons/resume-14px-black.png" />
+				<a href="{{SITEURL}}/static/resume">resume</a>
+			</li>
+			<li class="social">
+				<img alt="github" src="./images/icons/github-14px-black.png" />
+				<a href="https://github.com/benrbray">github</a>
+			</li>
+			<li class="social">
+				<img alt="linkedin" src="./images/icons/linkedin-14px-black.png" />
+				<a href="https://www.linkedin.com/in/benrbray/">linkedin</a>
+			</li>
+			<li class="social">
+				<img alt="newgrounds" src="./images/icons/ng-bw.ico" />
+				<a href="https://archawn.newgrounds.com/">newgrounds</a>
+			</li>
+			<li class="social">
+				<img alt="gmail" src="./images/icons/mail-14px-black.png" />
+				<a href="mailto:benrbray@gmail.com">gmail</a>
+			</li>
+		</ul>
+		<div id="about-text">
+			<p>I'm a <b>machine learning</b> and <b>graphics</b> engineer at <a href="https://embodyme.com/">EmbodyMe</a> in Tokyo.
+
+			<p>In my free time, I work on <a href="https://noteworthy.ink/">Noteworthy</a>, an open-source Markdown
+				editor with bidirectional links and excellent math support! I also enjoy reading about discrete
+				differential geometry and functional programming.
+
+			<p>I hold a Masters in Computer Science from <b>Georgia Tech</b>, where my research advisor was <a href="https://www.cc.gatech.edu/~jabernethy9/">Jacob Abernethy</a>. Previously, I studied math at
+				the University of Michigan, where I also helped with a machine learning <a href="https://eecs445-f16.github.io/">class</a> and <a href="http://msail.github.io/">reading
+					group</a>.
+
+			<p>Out of the office, I enjoy biking, <a href="./images/tokyo-walking-map.jpg">long walks</a>, and baking <a href="./images/sourdough.jpg">sourdough</a>. Maybe one day I'll make more <a href="http://www.newgrounds.com/portal/view/512482">games</a>. If you'd like to chat, feel free to
+				write me at <a href="mailto:benrbray@gmail.com">benrbray@gmail.com</a>.
+		</div>
+	</div>
+</div>
+
+<h2>Recent Updates</h2>
+
+<table>
+	<colgroup>
+		<col style="width:4em">
+		<col>
+	</colgroup><tr>
+		<td><b>2020</b></td>
+		<td>Started full-time as a <b>Machine Learning & Graphics Engineer</b> at EmbodyMe in Tokyo</td>
+	</tr><tr>
+		<td></td>
+		<td>Teaching Assistant for ISYE 6740: Computational Data Analysis with Prof. Yao Xie</td>
+	</tr>
+	<tr>
+		<td><b>2019</b></td>
+		<td>Teaching Assistant for <a href="https://cs4540-f19.github.io/">CS 4540: Advanced Algorithms (F19)</a> with Prof. Jacob Abernethy</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>Attended the <a href="http://www.cas.mcmaster.ca/~deza/tokyo2019progr.html">Discrete Optimization & Machine
+				Learning
+				Workshop</a> at RIKEN</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>Internship at <a href="http://www.riken.jp/en/research/labs/aip/">RIKEN AIP</a> in Tokyo on the <a href="https://emtiyaz.github.io/#research">Approximate Bayesian Inference</a> team</td>
+	</tr>
+	<tr>
+		<td><b>2018</b></td>
+		<td>Teaching Assistant for <a href="https://cs4540-f18.github.io/">CS 4540: Advanced Algorithms (F18)</a> with Prof. Jacob Abernethy</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>Visited the <a href="https://www.mccormick.northwestern.edu/eecs/computer-science/online-markets.html">Data
+				Science &amp; Online
+				Markets</a> group at Northwestern</td>
+	</tr>
+</table>
+
+<!-- Projects ----------------------------------------------------------------->
+<h2>Recent Posts (<a href="./blog">View Archive</a>)</h2>
+
+    <div class="post-box ">
+        <a class="post-title" href="./posts/category-theory/yoneda-lemma">Yoneda Lemma</a>
+        <span class="post-date">August  1, 2021</span>
+        Bridging the gap between formal and informal presentations of the Yoneda Lemma.
+    </div>
+
+    <div class="post-box ">
+        <a class="post-title" href="./posts/category-theory/hask-category">The Hask Category</a>
+        <span class="post-date">June  1, 2021</span>
+        A quick reference for understanding the <b>Hask</b> category of Haskell functions between data types.
+    </div>
+
+    <div class="post-box ">
+        <a class="post-title" href="./posts/expectation-maximization">Expectation Maximization</a>
+        <span class="post-date">November 26, 2015</span>
+        <b>Expectation Maximization</b> is an iterative algorithm used for maximum likelihood estimation on latent variable models.  Following (Neal &amp; Hinton 1998), we present expectation-maximization as coordinate ascent on the <b>Evidence Lower Bound</b>.  This perspective takes much of the mystery out of the algorithm and allows us to easily derive variants like <b>Hard EM</b> and <b>Variational Inference</b>.
+    </div>
+
+
+<!-- Draft Posts -->
+
+
+<!-- Draft Projects -->
+
+
+<!-- Open Source -------------------------------------------------------------->
+<h2>Open Source</h2>
+
+<p>I maintain the following open-source packages:</p>
+
+<div class="gridlist npm-package">
+	<div class="gridlist-badge">
+	<a ref="https://www.npmjs.com/package/@benrbray/prosemirror-math">
+		<img src="https://img.shields.io/npm/v/@benrbray/prosemirror-math?style=flat-square">
+	</a>
+	</div>
+	<div class="gridlist-title">
+	<a href="https://www.npmjs.com/package/@benrbray/prosemirror-math">
+		<div>@benrbray/prosemirror-math</div>
+	</a>
+	</div>
+</div>
+
+<div class="gridlist npm-package">
+	<div class="gridlist-badge">
+	<a href="https://www.npmjs.com/package/@benrbray/remark-cite">
+		<img src="https://img.shields.io/npm/v/@benrbray/remark-cite?style=flat-square">
+	</a>
+	</div>
+	<div class="gridlist-title"><a href="https://www.npmjs.com/package/@benrbray/remark-cite">
+		<div>@benrbray/remark-cite</div>
+	</a></div>
+</div>
+
+<p>I have also made a few small contributions to open-source libraries:</p>
+
+<div class="gridlist github-pr">
+	<div class="gridlist-badge github-pr-badge">
+		<span class="github-pr-merged">
+			<img src="./images/icons/git-merge-16.svg" width="14" height="14">
+		</span>
+	</div>
+	<div class="gridlist-title github-pr-title">
+		<a href="https://github.com/jgm/citeproc/pull/88">
+			Support Hyperlinked Titles per Draft of CSL v1.0.2 Spec
+			<span class="github-pr-subtitle">jgm/citeproc#88</span>
+		</a>
+	</div>
+</div>
+
+<div class="gridlist github-pr">
+	<div class="github-pr-badge">
+		<span class="github-pr-open">
+			<img src="./images/icons/git-pull-request-16.svg" width="14" height="14">
+		</span>
+	</div>
+	<div class="github-pr-title">
+		<a href="https://github.com/jgm/pandoc/pull/7514">
+			Adjust <code>fenced_divs</code> Syntax to Resemble Directive Syntax
+			<span class="github-pr-subtitle">jgm/pandoc#7514</span>
+		</a>
+	</div>
+</div>
+
+<div class="gridlist github-pr">
+	<div class="github-pr-badge">
+		<span class="github-pr-open">
+			<img src="./images/icons/git-pull-request-16.svg" width="14" height="14">
+		</span>
+	</div>
+	<div class="github-pr-title">
+		<a href="https://github.com/KaTeX/KaTeX/pull/3085">
+			Support <code>\textsc</code> via Small Caps Font <code>cmcsc10</code>
+			<span class="github-pr-subtitle">KaTeX/KaTeX#3085</span>
+		</a>
+	</div>
+</div>
+
+<div class="gridlist github-pr">
+	<div class="github-pr-badge">
+		<span class="github-pr-merged">
+			<img src="./images/icons/git-merge-16.svg" width="14" height="14">
+		</span>
+	</div>
+	<div class="github-pr-title">
+		<a href="https://github.com/pjones/byline/pull/20">
+			Support ANSI <code>Vivid</code> Color Intensity
+			<span class="github-pr-subtitle">pjones/byline#20</span>
+		</a>
+	</div>
+</div>
+
+<!-- Projects ----------------------------------------------------------------->
+<h2>Projects</h2>
+<div class="project-container">
+
+	<a class="project-box " href="./projects/noteworthy">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/noteworthy2.png" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>Noteworthy</p>
+		</div>
+	</a>
+
+	<a class="project-box " href="./projects/prosemirror-math">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/prosemirror-math.png" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>ProseMirror Math</p>
+		</div>
+	</a>
+
+	<a class="project-box " href="./projects/dhgp">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/deutsche-rundschau_thumb.png" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>Digital Humanities &amp; German&nbsp;Periodicals</p>
+		</div>
+	</a>
+
+	<a class="project-box " href="./projects/seam-carving">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/seam-carve_thumb.png" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>Seam Carving</p>
+		</div>
+	</a>
+
+	<a class="project-box  priority-1" href="./projects/differ">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/misc/rect7.PNG" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>Code Diff</p>
+		</div>
+	</a>
+
+	<a class="project-box " href="./projects/aask">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/aask_thumb.png" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>AdamBots Automated&nbsp;Scouting&nbsp;Kit</p>
+		</div>
+	</a>
+
+	<a class="project-box  priority-1" href="./projects/domain-color">
+		<!-- Thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/complex-domain-coloring_thumb.png" />
+		</div>
+		<!-- Title -->
+		<div class="project-title">
+			<p>Complex Domain Coloring</p>
+		</div>
+	</a>
+
+</div>
+
+</div>
+	</article>
+</div>
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated August 21, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

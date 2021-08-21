@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Seam Carving / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/article.css" />
+	<link rel="stylesheet" href="../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="../">Benjamin R. Bray</a></li>
+				<li><a href="../blog">WRITING</a></li>
+				<li><a href="../projects">PROJECTS</a></li>
+				<li><a href="../resources">RESOURCES</a></li>
+				<li><a href="../resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="pre-content">
+    <!-- Banner -->
+    
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">Seam Carving</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted  on December 28, 2014 / Updated December 28, 2014
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                
+                
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            
+            <a class="article-button demo" href="../static/seam-carving/index">
+                <div>LIVE DEMO</div>
+            </a>
+            
+            <!-- GitHub URL -->
+            
+            <a class="article-button github" href="https://github.com/benrbray/benrbray.github.io-source/tree/master/content/static/seam-carving">
+                <div>GITHUB</div>
+            </a>
+            
+            <!-- PDF URL -->
+            
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        <div class="toc"><h2>Table of Contents</h2>
+
+</div>
+<style>
+figure {
+  position: relative;
+}
+
+.eqheight {
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+.eqheight img {
+  max-width: 100%;
+}
+
+.eqheight div {
+  padding: 0.2em;
+}
+
+#seam-algorithm {
+  display: grid;
+  align-items: center;
+  grid: 1fr / 5fr 3fr;
+  grid-auto-flow: row;
+  grid-gap: 1em;
+}
+</style>
+<p><a href="https://en.wikipedia.org/wiki/Seam_carving">Seam Carving</a> is a classic dynamic programming algorithm for content-aware image resizing. Rather than scaling or cropping, the seam carving algorithm resizes images by removing (or copying) horizontal and vertical slices of the image. These slices, called <em>seams</em>, must cross the entire image, but are allowed to zig and zag around salient regions in order to avoid too much deformation.</p>
+<p>Below, the image to the left was resized using my <a href="../static/seam-carving/index">seam carving demo</a> to produce the image on the right. Images of hot-air balloons are practically the best-case scenario for seam carving, since the salient objects in the image (balloons!) are mostly surrounded by empty space. Click the link to try it out for yourself, in real-time, on a variety of test images!</p>
+<figure>
+<div class="eqheight">
+<div>
+<img src="../static/seam-carving/img/balloons.png">
+</div>
+<div>
+<img src="../static/seam-carving/results/balloons-after.png">
+</div>
+</div>
+</figure>
+<p>Seam carving was first introduced by <strong>[Avidan &amp; Shamir 2007]</strong> at SIGGRAPH. Due to its simplicity and effectiveness, the algorithm has since made its way into computer science textbooks as well as commercial photo editing software. To me, this technique is quite refreshing, and serves as a reminder that not all problems require a deep neural network!</p>
+<blockquote class="citation">
+Avidan, Shai, and Ariel Shamir. <a href="http://www.faculty.idc.ac.il/arik/SCWeb/imret/index.html">"Seam carving for content-aware image resizing."</a> In ACM SIGGRAPH 2007 papers, pp. 10-es. 2007.
+</blockquote>
+<p>Typically, seam carving implementations alternate between taking horizontal and vertical slices to reduce the height and width of an image. For width reduction, the algorithm works in several phases:</p>
+<figure id="seam-algorithm">
+<div>
+<p><b>Energy Computation.</b> Assign an <em>importance</em> value to each pixel in the image. Common choices for the energy function include gradient magnitude, entropy, and visual salience.</p>
+</div>
+<img src="../static/seam-carving/results/balloons-salience.png">
+<div>
+<p><b>Downward Accumulation.</b> In a dynamic programming implementation of seam carving, the downward accumulation phase keeps track of, for each pixel, the value of the <em>minimum</em> energy path from this pixel to the top of the image.</p>
+</div>
+<img src="../static/seam-carving/results/balloons-energy.png">
+<div>
+<p><b>Backtracking &amp; Seam Removal.</b> Once downward accumulation is complete, a backtracking algorithm is recovers the lowest-energy seams for each pixel in the bottom row of the image. The seams with the lowest energy are removed from the image.</p>
+</div>
+<img src="../static/seam-carving/results/balloons-seams.png">
+</figure>
+<p>Vertical resizing follows an analogous procedure. To increase the dimensions of an image, low-energy seams are <em>duplicated</em> instead of removed. Further variations exist for efficiently removing many seams simultanously, for intelligently cropping after no low-energy seams remain, and even for <a href="https://www.youtube.com/watch?v=Ug2aDccYN3c">seam-carving videos</a>!</p>
+
+    </section>
+</article>
+</div>
+
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated August 21, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

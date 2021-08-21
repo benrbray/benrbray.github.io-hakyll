@@ -1,0 +1,66 @@
+* { font-family:  "Segoe UI"; }
+
+#wrap {
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+h1 {
+	text-align:  center;
+	margin:  5px 0;
+}
+
+textarea {
+	width: 100%;
+	height:  100%;
+	font-family: Consolas, monaco, monospace;
+	resize: none;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+button {
+	margin:  4px;
+	padding: 10px;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	background-color: white;
+	color: black;
+}
+
+button:hover {
+	background-color:  #e6e6e6;
+}
+
+button.primary {
+	color:  white;
+	background-color: #337ab7;
+	border-color: #2e6da4; 
+}
+
+button.primary:hover {
+	background-color: #286090;
+	border-color: #204d74; 
+}
+
+#editor > div {
+	display: inline-block;
+	width:  50%;
+	max-width:  50%;
+	height: 400px;
+	padding: 5px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+#diff-result { width: 100%; }
+
+.line {
+	padding: 0 4px;
+	font-family: Consolas, monaco, monospace;
+	font-size:  13px;
+}
+.added { background-color: #fcc; }
+.removed { background-color: #cfc; }

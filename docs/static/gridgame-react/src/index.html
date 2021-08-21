@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Hello React!</title>
+	</head>
+	<body>
+		<style>
+			#root {
+				border: 1px solid gray;
+				padding: 1em;
+				margin-bottom: 1em;
+			}
+			#crossword {
+				display: block;
+				font-size: 1rem;
+			}
+		</style>
+
+		<!--<grid-game>
+		PYBO
+		ALGG
+		MELW
+		HTIE
+		</grid-game>-->
+
+		<grid-game id="crossword">
+		___@____@____
+		___@____@____
+		___@_________
+		_____@@___@@@
+		@@@__@_@_____
+		_________@__@
+		____@@_@@____
+		___@_________
+		NOFREELUNCH@@
+		@@@_@_@@____N
+		_________@__O
+		_@__@____@__O
+		____@@@__@__P
+		</grid-game>
+
+		<div id="form"></div>
+		<div id="console" style="max-height: 400px; overflow-y: scroll; font-family: monospace; font-size: 10px;"></div>
+		
+		<!-- Main -->
+		<script src="./index.tsx"></script>
+	</body>
+</html>
