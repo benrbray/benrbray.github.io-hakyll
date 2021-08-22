@@ -25,7 +25,7 @@ Tags: academic
 	--sans-font: "Roboto", "Ubuntu", sans-serif;
 
 	/** Font Size **/
-	--font-size: 1.0rem;
+	--font-size: 0.95rem;
 	--line-height: 1.4em;
 
 	/** UI Colors **/
@@ -68,7 +68,7 @@ Tags: academic
 	--color-link: #2a7ae2;
 	--color-wikilink: #2a7ae2;
 	--color-citation: seagreen;
-	--color-definition: blue;
+	--color-definition: #0002ad;
 	--color-inline-delims: #d0d0d0;
 	--color-heading-level: #e0e0e0;
 	--color-math-src: purple;
@@ -145,6 +145,10 @@ blockquote {
 	overflow-y: hidden;
 }
 
+.katex-display:last-child {
+	margin-bottom: 0;
+}
+
 /* ---- Inline Styles ----------------------------------- */
 
 em {
@@ -159,6 +163,7 @@ b, strong {
 dfn, span.definition {
 	color: var(--color-definition);
 	font-weight: bold;
+	font-style: normal;
 }
 
 
@@ -232,7 +237,7 @@ ul li {
 .container {
     margin-top: 1em;
     padding: 1em;
-    background-color: #ffffff;
+    background-color: #f7f7f7;
     border: 1px solid #d3d3d3;
     border-radius: 0.5em;
 }
@@ -289,6 +294,11 @@ ul li {
 }
 
 /* ==== Proof ==== */
+
+.container + .container[data-name="proof"] {
+	border-top: none;
+	padding-top: 0;
+}
 
 .container[data-name="proof"]::before {
   font-weight: normal;
