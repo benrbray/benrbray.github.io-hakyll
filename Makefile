@@ -5,5 +5,6 @@ build:
 
 .PHONY: watch
 watch:
-	cabal run site -- clean
+	rm -rf _site
+	rm -rf _cache
 	cabal run site -- watch
