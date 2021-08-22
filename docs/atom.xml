@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Benjamin R. Bray / Blog</title>
-    <link href="https://benrbray.com//atom.xml" rel="self" />
-    <link href="https://benrbray.com/" />
-    <id>https://benrbray.com//atom.xml</id>
+    <link href="https://benrbray.com/atom.xml" rel="self" />
+    <link href="https://benrbray.com" />
+    <id>https://benrbray.com/atom.xml</id>
     <author>
         <name>Benjamin R. Bray</name>
         <email>benrbray@gmail.com</email>
@@ -11,8 +11,8 @@
     <updated>2021-08-01T00:00:00Z</updated>
     <entry>
     <title>Yoneda Lemma</title>
-    <link href="https://benrbray.com//posts/category-theory/yoneda-lemma.html" />
-    <id>https://benrbray.com//posts/category-theory/yoneda-lemma.html</id>
+    <link href="https://benrbray.com/posts/category-theory/yoneda-lemma.html" />
+    <id>https://benrbray.com/posts/category-theory/yoneda-lemma.html</id>
     <published>2021-08-01T00:00:00Z</published>
     <updated>2021-08-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[<div class="toc"><h2>Table of Contents</h2>
@@ -336,8 +336,8 @@ x &amp;\mapsto \Hom_C(x,-) &amp; \text{(objects)} \\
 </entry>
 <entry>
     <title>The Hask Category</title>
-    <link href="https://benrbray.com//posts/category-theory/hask-category.html" />
-    <id>https://benrbray.com//posts/category-theory/hask-category.html</id>
+    <link href="https://benrbray.com/posts/category-theory/hask-category.html" />
+    <id>https://benrbray.com/posts/category-theory/hask-category.html</id>
     <published>2021-06-01T00:00:00Z</published>
     <updated>2021-06-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[<div class="toc"><h2>Table of Contents</h2>
@@ -636,8 +636,8 @@ x &amp;\mapsto \Hom_C(x,-) &amp; \text{(objects)} \\
 </entry>
 <entry>
     <title>Expectation Maximization</title>
-    <link href="https://benrbray.com//posts/expectation-maximization.html" />
-    <id>https://benrbray.com//posts/expectation-maximization.html</id>
+    <link href="https://benrbray.com/posts/expectation-maximization.html" />
+    <id>https://benrbray.com/posts/expectation-maximization.html</id>
     <published>2015-11-26T00:00:00Z</published>
     <updated>2015-11-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[<div class="toc"><h2>Table of Contents</h2>

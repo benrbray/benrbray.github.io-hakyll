@@ -25,7 +25,7 @@ import qualified Data.Time as Time
 import Data.Time.Locale.Compat (TimeLocale, defaultTimeLocale)
 -- control
 import Control.Applicative ((<|>))
-import Control.Monad (mplus, liftM, liftM2, ap, (>=>))
+import Control.Monad (mplus, liftM, liftM2, ap, (>=>), when, guard, unless)
 -- text
 import qualified Data.Text as T
 import Data.Text (Text)
@@ -164,7 +164,7 @@ main = do
                   >>= postCompiler
 
     match postGlob postRules
-    match postDraftGlob postRules
+    unless isPublish $ match postDraftGlob postRules
 
     -- projects
 
@@ -175,11 +175,15 @@ main = do
 
     match projectGlob $ do
         route $ setExtension "html"
-        compile $ getResourceBody >>= readPandocWith readerOpts >>= postCompiler
+        compile $ getResourceBody
+                    >>= readPandocWith readerOpts
+                    >>= projCompiler
 
-    match projDraftGlob $ do
+    unless isPublish $ match projDraftGlob $ do
         route $ setExtension "html"
-        compile $ getResourceBody >>= readPandocWith readerOpts >>= postCompiler
+        compile $ getResourceBody 
+                    >>= readPandocWith readerOpts
+                    >>= projCompiler
 
     -- static pages
 
@@ -260,7 +264,7 @@ feedConfig = FeedConfiguration
     , feedDescription = "Math & Programming Blog"
     , feedAuthorName = "Benjamin R. Bray"
     , feedAuthorEmail = "benrbray@gmail.com"
-    , feedRoot = "https://benrbray.com/"
+    , feedRoot = "https://benrbray.com"
     }
 
 --------------------------------------------------------------------------------
