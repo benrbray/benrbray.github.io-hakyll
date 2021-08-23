@@ -24,6 +24,7 @@ module Biblio
 
 
 --------------------------------------------------------------------------------
+
 import           Control.Monad                 (liftM)
 import           Data.Binary                   (Binary (..))
 import qualified Data.ByteString               as B
@@ -31,59 +32,24 @@ import qualified Data.ByteString.Lazy          as BL
 import qualified Data.Map                      as Map
 import qualified Data.Time                     as Time
 import           Data.Typeable                 (Typeable)
-import           Hakyll.Core.Compiler
-import           Hakyll.Core.Compiler.Internal
-import           Hakyll.Core.Identifier
-import           Hakyll.Core.Item
-import           Hakyll.Core.Writable
-import           Hakyll.Web.Pandoc
 import           Text.Pandoc                   (Extension (..), Pandoc,
                                                 ReaderOptions (..),
                                                 enableExtension)
 import qualified Text.Pandoc                   as Pandoc
 import qualified Text.Pandoc.Citeproc          as Pandoc (processCitations)
 
+-- hakyll
+import           Hakyll
+import           Hakyll.Core.Compiler.Internal
 
 --------------------------------------------------------------------------------
-newtype CSL = CSL {unCSL :: B.ByteString}
-    deriving (Binary, Show, Typeable)
 
-
-
---------------------------------------------------------------------------------
-instance Writable CSL where
-    -- Shouldn't be written.
-    write _ _ = return ()
-
-
---------------------------------------------------------------------------------
-cslCompiler :: Compiler (Item CSL)
-cslCompiler = fmap (CSL . BL.toStrict) <$> getResourceLBS
-
-
---------------------------------------------------------------------------------
-newtype Biblio = Biblio {unBiblio :: B.ByteString}
-    deriving (Binary, Show, Typeable)
-
-
---------------------------------------------------------------------------------
-instance Writable Biblio where
-    -- Shouldn't be written.
-    write _ _ = return ()
-
-
---------------------------------------------------------------------------------
-biblioCompiler :: Compiler (Item Biblio)
-biblioCompiler = fmap (Biblio . BL.toStrict) <$> getResourceLBS
-
-
---------------------------------------------------------------------------------
-readPandocBiblio :: ReaderOptions
+readBiblio :: ReaderOptions
                  -> Item CSL
                  -> Item Biblio
-                 -> (Item String)
+                 -> Item String
                  -> Compiler (Item Pandoc)
-readPandocBiblio ropt csl biblio item = do
+readBiblio ropt csl biblio item = do
     -- It's not straightforward to use the Pandoc API as of 2.11 to deal with
     -- citations, since it doesn't export many things in 'Text.Pandoc.Citeproc'.
     -- The 'citeproc' package is also hard to use.
@@ -122,6 +88,7 @@ readPandocBiblio ropt csl biblio item = do
     zeroTime = Time.UTCTime (toEnum 0) 0
 
 --------------------------------------------------------------------------------
+
 -- | Compiles a markdown file via Pandoc. Requires the .csl and .bib files to be known to the compiler via match statements.
 pandocBiblioCompilerWith :: ReaderOptions -> String -> String -> Item String -> Compiler (Item Pandoc)
 pandocBiblioCompilerWith ropt cslFileName bibFileName item = do
