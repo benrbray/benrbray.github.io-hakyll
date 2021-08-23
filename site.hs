@@ -21,11 +21,14 @@ import Data.List (intersperse, sortBy, elem, isSuffixOf)
 import Data.List.Extra (stripSuffix)
 import Data.Functor.Identity
 import Data.Functor ((<&>))
-import qualified Data.Time as Time
-import Data.Time.Locale.Compat (TimeLocale, defaultTimeLocale)
 -- control
 import Control.Applicative ((<|>))
-import Control.Monad (mplus, liftM, liftM2, ap, (>=>), when, guard, unless)
+import Control.Monad (mplus, msum, liftM, liftM2, ap, (>=>), when, guard, unless)
+-- time
+import Data.Time.Clock (UTCTime (..))
+import Data.Time.Format (formatTime, parseTimeM)
+import qualified Data.Time as Time
+import Data.Time.Locale.Compat (TimeLocale, defaultTimeLocale)
 -- text
 import qualified Data.Text as T
 import Data.Text (Text)
@@ -294,8 +297,8 @@ removeExt item = do
 
 postCtx :: Context String
 postCtx =
-    dateField "date" fmt         `mappend`
-    dateField "date_updated" fmt `mappend`
+    dateField "date" fmt             `mappend`
+    metaDateField "date_updated" fmt `mappend`
     defaultContext
     where fmt = "%B %e, %Y"
 
@@ -317,6 +320,55 @@ renderMath pandoc = do
     Just _  -> pandocCompilerWith readerOpts writerOpts -- todo: this is wrong
     Nothing -> writePandocWith writerOpts <$> (traverse renderKatex pandoc)
                    where renderKatex = unsafeCompiler . kaTeXifyIO macros
+
+---- DATES ---------------------------------------------------------------------
+
+-- | Looks for a date in the metadata corresponding to the key,
+-- and re-format it to have the specified format. 
+metaDateField :: String     -- ^ Key in which the rendered date should be placed
+              -> String     -- ^ Format to use on the date
+              -> Context a  -- ^ Resulting context
+metaDateField = metaDateFieldWith defaultTimeLocale
+
+-- https://hackage.haskell.org/package/hakyll-4.14.0.0/docs/src/Hakyll.Web.Template.Context.html#dateFieldWith
+metaDateFieldWith :: TimeLocale  -- ^ Output time locale
+              -> String      -- ^ Destination key
+              -> String      -- ^ Format to use on the date
+              -> Context a   -- ^ Resulting context
+metaDateFieldWith locale key format = field key $ \i -> do
+    time <- getTimeMeta locale key $ itemIdentifier i
+    case time of
+        Nothing -> noResult "no metadata field 'date_updated'"
+        Just t  -> return $ formatTime locale format t
+
+-- | Parser for extracting and parsing a date from the specified metadata key.
+-- https://hackage.haskell.org/package/hakyll-4.14.0.0/docs/src/Hakyll.Web.Template.Context.html#getItemUTC
+getTimeMeta :: (MonadMetadata m, MonadFail m)
+           => TimeLocale        -- ^ Output time locale
+           -> String            -- ^ Key
+           -> Identifier        -- ^ Input page
+           -> m (Maybe UTCTime) -- ^ Parsed UTCTime
+getTimeMeta locale key ident = do
+    metadata <- getMetadata ident
+    let tryField k fmt = lookupString k metadata >>= parseTime' fmt
+
+    return $ msum $
+        [tryField key fmt | fmt <- formats]
+  where
+    parseTime' = parseTimeM True locale
+    formats    =
+        [ "%a, %d %b %Y %H:%M:%S %Z"
+        , "%a, %d %b %Y %H:%M:%S"
+        , "%Y-%m-%dT%H:%M:%S%Z"
+        , "%Y-%m-%dT%H:%M:%S"
+        , "%Y-%m-%d %H:%M:%S%Z"
+        , "%Y-%m-%d %H:%M:%S"
+        , "%Y-%m-%d"
+        , "%B %e, %Y %l:%M %p"
+        , "%B %e, %Y"
+        , "%b %d, %Y"
+        ]
+
 
 ---- PANDOC OPTIONS ------------------------------------------------------------
 
