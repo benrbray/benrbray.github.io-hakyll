@@ -79,6 +79,7 @@ body {
 	font-family: var(--serif-font);
 	font-size: var(--font-size);
 	color: #303030;
+	tab-size: 4;
 }
 
 /* Basic Styles ------------------------------------------------------------- */
@@ -170,9 +171,9 @@ dfn, span.definition {
 
 /* ---- Code -------------------------------------------- */
 
-pre      { font-family: var(--code-font); display: block; }
+pre      { font-family: var(--code-font); background-color: var(--color-bg-2); display: block; }
 code     { font-family: var(--code-font); background-color: var(--color-bg-2); }
-pre code { display: block; }
+pre code { display: block; overflow-x: scroll; }
 
 p code {
 	display: inline;
@@ -184,6 +185,10 @@ code {
 	background-color: var(--color-bg-2);
 	font-family: "Consolas", "Ubuntu Mono", monospace;
 	text-align: left;
+}
+
+.sourceCode {
+
 }
 
 /* code in headings */

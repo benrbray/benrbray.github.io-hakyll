@@ -1,7 +1,6 @@
 ---
 title:  "Abstract Algebra:  Modules"
 date:  2020-05-13
-unpublished: True
 category:  math
 katex_macros: abstract-algebra.katex
 tags: abstract-algebra, linear-algebra

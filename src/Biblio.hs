@@ -26,12 +26,8 @@ module Biblio
 --------------------------------------------------------------------------------
 
 import           Control.Monad                 (liftM)
-import           Data.Binary                   (Binary (..))
-import qualified Data.ByteString               as B
-import qualified Data.ByteString.Lazy          as BL
 import qualified Data.Map                      as Map
 import qualified Data.Time                     as Time
-import           Data.Typeable                 (Typeable)
 import           Text.Pandoc                   (Extension (..), Pandoc,
                                                 ReaderOptions (..),
                                                 enableExtension)
@@ -39,7 +35,17 @@ import qualified Text.Pandoc                   as Pandoc
 import qualified Text.Pandoc.Citeproc          as Pandoc (processCitations)
 
 -- hakyll
-import           Hakyll
+import Hakyll
+    ( fromFilePath,
+      load,
+      readPandocWith,
+      readPandocBiblio,
+      biblioCompiler,
+      cslCompiler,
+      Compiler,
+      Biblio(..),
+      Item(itemBody),
+      CSL(..) )
 import           Hakyll.Core.Compiler.Internal
 
 --------------------------------------------------------------------------------

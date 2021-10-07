@@ -15,9 +15,9 @@ a.sourceLine:empty {
 	height: 1.2em;
 }
 
-.sourceCode {
+/* .sourceCode {
 	overflow: visible;
-}
+} */
 
 code.sourceCode {
 	white-space: pre;

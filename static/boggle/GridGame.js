@@ -386,44 +386,87 @@ export class GridGameElement extends HTMLElement {
 
 	//////////////////////////////////////////////////////////////////
 
-	fromString(input){
+	fromString(input, numRows, numCols){
+		// remove spaces from input
+		input = input.replace(/\s/g, '');
 		// if input empty, fail gracefully
 		if(!input){ return null; }
 		input = input.trim();
 		if(input.length == 0){ return null; }
-		
-		// parse input and validate dimensions
-		let lines = input.split("\n");
-		let numRows = lines.length;
-		if(numRows < 1){ return null; }
-		
-		let numCols = 0;
-		let data = [];
 
-		for(let r = 0; r < numRows; r++){
-			let line = lines[r].split("");
+		let blanks = "-_";
 
-			// first row determines numCols
-			if(r == 0){ numCols = line.length; }
-			else if(line.length != numCols){ return null; }
+		// numRows and numCols must both be present
+		if(numRows === undefined || numCols === undefined){
+			numRows = undefined;
+			numCols = undefined;
+			// parse input and validate dimensions
+			let lines = input.split("\n");
+			let numRows = lines.length;
+			if(numRows < 1){ return null; }
+			
+			let numCols = null;
+			let data = [];
 
-			// handle blank / disabled cells
-			for(let c = 0; c < numCols; c++){
-				if(line[c] == "_"){
-					line[c] = "";
-				} else if(line[c] == "@"){
-					line[c] = null;
+			for(let r = 0; r < numRows; r++){
+				let line = lines[r].split("");
+
+				// first row determines numCols
+				if(r == 0){ numCols = line.length; }
+				else if(line.length != numCols){ return null; }
+
+				// handle blank / disabled cells
+				for(let c = 0; c < numCols; c++){
+					if(blanks.indexOf(line[c]) >= 0){
+						line[c] = "";
+					} else if(line[c] == "@"){
+						line[c] = null;
+					}
+				}
+
+				data.push(line);
+			}
+			
+			return {
+				numRows : numRows,
+				numCols : numCols,
+				data : data
+			};
+		} else {
+			// validate input size
+			if(numRows * numCols !== input.length) {
+				console.error(`invalid input (length ${input.length}) for ${numRows}x${numCols} grid` );
+				console.error(input);
+				return null;
+			}
+
+			let data = [];
+			let line = [];
+			for(let idx = 0; idx < input.length; idx++){
+				if(idx > 0 && idx % numCols === 0){
+					data.push(line);
+					line = [];
+				}
+
+				let char = input[idx];
+				if(blanks.indexOf(char) >= 0){
+					line.push("");
+				} else if(char === "@") {
+					line.push(null);
+				} else {
+					line.push(char);
 				}
 			}
 
 			data.push(line);
+			
+			return {
+				numRows : numRows,
+				numCols : numCols,
+				data : data
+			};
 		}
 		
-		return {
-			numRows : numRows,
-			numCols : numCols,
-			data : data
-		};
 	}
 
 	//// CALLBACKS ///////////////////////////////////////////////////
@@ -436,7 +479,9 @@ export class GridGameElement extends HTMLElement {
 		//    > https://github.com/WebReflection/html-parsed-element
 		//    > https://stackoverflow.com/questions/48498581/textcontent-empty-in-connectedcallback-of-a-custom-htmlelement
 		if(this.textContent){
-			let boardData = this.fromString(this.textContent);
+			let numRows = this.dataset.rows;
+			let numCols = this.dataset.cols;
+			let boardData = this.fromString(this.textContent, numRows, numCols);
 
 			if(boardData){
 				this.fillBoard(boardData);

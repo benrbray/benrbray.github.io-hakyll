@@ -30,6 +30,7 @@ function createWorker(){
 
 	worker = new Worker("/static/boggle/unboggle.worker.js");
 	worker.onmessage = function(evt){
+		console.log("unboggle :: message received from worker ::", evt);
 		// loading animation
 		stopLoadAnimation();
 		workerIsWorking = false;
@@ -61,7 +62,7 @@ function stopUnboggler(){
 	console.log("unboggle :: stop");
 	stopLoadAnimation();
 	worker.terminate();
-	console.log(worker);
+	worker = null;
 	workerIsWorking = false;
 }
 

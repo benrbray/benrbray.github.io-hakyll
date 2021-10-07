@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<!-- Viewport Meta Tag for Mobile Site -->
+	<!-- https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Unboggler / Benjamin R. Bray</title>
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/article.css" />
+	<link rel="stylesheet" href="../css/pandoc-syntax.css" />
+	<link rel="stylesheet" href="../katex/katex.min.css" />
+</head>
+
+<!---- BODY ----------------------------------------------->
+<body>
+	<header id="header-box">
+		<nav id="header">
+			<ul id="header-nav">
+				<li><a id="header-name" href="../">Benjamin R. Bray</a></li>
+				<li><a href="../blog">WRITING</a></li>
+				<li><a href="../projects">PROJECTS</a></li>
+				<li><a href="../resources">RESOURCES</a></li>
+				<li><a href="../resume.pdf">RESUME</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div id="pre-content">
+    <!-- Banner -->
+    
+</div>
+
+<div id="page">
+<article id="content">
+    <!-- Post Header -->
+    <header class="article-header">
+        <h1 class="article-title">Unboggler</h1>
+        <div class="article-info">
+            <!-- Date -->
+            <div class="article-date">
+                Posted  on January 18, 2020
+            </div>
+            <!-- Tags / Tools -->
+            <nav class="article-tags">
+                
+                
+            </nav>
+        </div>
+        <div class="article-buttons">
+            <!-- Demo URL -->
+            
+            <!-- GitHub URL -->
+            
+            <!-- PDF URL -->
+            
+        </div>
+    </header>
+
+    <!-- Body -->
+    <section>
+        <div class="toc"><h2>Table of Contents</h2>
+<ul>
+<li><a href="#boggle">Boggle</a></li>
+<li><a href="#unboggle">Unboggle</a>
+<ul>
+<li><a href="#the-unboggler">The Unboggler</a></li>
+<li><a href="#sat-solvers">SAT Solvers</a></li>
+<li><a href="#sat-encoding">SAT Encoding</a></li>
+</ul></li>
+</ul>
+</div>
+<style>
+
+/* ==== BOGGLE ============================================================== */
+
+#boggle-game {
+	display: grid;
+	position: relative;
+	
+	grid-gap: 1rem;
+	grid: "controls words" auto
+	      "board words" 1fr
+		  "solve words" auto
+		  / auto 1fr;
+}
+
+grid-game {
+  font-family: var(--sans-font);
+}
+
+#boggle-controls { grid-area: controls; }
+#boggle-solve    { grid-area: solve;    }
+#boggle-board    { grid-area: board;    }
+#boggle-list     { grid-area: words;    }
+
+#boggle-list {
+	position: absolute;
+	max-height: 100%;
+	overflow-y: auto;
+  font-family: var(--sans-font);
+}
+
+.wordList {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.wordList span {
+	flex: 1;
+	/*padding: 4px 0.5em 2px 0.5em;*/
+  padding: 2px 0.5em;
+	margin: 0.2em;
+
+  /* display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column; */
+
+	text-align: center;
+	color: darkblue;
+	background-color: lightblue;
+	border: 1px solid darkblue;
+	border-radius: 4px;
+	user-select: none;
+}
+
+.wordList span:hover {
+	background-color: #89bed0;
+}
+
+#boggle-controls {
+	display: grid;
+	grid: auto / 1fr 1fr;
+	grid-auto-flow: row;
+	grid-gap: 1em;
+}
+
+#boggle-solve button {
+	font-size: 1.2em;
+  font-family: var(--serif-font);
+	color: white;
+	background-color: #52b955;
+	border: none;
+}
+
+#boggle-solve button:hover {
+	background-color: #479c4a;
+}
+
+#boggle-game .controls button {
+	display: block;
+	width: 100%;
+	height: 2em;
+}
+
+/* ==== UNBOGGLE ============================================================ */
+
+#unboggle-game {
+	display: grid;
+	position: relative;
+	
+	grid-gap: 1rem;
+	grid: "board words" 1fr
+		  "solve words" auto
+		  / auto 1fr;
+}
+
+#unboggle-solve { grid-area: solve; }
+#unboggle-board { grid-area: board; }
+#unboggle-words { grid-area: words; }
+
+#unboggle-board {
+	--cell-background-rgb: 0,0,0;
+	background-color: black;
+	color: white;
+}
+
+#unboggle-input {
+	width: 100%;
+	height: 100%;
+	font-size: 1.2em;
+}
+
+#unboggle-solve button {
+	font-size: 1.2em;
+	color: #52b955;
+	width: 100%;
+	height: 2em;
+	background-color: white;
+	border: 2px solid #52b955;
+}
+
+#unboggle-solve button:hover {
+	background-color: #eee;
+}
+
+#unboggle-button.stop {
+	border-color: red;
+	color: red;
+	background-color: white;
+}
+
+#unboggle-container {
+	position: relative;
+}
+
+#unboggle-overlay {
+	display: none;
+	position: relative;
+	grid-area: board;
+	background-color: rgba(255,255,255,0.5);
+	z-index: 1;
+}
+
+#crossword {
+	display: block;
+	font-size: 1rem;
+	margin: 1em auto;
+}
+
+.checkboxes {
+	display: grid;
+	grid: 1fr / 1fr 1fr;
+	grid-gap: 1px;
+	background-color: #999;
+	border: 1px solid #999;
+}
+
+.checkboxes input {
+	display: none;
+	position: absolute;
+	pointer-events: none;
+
+	background: transparent;
+	border-radius: 0px;
+	padding: 5px;
+	box-shadow: none!important;
+}
+.checkboxes input[type="radio"] + span:hover {
+	background-color: #e0e0e0;
+}
+.checkboxes input[type="radio"]:checked + span {
+	background-color: lightblue;
+	color: darkblue;
+}.checkboxes input[type="radio"]:checked + span:hover {
+	background-color: #89bed0;
+}
+
+.checkboxes label {
+	background-color: white;
+	text-align: center;
+	user-select: none;
+}
+.checkboxes input[type="radio"] + span {
+  display: block;
+  padding: 5px 10px;
+}
+</style>
+<!-- Scripts -->
+<script src="../static/boggle/dictionary.js"></script>
+<script src="../static/boggle/WordTrie.js"></script>
+<script src="../static/boggle/minisat.js"></script>
+<script src="../static/boggle/boggle.js" defer></script>
+<script src="../static/boggle/unboggle.js" defer></script>
+<script src="../static/boggle/GridGame.js" type="module"></script>
+<script type="module">
+import { init, GridGameElement } from "/static/boggle/GridGame.js";
+
+console.log("module code!!!");
+window.customElements.define("grid-game", GridGameElement);
+</script>
+<h1 id="boggle">Boggle</h1>
+<p>Boggle is a classic board game in which players search for words constructed by connecting adjacent tiles in a grid of letters. Letters can be used at most once, and are allowed to connect horizontally, vertically, or diagonally. Listing all words in a Boggle board is a common interview question, easily achieved by querying a <a href="https://en.wikipedia.org/wiki/Trie">trie</a> data structure assembled from a list of dictionary words. Use the widget below to see it in action!</p>
+<div id="boggle-game">
+<div id="boggle-controls" class="controls">
+<button style="grid-column-end:span 2;" onclick="boggleRandomize()" type="button">
+Randomize
+</button>
+<div class="checkboxes" style="grid-column-end:span 2">
+<label><input type="radio" onclick="randomDice()" name="randomize" value="boggle-dice" required checked="checked"><span>Boggle Dice</span></label><label><input type="radio" onclick="randomFreq()" name="randomize" value="frequency" required><span>Frequency</span></label><label><input type="radio" onclick="randomUniform()" name="randomize" value="uniform" required><span>Uniform</span></label><label><input type="radio" onclick="randomWord()" name="randomize" value="long-word" required><span>Long Word</span></label>
+</div>
+</div>
+<grid-game id="boggle-board" type="boggle" data-rows="4" data-cols="4"> PYBO ALGG MELW HTIE </grid-game>
+<div id="boggle-list">
+<div class="wordList">
+
+</div>
+</div>
+<div id="boggle-solve" class="controls">
+<button onclick="solveBoggle()" type="button">
+SOLVE!
+</button>
+</div>
+</div>
+<!-- UNBOGGLE ----------------------------------------------------------------->
+<h1 id="unboggle">Unboggle</h1>
+<p>Boggle was easy enough, so let's try <b>Unboggle</b>, or reverse boggle, where the goal is to reconstruct a Boggle board from a given list of words. There is no obvious way to divide-and-conquer the problem and no obvious greedy algorithm guaranteed to use all the words in the list. Instead, I encode Unboggle as a <strong>boolean satisfiability</strong> problem using <a href="https://github.com/meteor/logic-solver"><code>logic-solver.js</code></a>, a convenient wrapper around the general-purpose <a href="http://minisat.se/"><code>minisat</code></a> solver, which has been compiled to JavaScript using <a href="https://emscripten.org/"><code>emscripten</code></a>.</p>
+<h2 id="the-unboggler">The Unboggler</h2>
+<p>Try it out below! For a 4x4 grid and about 10 words, you can expect the Unboggle search to take about 30 seconds. Since the solver isn't designed to detect unsatisfiability, the Unboggler may hang for much longer if no satisfying board exists!</p>
+<div id="unboggle-game">
+<!-- Board -->
+<grid-game id="unboggle-board" type="boggle" data-rows="4" data-cols="4"> THE- UN-- BOGG LER- </grid-game> <!-- Spinner -->
+<div id="unboggle-overlay">
+<pre><code>&lt;div class=&quot;spinner&quot;&gt;&lt;/div&gt;</code></pre>
+</div>
+<!-- Word List -->
+<div id="unboggle-words">
+<textarea id="unboggle-input" type="text" style="box-sizing:border-box">
+ANTIQUE
+EQUITY
+QUALITY
+EQUIVALENT
+ANTIQUITY
+DIVIDE
+QUILT
+</textarea>
+</div>
+<!-- Controls -->
+<div id="unboggle-solve" class="controls">
+<button id="unboggle-button" type="button">
+UNSOLVE?
+</button>
+</div>
+</div>
+<h2 id="sat-solvers">SAT Solvers</h2>
+<p>SAT solvers search for a satisfying assignment of <code>true</code> and <code>false</code> values to a boolean formula containing literals, conjunction, disjunction, and negation. For example, the formula</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∨</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∨</mo><mi mathvariant="normal">¬</mi><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="false">)</mo><mo>∧</mo><mo stretchy="false">(</mo><mi mathvariant="normal">¬</mi><msub><mi>x</mi><mn>1</mn></msub><mo>∨</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∨</mo><mi mathvariant="normal">¬</mi><msub><mi>x</mi><mn>4</mn></msub><mo stretchy="false">)</mo><mo>∧</mo><mo stretchy="false">(</mo><mi mathvariant="normal">¬</mi><msub><mi>x</mi><mn>3</mn></msub><mo>∨</mo><mi mathvariant="normal">¬</mi><msub><mi>x</mi><mn>4</mn></msub><mo>∨</mo><msub><mi>x</mi><mn>5</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">
+(x_1 \vee x_2 \vee \neg x_3)
+\wedge (\neg x_1 \vee x_2 \vee \neg x_4)
+\wedge (\neg x_3 \vee \neg x_4 \vee x_5)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7055600000000001em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7055600000000001em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7055600000000001em;vertical-align:-0.15em;"></span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∨</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>is satisfied by the assignment <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mrow><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">e</mi></mrow></mrow><annotation encoding="application/x-tex">x_1 = x_2 = \mathtt{true}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.55358em;vertical-align:0em;"></span><span class="mord"><span class="mord mathtt">true</span></span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><msub><mi>x</mi><mn>4</mn></msub><mo>=</mo><mrow><mi mathvariant="monospace">f</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">l</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">e</mi></mrow></mrow><annotation encoding="application/x-tex">x_3 = x_4 = \mathtt{false}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.61111em;vertical-align:0em;"></span><span class="mord"><span class="mord mathtt">false</span></span></span></span></span>. Integer constraints like <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>11</mn></mrow><annotation encoding="application/x-tex">y=11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">11</span></span></span></span> can be encoded as binary constraints on the individual binary digits <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>y</mi><mn>4</mn></msub><msub><mi>y</mi><mn>3</mn></msub><msub><mi>y</mi><mn>2</mn></msub><msub><mi>y</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">y = y_4 y_3 y_2 y_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, like so:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>y</mi><mn>4</mn></msub><mo>∧</mo><mi mathvariant="normal">¬</mi><msub><mi>y</mi><mn>3</mn></msub><mo>∧</mo><msub><mi>y</mi><mn>2</mn></msub><mo>∧</mo><msub><mi>y</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">
+y_4 \wedge \neg y_3 \wedge y_2 \wedge y_1
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.75em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.75em;vertical-align:-0.19444em;"></span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.75em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>Thankfully, <code>logic-solver.js</code> takes care of binary encodings for us and supports basic arithmetic constraints like <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mo>=</mo><mo separator="true">,</mo><mo>&lt;</mo><mo separator="true">,</mo><mo>&gt;</mo><mo separator="true">,</mo><mo>≤</mo><mo separator="true">,</mo><mo>≥</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(=, &lt;, &gt;, \leq, \geq)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mclose">)</span></span></span></span>, together with addition and subtraction.</p>
+<h2 id="sat-encoding">SAT Encoding</h2>
+<p>To encode Unboggle as a satisfiability problem, suppose we wish to fit <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span> words on an <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> board. Assume an average word length <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">ℓ</mi></mrow><annotation encoding="application/x-tex">\ell</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">ℓ</span></span></span></span>.</p>
+<ul>
+<li>For each letter of every word on the list, we use two integer variables to represent the letter's grid coordinates, requiring <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mn>2</mn><mi>m</mi><mi mathvariant="normal">ℓ</mi><mo stretchy="false">⌈</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mi>n</mi><mo stretchy="false">⌉</mo></mrow><annotation encoding="application/x-tex">L = 2 m \ell \lceil \log_2 n \rceil</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mord mathnormal">m</span><span class="mord">ℓ</span><span class="mopen">⌈</span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">n</span><span class="mclose">⌉</span></span></span></span> binary literals.</li>
+<li>When the board size is not a power of two, each coordinate needs an upper bound.</li>
+<li>Adjacent letters within the same word must be adjacent on the board.</li>
+<li>A word cannot overlap itself; its coordinate pairs must all be distinct.</li>
+<li>Two different words can only intersect at a common letter; that is, two different letters from distinct words cannot occupy the same space.</li>
+</ul>
+<p>The number of constraints increases roughly quadratically with the number of words, so Unboggling more than ten words may take quite a while! The code below uses <code>logic-solver.js</code> to represent these constraints:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">encode</span>(numRows<span class="op">,</span> numCols<span class="op">,</span> words){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> solver <span class="op">=</span> <span class="kw">new</span> Logic<span class="op">.</span><span class="fu">Solver</span>()<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>	<span class="co">// dimensions</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> numWords <span class="op">=</span> words<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> numRowBits <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">ceil</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">log2</span>(numRows))<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> numColBits <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">ceil</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">log2</span>(numCols))<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>	<span class="co">// bit constants</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> const_1  <span class="op">=</span> Logic<span class="op">.</span><span class="fu">constantBits</span>(<span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> const_numRows <span class="op">=</span> Logic<span class="op">.</span><span class="fu">constantBits</span>(numRows)<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> const_numCols <span class="op">=</span> Logic<span class="op">.</span><span class="fu">constantBits</span>(numCols)<span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>	<span class="co">// word constraints</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>	<span class="kw">let</span> wordPaths <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>	<span class="cf">for</span>(<span class="kw">let</span> w <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> w <span class="op">&lt;</span> numWords<span class="op">;</span> w<span class="op">++</span>){</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>		<span class="co">// translate word</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>		<span class="kw">let</span> word <span class="op">=</span> words[w]<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>		<span class="kw">let</span> wordPath <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>		<span class="cf">for</span>(<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>){</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>			<span class="co">// location of ith letter stored in variables:</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>			<span class="co">//     p_(w)_(i)_r and p_(w)_(i)_c</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>			<span class="kw">let</span> pr <span class="op">=</span> Logic<span class="op">.</span><span class="fu">variableBits</span>(<span class="vs">`p_</span><span class="sc">${</span>w<span class="sc">}</span><span class="vs">_</span><span class="sc">${</span>i<span class="sc">}</span><span class="vs">_r`</span><span class="op">,</span> numRowBits)<span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>			<span class="kw">let</span> pc <span class="op">=</span> Logic<span class="op">.</span><span class="fu">variableBits</span>(<span class="vs">`p_</span><span class="sc">${</span>w<span class="sc">}</span><span class="vs">_</span><span class="sc">${</span>i<span class="sc">}</span><span class="vs">_c`</span><span class="op">,</span> numColBits)<span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>			wordPath<span class="op">.</span><span class="fu">push</span>([pr<span class="op">,</span>pc])<span class="op">;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>			<span class="co">// enforce board boundaries on paths (coordinates zero-indexed)</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>			solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">lessThan</span>(pr<span class="op">,</span> const_numRows))<span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>			solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">lessThan</span>(pc<span class="op">,</span> const_numCols))<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>			<span class="co">// adjacent letters in word must be adjacent on board</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>			<span class="cf">if</span>(i <span class="op">&gt;</span> <span class="dv">0</span>){</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>				<span class="co">// x difference</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>				solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">lessThanOrEqual</span>(wordPath[i<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>]<span class="op">,</span> Logic<span class="op">.</span><span class="fu">sum</span>(wordPath[i][<span class="dv">0</span>]<span class="op">,</span>   const_1)))<span class="op">;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>				solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">lessThanOrEqual</span>(wordPath[i][<span class="dv">0</span>]<span class="op">,</span>   Logic<span class="op">.</span><span class="fu">sum</span>(wordPath[i<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>]<span class="op">,</span> const_1)))<span class="op">;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>				<span class="co">// y difference</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>				solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">lessThanOrEqual</span>(wordPath[i<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>]<span class="op">,</span> Logic<span class="op">.</span><span class="fu">sum</span>(wordPath[i][<span class="dv">1</span>]<span class="op">,</span>   const_1)))<span class="op">;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>				solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">lessThanOrEqual</span>(wordPath[i][<span class="dv">1</span>]<span class="op">,</span>   Logic<span class="op">.</span><span class="fu">sum</span>(wordPath[i<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>]<span class="op">,</span> const_1)))<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>			}</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>		}</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>		<span class="co">// path cannot overlap itself</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>		<span class="cf">for</span>(<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>){</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>			<span class="cf">for</span>(<span class="kw">let</span> j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> word<span class="op">.</span><span class="at">length</span><span class="op">;</span> j<span class="op">++</span>){</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>				solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">atMostOne</span>(</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>					Logic<span class="op">.</span><span class="fu">equalBits</span>(wordPath[i][<span class="dv">0</span>]<span class="op">,</span>wordPath[j][<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>					Logic<span class="op">.</span><span class="fu">equalBits</span>(wordPath[i][<span class="dv">1</span>]<span class="op">,</span>wordPath[j][<span class="dv">1</span>])</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>				))<span class="op">;</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>			}</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>		}</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>		wordPaths<span class="op">.</span><span class="fu">push</span>(wordPath)<span class="op">;</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>	}</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>	<span class="co">// now, ensure word paths are all compatible</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>	<span class="cf">for</span>(<span class="kw">let</span> w1 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> w1 <span class="op">&lt;</span> numWords<span class="op">;</span> w1<span class="op">++</span>){</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>		<span class="cf">for</span>(<span class="kw">let</span> w2 <span class="op">=</span> w1<span class="op">+</span><span class="dv">1</span><span class="op">;</span> w2 <span class="op">&lt;</span> numWords<span class="op">;</span> w2<span class="op">++</span>){</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>			<span class="kw">let</span> word1 <span class="op">=</span> words[w1]<span class="op">;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>			<span class="kw">let</span> word2 <span class="op">=</span> words[w2]<span class="op">;</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>			<span class="cf">for</span>(<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> word1<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>){</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>				<span class="cf">for</span>(<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> word2<span class="op">.</span><span class="at">length</span><span class="op">;</span> j<span class="op">++</span>){</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>					<span class="co">// no constraint if words have letter in common</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>					<span class="cf">if</span>(word1[i] <span class="op">==</span> word2[j]){ <span class="cf">continue</span><span class="op">;</span> }</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>					<span class="co">// prevent different letters from occupying same space</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>					solver<span class="op">.</span><span class="fu">require</span>(Logic<span class="op">.</span><span class="fu">atMostOne</span>(</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>						Logic<span class="op">.</span><span class="fu">equalBits</span>( wordPaths[w1][i][<span class="dv">0</span>]<span class="op">,</span> wordPaths[w2][j][<span class="dv">0</span>] )<span class="op">,</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>						Logic<span class="op">.</span><span class="fu">equalBits</span>( wordPaths[w1][i][<span class="dv">1</span>]<span class="op">,</span> wordPaths[w2][j][<span class="dv">1</span>] )</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>					))<span class="op">;</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>				}</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>			}</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>		}</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>	}</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>	<span class="co">// find solution</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>	<span class="cf">return</span> {</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>		<span class="dt">solution</span><span class="op">:</span> solver<span class="op">.</span><span class="fu">solve</span>()<span class="op">,</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>		<span class="dt">wordPaths</span><span class="op">:</span> wordPaths</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>	}<span class="op">;</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+
+    </section>
+</article>
+</div>
+
+
+	<footer id="page-footer">
+		<span style="float: left; vertical-align: middle">
+			<img id="visitor-count" src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits">
+			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io-source">hosted on GitHub</a>.
+		</span>
+		<span style="float: right">
+			Generated October  7, 2021
+		</span>
+	</footer>
+<!--------------------------------------------------------->
+</body>
+
+</html>

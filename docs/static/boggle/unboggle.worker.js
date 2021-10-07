@@ -35,7 +35,6 @@ function encode(numRows, numCols, words){
 
 	// bit constants
 	let const_1  = Logic.constantBits(1);
-	let const_25 = Logic.constantBits(25);
 	let const_numRows = Logic.constantBits(numRows);
 	let const_numCols = Logic.constantBits(numCols);
 
@@ -46,11 +45,10 @@ function encode(numRows, numCols, words){
 		// translate word
 		let word = words[w];
 		let wordPath = [];
-		let numLetters = word.length;
 
 		for(let i = 0; i < word.length; i++){
 			// location of ith letter stored in variables:
-			//     p_(w)_(i)_x and p_(w)_(i)_y
+			//     p_(w)_(i)_r and p_(w)_(i)_c
 			let pr = Logic.variableBits(`p_${w}_${i}_r`, numRowBits);
 			let pc = Logic.variableBits(`p_${w}_${i}_c`, numColBits);
 			wordPath.push([pr,pc]);
@@ -134,8 +132,18 @@ function decode(numRows, numCols, words, wordPaths, solution){
 			if(result[pr][pc] == "."){
 				result[pr][pc] = words[w][k];
 			} else if(result[pr][pc] != words[w][k]){
-				console.log("DECODING ERROR!");
+				console.error("DECODING ERROR!");
 				return;
+			}
+		}
+	}
+
+	// fill in any missing characters
+	for(let r = 0; r < numRows; r++) {
+		for(let c = 0; c < numRows; c++) {
+			if(result[r][c] === ".") {
+				let letterIdx = Math.floor(Math.random() * 26);
+				result[r][c] = ALPHABET[letterIdx];
 			}
 		}
 	}
