@@ -3,15 +3,22 @@
 let boggle = null;
 let wordTrie = null;
 let boggleInput = null;
+let solveButton = null;
 
 window.addEventListener("load", function(){
 	boggle = document.getElementById("boggle-board");
 	wordTrie = new WordTrie(DICTIONARY, 3);
 	boggleInput = document.getElementById("boggle-input");
+
 	boggleInput.oninput = function(evt) {
 		let userString = boggleInput.value;
 		let board = boggle.fromString(boggleInput.value, 4, 4);
 		boggle.fillBoard(board);
+	}
+
+	solveButton = document.getElementById("boggle-solve-btn");
+	solveButton.onclick = function(){
+		solveBoggle();
 	}
 });
 
@@ -71,6 +78,7 @@ function displayWords(words, pathMap){
 		let word = words[k];
 		let wordElt = document.createElement("span");
 		wordElt.onmouseover = (evt => { boggleHighlightWord(word) }); 
+		wordElt.ontouchstart = (evt => { boggleHighlightWord(word) }); 
 		wordElt.textContent = word
 		wordListElt.appendChild(wordElt);
 	}
