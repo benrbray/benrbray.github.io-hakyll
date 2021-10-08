@@ -32,7 +32,7 @@ summary: Generate a boggle board containing your custom list of words!
 			"input"
 			"solve"
 			"words";
-		grid-template-rows: 1fr auto auto 2fr;
+		grid-template-rows: 1fr auto auto auto 2fr;
 		grid-template-columns: 1fr;
 	}
 }
@@ -258,7 +258,7 @@ HTIE
 </div>
 <input id="boggle-input" maxlength=16 style="text-transform: uppercase;" placeholder="BOARD INPUT" onclick="">
 <div id="boggle-solve" class="controls">
-<button onclick="solveBoggle()" type="button">SOLVE!</button>
+<button id="boggle-solve-btn" type="button">SOLVE!</button>
 </div>
 </div>
 
