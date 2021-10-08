@@ -22,6 +22,19 @@ summary: Generate a boggle board containing your custom list of words!
 		  / auto 1fr;
 }
 
+
+@media (max-width: 35rem) {
+	#boggle-game {
+		grid-template-areas:
+			"controls"
+			"board"
+			"solve"
+			"words";
+		grid-template-rows: 1fr auto auto 2fr;
+		grid-template-columns: 1fr;
+	}
+}
+
 grid-game {
   font-family: var(--sans-font);
 }
@@ -102,6 +115,17 @@ grid-game {
 	grid: "board words" 1fr
 		  "solve words" auto
 		  / auto 1fr;
+}
+
+@media (max-width: 35rem) {
+	#unboggle-game {
+		grid-template-areas:
+			"board"
+			"solve"
+			"words";
+		grid-template-rows: 1fr auto auto;
+		grid-template-columns: 1fr;
+	}
 }
 
 #unboggle-solve { grid-area: solve; }
