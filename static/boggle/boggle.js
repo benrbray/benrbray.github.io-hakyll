@@ -2,14 +2,18 @@
 
 let boggle = null;
 let wordTrie = null;
+let boggleInput = null;
 
 window.addEventListener("load", function(){
 	boggle = document.getElementById("boggle-board");
 	wordTrie = new WordTrie(DICTIONARY, 3);
+	boggleInput = document.getElementById("boggle-input");
+	boggleInput.oninput = function(evt) {
+		let userString = boggleInput.value;
+		let board = boggle.fromString(boggleInput.value, 4, 4);
+		boggle.fillBoard(board);
+	}
 });
-
-const HelloWorldText = () => ( `<h2> Hello World </h2>` );
-
 
 function solveBoggle(){
 	// read boggle board

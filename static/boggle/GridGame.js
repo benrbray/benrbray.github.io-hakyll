@@ -388,7 +388,7 @@ export class GridGameElement extends HTMLElement {
 
 	fromString(input, numRows, numCols){
 		// remove spaces from input
-		input = input.replace(/\s/g, '');
+		input = input.replace(/\s/g, '').toUpperCase();
 		// if input empty, fail gracefully
 		if(!input){ return null; }
 		input = input.trim();
@@ -435,9 +435,8 @@ export class GridGameElement extends HTMLElement {
 		} else {
 			// validate input size
 			if(numRows * numCols !== input.length) {
-				console.error(`invalid input (length ${input.length}) for ${numRows}x${numCols} grid` );
-				console.error(input);
-				return null;
+				console.warn(`invalid input (length ${input.length}) for ${numRows}x${numCols} grid` );
+				console.warn(input);
 			}
 
 			let data = [];
@@ -495,14 +494,17 @@ export class GridGameElement extends HTMLElement {
 		this.numRows = boardData.numRows;
 		this.numCols = boardData.numCols;
 
+		// TODO: make it easier to iterate over cells without
+		// depending on specific structure as a table
 		for(let r = 0; r < this.numRows; r++){
+			if(boardData.data.length <= r) { continue; }
 			for(let c = 0; c < this.numCols; c++){
-				// TODO: make it easier to iterate over cells without
-				// depending on specific structure as a table
+				if(boardData.data[r].length <= c) { continue; }
+
 				let data = boardData.data[r][c];
 				let cell = this.getCell(r,c);
 
-				if(data)          { cell.textContent = data; }
+				if(data) { cell.textContent = data; }
 				if(data === null) {
 					cell.classList.add("void");
 					cell.setAttribute("disabled","");

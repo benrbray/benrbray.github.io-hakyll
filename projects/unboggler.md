@@ -18,6 +18,7 @@ summary: Generate a boggle board containing your custom list of words!
 	grid-gap: 1rem;
 	grid: "controls words" auto
 	      "board words" 1fr
+		  "input words" auto
 		  "solve words" auto
 		  / auto 1fr;
 }
@@ -28,6 +29,7 @@ summary: Generate a boggle board containing your custom list of words!
 		grid-template-areas:
 			"controls"
 			"board"
+			"input"
 			"solve"
 			"words";
 		grid-template-rows: 1fr auto auto 2fr;
@@ -43,12 +45,13 @@ grid-game {
 #boggle-solve    { grid-area: solve;    }
 #boggle-board    { grid-area: board;    }
 #boggle-list     { grid-area: words;    }
+#boggle-input    { grid-area: input;    }
 
 #boggle-list {
 	position: absolute;
 	max-height: 100%;
 	overflow-y: auto;
-  font-family: var(--sans-font);
+	font-family: var(--sans-font);
 }
 
 .wordList {
@@ -85,6 +88,11 @@ grid-game {
 	grid: auto / 1fr 1fr;
 	grid-auto-flow: row;
 	grid-gap: 1em;
+}
+
+#boggle-input {
+	height: 2em;
+	font-family: var(--sans-font);
 }
 
 #boggle-solve button {
@@ -230,8 +238,6 @@ grid-game {
 
 <script type="module">
 import { init, GridGameElement } from "/static/boggle/GridGame.js";
-
-console.log("module code!!!");
 window.customElements.define("grid-game", GridGameElement);
 </script>
 
@@ -240,7 +246,7 @@ window.customElements.define("grid-game", GridGameElement);
 Boggle is a classic board game in which players search for words constructed by connecting adjacent tiles in a grid of letters.  Letters can be used at most once, and are allowed to connect horizontally, vertically, or diagonally.  Listing all words in a Boggle board is a common interview question, easily achieved by querying a <a href="https://en.wikipedia.org/wiki/Trie">trie</a> data structure assembled from a list of dictionary words.  Use the widget below to see it in action!
 
 <div id="boggle-game">
-<div id="boggle-controls" class="controls"><button style="grid-column-end:span 2;" onclick="boggleRandomize()" type="button">Randomize</button><div class="checkboxes" style="grid-column-end:span 2"><label><input type="radio" onclick="randomDice()"  name="randomize" value="boggle-dice" required checked="checked"><span>Boggle Dice</span></label><label><input type="radio" onclick="randomFreq()"  name="randomize" value="frequency" required><span>Frequency</span></label><label><input type="radio" onclick="randomUniform()"  name="randomize" value="uniform" required><span>Uniform</span></label><label><input type="radio" onclick="randomWord()" name="randomize" value="long-word" required><span>Long Word</span></label></div></div>
+<div id="boggle-controls" class="controls"><div class="checkboxes" style="grid-column-end:span 2"><label><input type="radio" onclick="randomDice()"  name="randomize" value="boggle-dice" required checked="checked"><span>Boggle Dice</span></label><label><input type="radio" onclick="randomFreq()"  name="randomize" value="frequency" required><span>Frequency</span></label><label><input type="radio" onclick="randomUniform()"  name="randomize" value="uniform" required><span>Uniform</span></label><label><input type="radio" onclick="randomWord()" name="randomize" value="long-word" required><span>Long Word</span></label></div></div>
 <grid-game id="boggle-board" type="boggle" data-rows="4" data-cols="4">
 PYBO
 ALGG
@@ -250,6 +256,7 @@ HTIE
 <div id="boggle-list">
 <div class="wordList"></div>
 </div>
+<input id="boggle-input" maxlength=16 style="text-transform: uppercase;" placeholder="BOARD INPUT" onclick="">
 <div id="boggle-solve" class="controls">
 <button onclick="solveBoggle()" type="button">SOLVE!</button>
 </div>

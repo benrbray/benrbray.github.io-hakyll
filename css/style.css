@@ -167,8 +167,6 @@ dfn, span.definition {
 	font-style: normal;
 }
 
-
-
 /* ---- Code -------------------------------------------- */
 
 pre      { font-family: var(--code-font); background-color: var(--color-bg-2); display: block; }
@@ -185,10 +183,6 @@ code {
 	background-color: var(--color-bg-2);
 	font-family: "Consolas", "Ubuntu Mono", monospace;
 	text-align: left;
-}
-
-.sourceCode {
-
 }
 
 /* code in headings */
