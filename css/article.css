@@ -5,7 +5,7 @@ Style declarations for articles, project pages, etc..
 
 /* Post Body ---------------------------------------------------------------- */
 
-#post-body {
+article {
 	counter-reset: section subsec subsub figcounter;
 }
 
@@ -350,14 +350,14 @@ figure>img, .img-gallery>img {
 /* Figure Caption */
 
 figcaption::before {
-	counter-increment: figcounter;
-	content: "Figure " counters(figcounter, "") ".";
+	content: "Figure " counter(figcounter) ".";
 	display: span;
 	margin-right: 0.5em;
 	font-style: italic;
 }
 
 figcaption {
+	counter-increment: figcounter;
 	margin-top: 0.5em;
 }
 
