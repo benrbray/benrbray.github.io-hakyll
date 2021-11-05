@@ -330,11 +330,9 @@ function backbite(numRows, numCols){
 		for(let j = 0 ; j < diagLength; j++){
 			// ??????
 		}
-
 		// compute diagonal start idx (first row, then final col)
 		if(i < numCols-1) { diagStartIdx += 1;       }
 		else              { diagStartIdx += numCols; }
-
 		// compute diagonal length (even for non-square grids)
 		if(i+1 < minDim)             { diagLength++; }
 		if(i  >= diagCount - minDim) { diagLength--; }
@@ -355,109 +353,13 @@ function backbite(numRows, numCols){
 	// backbite algorithm
 	let max_iter = numRows * numCols;
 	for(let iter = 0; iter < max_iter; iter++){
-		// backbite
-		let whichEnd = (Math.random() < 0.5);
-		let end = (whichEnd ? endA : endB);
-		let row = Math.floor(end / numCols);
-		let col = end % numCols;
-
-		// select random neighbor
-		let neighbors = [];
-
-		// t(op), b(ottom), l(eft), r(ight)
-		let free_l = (col > 0);
-		let free_r = (col < numCols-1);
-		let free_t = (row > 0);
-		let free_b = (row < numRows-1);
-
-		// TODO: Prettier?
-		if(free_l) {     neighbors.push(end-1); }
-		if(free_r) {     neighbors.push(end+1); }
-		if(free_t) {     neighbors.push(end-numCols);
-			if(free_l) { neighbors.push(end-numCols-1); }
-			if(free_r) { neighbors.push(end-numCols+1); }
-		}
-		if(free_b) {     neighbors.push(end+numCols);
-			if(free_l) { neighbors.push(end+numCols-1); }
-			if(free_r) { neighbors.push(end+numCols+1); }
-		}
-
 		// random stopping
 		if(Math.random() < 0.01){ break; }
 
-		// choose random non-adjacent neighbor
-		// (resolve wrong choice with fisher-yates-like shuffle)
-		let idx = (Math.random() * neighbors.length) | 0;
-		let adjacent = (whichEnd ? path[end].next : path[end].prev);
-		while(neighbors[idx] == adjacent){
-			neighbors[idx] = neighbors[neighbors.length-1];
-			idx = (Math.random() * (neighbors.length-1)) | 0;
-		}
-		let nhbr = neighbors[idx];
-
-		// connect neighbor to endpoint
-		if(whichEnd){ 
-
-			if(nhbr == endB){
-				path[end ].prev = nhbr;
-				path[nhbr].next = end;
-
-				endA = nhbr;
-				endB = path[nhbr].prev;
-				path[endB].next = null;
-				path[endA].prev = null;
-			} else {
-				path[end].prev = path[end].next;
-				path[end].next = nhbr;
-				let idx = path[nhbr].prev;
-				path[nhbr].prev = end;
-
-				// new front is at idx
-				endA = idx;
-
-				// reverse path from [end --> nhbr)
-				let prev = null;
-				while(idx != end){
-					let next = path[idx].prev;
-					path[idx].prev = prev;
-					path[idx].next = next;
-					prev = idx;
-					idx = next;
-				}
-			}
-
-		} else {
-
-			if(nhbr == endA){
-				path[end ].next = nhbr;
-				path[nhbr].prev = end;
-
-				endA = path[nhbr].next;
-				endB = nhbr;
-				path[endB].next = null;
-				path[endA].prev = null;
-			} else {
-				path[end].next = path[end].prev;
-				path[end].prev = nhbr;
-				let idx = path[nhbr].next;
-				path[nhbr].next = end; 
-
-				// new back is at idx
-				endB = idx;
-
-				// reverse path from [end --> nhbr)
-				let next = null;
-				while(idx != end){
-					let prev = path[idx].next;
-					path[idx].next = next;
-					path[idx].prev = prev;
-					next = idx;
-					idx = prev;
-				}
-			}
-
-
-		}
+		let result = backbiteIter(path, numRows, numCols, endA, endB);
+		path = result.path;
+		endA = result.endA;
+		endB = result.endB;
 		
 		validatePath(path, numRows, numCols, endA, endB);
 	}
@@ -480,6 +382,109 @@ function backbite(numRows, numCols){
 	return result;
 }
 
+function backbiteIter(path, numRows, numCols, endA, endB){
+	// backbite
+	let whichEnd = (Math.random() < 0.5);
+	let end = (whichEnd ? endA : endB);
+	let row = Math.floor(end / numCols);
+	let col = end % numCols;
+
+	// select random neighbor
+	let neighbors = [];
+
+	// t(op), b(ottom), l(eft), r(ight)
+	let free_l = (col > 0);
+	let free_r = (col < numCols-1);
+	let free_t = (row > 0);
+	let free_b = (row < numRows-1);
+
+	// TODO: Prettier?
+	if(free_l) {     neighbors.push(end-1); }
+	if(free_r) {     neighbors.push(end+1); }
+	if(free_t) {     neighbors.push(end-numCols);
+		if(free_l) { neighbors.push(end-numCols-1); }
+		if(free_r) { neighbors.push(end-numCols+1); }
+	}
+	if(free_b) {     neighbors.push(end+numCols);
+		if(free_l) { neighbors.push(end+numCols-1); }
+		if(free_r) { neighbors.push(end+numCols+1); }
+	}
+
+	// choose random non-adjacent neighbor
+	// (resolve wrong choice with fisher-yates-like shuffle)
+	let idx = (Math.random() * neighbors.length) | 0;
+	let adjacent = (whichEnd ? path[end].next : path[end].prev);
+	while(neighbors[idx] == adjacent){
+		neighbors[idx] = neighbors[neighbors.length-1];
+		idx = (Math.random() * (neighbors.length-1)) | 0;
+	}
+	let nhbr = neighbors[idx];
+
+	// connect neighbor to endpoint
+	if(whichEnd){ 
+
+		if(nhbr == endB){
+			path[end ].prev = nhbr;
+			path[nhbr].next = end;
+
+			endA = nhbr;
+			endB = path[nhbr].prev;
+			path[endB].next = null;
+			path[endA].prev = null;
+		} else {
+			path[end].prev = path[end].next;
+			path[end].next = nhbr;
+			let idx = path[nhbr].prev;
+			path[nhbr].prev = end;
+
+			// new front is at idx
+			endA = idx;
+
+			// reverse path from [end --> nhbr)
+			let prev = null;
+			while(idx != end){
+				let next = path[idx].prev;
+				path[idx].prev = prev;
+				path[idx].next = next;
+				prev = idx;
+				idx = next;
+			}
+		}
+
+	} else {
+
+		if(nhbr == endA){
+			path[end ].next = nhbr;
+			path[nhbr].prev = end;
+
+			endA = path[nhbr].next;
+			endB = nhbr;
+			path[endB].next = null;
+			path[endA].prev = null;
+		} else {
+			path[end].next = path[end].prev;
+			path[end].prev = nhbr;
+			let idx = path[nhbr].next;
+			path[nhbr].next = end; 
+
+			// new back is at idx
+			endB = idx;
+
+			// reverse path from [end --> nhbr)
+			let next = null;
+			while(idx != end){
+				let prev = path[idx].next;
+				path[idx].next = next;
+				path[idx].prev = prev;
+				next = idx;
+				idx = prev;
+			}
+		}
+	}
+
+	return { path, endA, endB, idx };
+}
+
 /*function printPath(path, numRows, numCols){
 	let pathStr = "";
 	for(let r = 0; r < numRows; r++){
@@ -487,7 +492,6 @@ function backbite(numRows, numCols){
 		for(let c = 0; c < numCols; c++){
 			let idx = r*numCols + c;
 			let next = path[idx].next;
-
 			if(path[idx].prev == null){
 				     if(next == null)          { rowStr += "E ";  }
 				else if(next == idx-1)         { rowStr += "🢀 "; }
@@ -512,7 +516,6 @@ function backbite(numRows, numCols){
 		}
 		pathStr += rowStr + "\n";
 	}
-
 	console.log(pathStr);
 }*/
 

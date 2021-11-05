@@ -1,7 +1,8 @@
 ---
 title:  Unboggler
 date: January 18, 2020
-tags: algorithms
+tags: algorithms, satisfiability, games
+tools: javascript
 thumb_url: images/thumbnails/boggle_thumb.jpg
 priority: 1
 summary: Generate a boggle board containing your custom list of words!

@@ -1,5 +1,6 @@
 ---
 tags: math, category-theory, yoneda-lemma
+tools: haskell
 katex_macros: category-theory.katex
 title: Yoneda Lemma
 bib: bib/category-theory.bib

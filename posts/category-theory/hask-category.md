@@ -1,5 +1,6 @@
 ---
-tags: haskell, category-theory, functional-programming
+tags: math, category-theory, functional-programming
+tools: haskell
 katex_macros: category-theory.katex
 title: The Hask Category
 date: 2021-06-01

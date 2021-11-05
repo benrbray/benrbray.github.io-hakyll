@@ -99,12 +99,10 @@ main = do
         route idRoute
         compile copyFileCompiler
 
-    let timeCtx = ctxWithDate now defaultContext
-
     -- collect all tags found in posts and assign them a url
     -- https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html
-    tags  <- buildTagsWith getTags  postGlob (fromCapture "tags/*.html")
-    tools <- buildTagsWith getTools postGlob (fromCapture "tools/*.html")
+    tags  <- buildTagsWith getTags  (postGlob .||. projectGlob) (fromCapture "tags/*.html")
+    tools <- buildTagsWith getTools (projectGlob .||. postGlob) (fromCapture "tools/*.html")
     let ctx = ctxWithDate now $ postCtxWithTags tags tools
 
     -- miscellaneous pages with fixed links
@@ -204,6 +202,14 @@ main = do
                 >>= loadAndApplyTemplate "templates/page.html"    archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= adjustUrls
+
+    create ["resume.html"] $ do
+        route idRoute
+        compile $ do
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/resume.html" ctx
+                >>= adjustUrls
+
 
     create ["projects.html"] $ do
         route idRoute
