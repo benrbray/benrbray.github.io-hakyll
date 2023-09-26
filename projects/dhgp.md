@@ -1,14 +1,16 @@
 ---
 title:  Digital Humanities &amp; German&nbsp;Periodicals
 date: December 1, 2016
-tags:  nlp, topic-models, machine-learning
-tools: python, flask, gensim, javascript
+tags:  nlp, machine-learning
+tools: python, js
 thumb_url: images/thumbnails/deutsche-rundschau_thumb.png
 banner_url: images/thumbnails/deutsche-rundschau_long.png
 banner_comment: "Image <a href='https://twitter.com/FontaneArchiv/status/999271012591177728'>@FontaneArchiv</a>"
-Summary: As an undergraduate research assistant, I spent three years as the primary developer for an NLP-driven web application built to assist a humanities professor with his research on 19th-century German literature.  The application allowed him to run statistical topic models (LDA, HDP, dynamic topic models, etc.) on a large corpus of text, and displayed helpful visualizations of the results.  The application was built using Python / Flask / Bootstrap and also supported toponym detection and full-text search.  
+summary: "<p>As an undergraduate research assistant, I ran statistical topic models on a corpus of 19th-century German-language periodicals."
+
 ---
 
+As an undergraduate research assistant, I spent three years as the primary developer for an NLP-driven web application built to assist a humanities professor with his research on 19th-century German literature.  The application allowed him to run statistical topic models (LDA, HDP, dynamic topic models, etc.) on a large corpus of text, and displayed helpful visualizations of the results.  The application was built using Python / Flask / Bootstrap and also supported toponym detection and full-text search.  
 # Overview
 
 As an undergraduate research assistant, I spent three years as the primary developer for an NLP-driven web application built to assist a humanities professor ([Dr. Peter McIsaac](https://lsa.umich.edu/german/people/faculty/pmcisaac.html), University of Michigan) with his research on 19th-century German literature.  The application allowed him to run statistical topic models ([LDA](http://jmlr.org/papers/volume3/blei03a/blei03a.pdf), [HDP](http://proceedings.mlr.press/v15/wang11a/wang11a.pdf), [DTM](https://mimno.infosci.cornell.edu/info6150/readings/dynamic_topic_models.pdf), etc.) on a large corpus of text and displayed helpful visualizations of the results.  The application was built using **Python** / **Flask** / **Bootstrap** and also supported toponym detection and full-text search.  We used [`gensim`](https://radimrehurek.com/gensim/) for topic modeling.

@@ -1,13 +1,13 @@
 ---
 title:  AdamBots Automated&nbsp;Scouting&nbsp;Kit
-date: June 1, 2014
-tags:  linear-algebra, robotics
+date: June 1, 2013
+tags:  math, ui
 tools:  javascript
 thumb_url: images/thumbnails/aask_thumb.png
 banner_url: images/thumbnails/aask_long.png
 demo_url: /static/aask/aask.html
 github_url: https://github.com/benrbray/adambots-automated-scouting-kit
-summary: Match prediction and analysis for FIRST FRC competitions. 
+summary: I used <i>linear algebra</i> to give my high school robotics team a competitive edge!  Since robots compete in teams of three, an individual's contribution to the final score cannot be known.  By scraping public match data and solving a linear system, I estimated an <i>offensive power rating</i> for each robot, which my team used to predict match outcomes and choose alliances. 
 ---
 
 <style>

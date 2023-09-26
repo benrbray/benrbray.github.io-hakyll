@@ -1,9 +1,10 @@
 ---
 title:  ProseMirror Math
 date: June 14, 2020
-tags:  math, text-editor
-tools: typescript, prosemirror, katex
-thumb_url: images/thumbnails/prosemirror-math.png
+tags:  math, ui
+tools: typescript
+thumb_url: images/thumbnails/prosemirror-math-2.png
+# thumb_url: images/thumbnails/prosemirror-math.png
 github_url: https://github.com/benrbray/prosemirror-math
 summary: Schema and plugins for math editing using ProseMirror!
 ---

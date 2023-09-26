@@ -1,8 +1,8 @@
 ---
 title:  Noteworthy
 date: September 16, 2020
-tags: note-taking, math
-tools: typescript, prosemirror, electron
+tags: ui
+tools: typescript
 thumb_url: images/thumbnails/noteworthy2.png
 github_url: https://github.com/benrbray/noteworthy
 demo_url: https://noteworthy.ink/

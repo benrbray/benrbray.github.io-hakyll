@@ -34,7 +34,7 @@
 	<style>
 /* About Me */
 
-#about-box {
+/* #about-box {
 	display: grid;
 	grid-row-gap: 0.5rem;
 	grid-column-gap: 1.0rem;
@@ -50,8 +50,6 @@
 
 #about-container {
 	background-color: #dfedff;
-	/*#dedede*/
-	;
 }
 
 @media (min-width: 40rem) {
@@ -62,7 +60,7 @@
 			"info text";
 	}
 
-	#ben-photo {
+	#about-box #ben-photo {
 		justify-self: center;
 	}
 }
@@ -79,7 +77,7 @@
 		align-self: center;
 	}
 
-	#ben-photo {
+	#about-box #ben-photo {
 		justify-self: right;
 	}
 }
@@ -106,7 +104,7 @@
 	vertical-align: middle;
 }
 
-#ben-photo {
+#about-box #ben-photo {
 	grid-area: img;
 	width: 140px;
 	height: 140px;
@@ -120,10 +118,10 @@
 
 #about-text p:first-child {
 	margin-top: 0;
-}
+} */
 
 h2 {
-	font-size: 1.4em;
+	font-size: 1.8rem;
 	margin-top: 2em;
 }
 
@@ -195,105 +193,79 @@ h2 {
 	font-weight: normal;
 	font-family: var(--code-font);
 }
+
+/* ---- */
+
+#about {
+	display: flex;
+	flex-direction: row;
+	gap: 2em;
+}
+
+#about .about-portrait {
+	flex-basis: 40%;
+
+	min-width: 16rem;
+	position: relative;
+}
+
+#about .about-portrait img {
+	display: block;
+	width: 100%;
+}
+
+#about .about-description {
+	grid-area: desc;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#about .about-description p { margin: 0.6rem 0; }
+#about .about-title         { margin: 0.6rem 0; }
+
+#about .about-title {
+	font-size: 2em;
+	font-weight: bold;
+}
+
 </style>
 
 <div id="page">
 
-<!-- ABOUT ME -->
-<div id="about-container">
-	<div id="about-box">
-		<img alt="photo of me, with a blurry space needle in the background!" id="ben-photo" src="./images/ben-160px.jpg" />
-		<ul id="about-info">
-			<li class="social">
-				<img alt="resume" src="./images/icons/resume-14px-black.png" />
-				<a href="./resume">resume</a>
-			</li>
-			<li class="social">
-				<img alt="github" src="./images/icons/github-14px-black.png" />
-				<a href="https://github.com/benrbray">github</a>
-			</li>
-			<li class="social">
-				<img alt="linkedin" src="./images/icons/linkedin-14px-black.png" />
-				<a href="https://www.linkedin.com/in/benrbray/">linkedin</a>
-			</li>
-			<li class="social">
-				<img alt="newgrounds" src="./images/icons/ng-bw.ico" />
-				<a href="https://archawn.newgrounds.com/">newgrounds</a>
-			</li>
-			<li class="social">
-				<img alt="gmail" src="./images/icons/mail-14px-black.png" />
-				<a href="mailto:benrbray@gmail.com">gmail</a>
-			</li>
-		</ul>
-		<div id="about-text">
-			<p>I work as a research engineer as part of Prof. <a href="https://group-mmm.org/~ichiro/">Ichiro Hasuo</a>'s <a href="https://group-mmm.org/eratommsd/">ERATO MMSD</a> project at <a href="https://www.nii.ac.jp/en/">National Institute of Informatics</a> in Tokyo, Japan.
+<div id="about">
+	<!-- photo -->
+	<div class="about-portrait">
+		<img alt="photo of me in France, taken September 2023" src="./images/ben-france.png" />
+	</div>
+	<!-- ontro -->
+	<div class="about-description">
+		<div class="about-title">Benjamin R. Bray</div>
+		<p>
+			I work as a <b>research software engineer</b> for Prof. <a href="https://group-mmm.org/~ichiro/">Ichiro Hasuo</a> at the <a href="https://www.nii.ac.jp/en/">National Institute of Informatics</a> in Tokyo, Japan, where I use <b>Haskell</b> to create domain-specific programming languages for formal verification of cyberphysical systems.
+		</p>
+		<p>
+			My ambition is to design software which makes <b>formal verification</b> more accessible to developers.  I'm particularly interested in improving the user experience of <b>dependently-typed</b> programming. 
+		</p>
+		<p>
+			In my free time, I enjoy cycling, dodgeball, <a href="./images/tokyo-walking-map.jpg">long walks</a>, and baking <a href="./images/sourdough.jpg">sourdough</a>. Maybe one day I'll make more <a href="http://www.newgrounds.com/portal/view/512482">games</a>. If you'd like to chat, feel free to
+		write me at <a href="mailto:benrbray@gmail.com">benrbray@gmail.com</a>.
+		</p>
 
-			<p>In my free time, I work on <a href="https://noteworthy.ink/">Noteworthy</a>, an open-source Markdown
-				editor with bidirectional links and excellent math support! I also enjoy reading about functional programming and discrete
-				differential geometry.
+		<!-- <p>In my free time, I work on <a href="https://noteworthy.ink/">Noteworthy</a>, an open-source Markdown
+			editor with bidirectional links and excellent math support!
+		</p> -->
 
-			<p>I hold a Masters in Computer Science from <b>Georgia Tech</b>, where my research advisor was <a href="https://www.cc.gatech.edu/~jabernethy9/">Jacob Abernethy</a>. Previously, I studied math at
-				the University of Michigan, where I also helped with a machine learning <a href="https://eecs445-f16.github.io/">class</a> and <a href="http://msail.github.io/">reading
-					group</a>.
-
-			<p>Out of the office, I enjoy biking, <a href="./images/tokyo-walking-map.jpg">long walks</a>, and baking <a href="./images/sourdough.jpg">sourdough</a>. Maybe one day I'll make more <a href="http://www.newgrounds.com/portal/view/512482">games</a>. If you'd like to chat, feel free to
-				write me at <a href="mailto:benrbray@gmail.com">benrbray@gmail.com</a>.
-		</div>
+		<!-- <p>I hold a Masters in Computer Science from <b>Georgia Tech</b>, where my research advisor was <a
+				href="https://www.cc.gatech.edu/~jabernethy9/">Jacob Abernethy</a>. Previously, I studied math at
+			the University of Michigan, where I also helped with a machine learning <a
+				href="https://eecs445-f16.github.io/">class</a> and <a href="http://msail.github.io/">reading
+				group</a>. -->
 	</div>
 </div>
 
-<!-- <h2>Recent Updates</h2>
-
-<table>
-	<colgroup>
-		<col style="width:4em">
-		<col>
-	</colgroup><tr>
-		<td><b>2023</b></td>
-		<td>Joined the <a href="https://group-mmm.org/~ichiro/">Hasuo Lab</a> at the <a href="National Institute of Informatics">National Institute of Informatics</a> as a <b>research engineer</b>.</td>
-	</tr><tr>
-		<td><b>2022</b></td>
-		<td>Joined Smartpay in Tokyo as a backend engineer writing <b>purely functional Scala</b></td>
-	</tr><tr>
-		<td><b>2020</b></td>
-		<td>Started full-time as a <b>Machine Learning & Graphics Engineer</b> at EmbodyMe in Tokyo</td>
-	</tr><tr>
-		<td></td>
-		<td>Teaching Assistant for ISYE 6740: Computational Data Analysis with Prof. Yao Xie</td>
-	</tr>
-	<tr>
-		<td><b>2019</b></td>
-		<td>Teaching Assistant for <a href="https://cs4540-f19.github.io/">CS 4540: Advanced Algorithms (F19)</a> with Prof. Jacob Abernethy</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>Attended the <a href="http://www.cas.mcmaster.ca/~deza/tokyo2019progr.html">Discrete Optimization & Machine
-				Learning
-				Workshop</a> at RIKEN</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>Internship at <a href="http://www.riken.jp/en/research/labs/aip/">RIKEN AIP</a> in Tokyo on the <a
-				href="https://emtiyaz.github.io/#research">Approximate Bayesian Inference</a> team</td>
-	</tr>
-	<tr>
-		<td><b>2018</b></td>
-		<td>Teaching Assistant for <a href="https://cs4540-f18.github.io/">CS 4540: Advanced Algorithms (F18)</a> with Prof. Jacob Abernethy</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>Visited the <a href="https://www.mccormick.northwestern.edu/eecs/computer-science/online-markets.html">Data
-				Science &amp; Online
-				Markets</a> group at Northwestern</td>
-	</tr>
-</table> -->
-
-<!-- Projects ----------------------------------------------------------------->
-<h2>Recent Posts (<a href="./blog">View Archive</a>)</h2>
+<!-- Writing ----------------------------------------------------------------->
+<h2>Selected Writing</h2>
 
     <div class="post-box ">
         <a class="post-title" href="./posts/category-theory/yoneda-lemma">Yoneda Lemma</a>
@@ -320,11 +292,229 @@ h2 {
     </div>
 
 
-<!-- Draft Posts -->
 
 
-<!-- Draft Projects -->
+<!-- Projects ----------------------------------------------------------------->
+<h2>Selected Projects</h2>
+<div class="project-list">
 
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="https://github.com/benrbray/type-safari">Type Inference Zoo</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">September 2023 in </span>
+				<span class="project-tags">
+					<a href="./tags/plt" class="tag">plt</a>
+					<a href="./tools/haskell" class="tool">haskell</a> <a href="./tools/typescript" class="tool">typescript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				Still in development.  With this project, I will collect reference implementations of type inference algorithms, with particular emphasis on those features which are necessary for practical implementations, such as error reporting and incrementality.
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/hindley-milner-3.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/noteworthy">Noteworthy</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">September 2020 in </span>
+				<span class="project-tags">
+					<a href="./tags/ui" class="tag">ui</a>
+					<a href="./tools/typescript" class="tool">typescript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				An open-source Markdown editor with bidirectional links and excellent math support!
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/noteworthy2.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/prosemirror-math">ProseMirror Math</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">June 2020 in </span>
+				<span class="project-tags">
+					<a href="./tags/math" class="tag">math</a> <a href="./tags/ui" class="tag">ui</a>
+					<a href="./tools/typescript" class="tool">typescript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				Schema and plugins for math editing using ProseMirror!
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/prosemirror-math-2.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/unboggler">Unboggler</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">January 2020 in </span>
+				<span class="project-tags">
+					<a href="./tags/algorithms" class="tag">algorithms</a>
+					<a href="./tools/javascript" class="tool">javascript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				Generate a boggle board containing your custom list of words!
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/boggle_thumb.jpg" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/dhgp">Digital Humanities &amp; German&nbsp;Periodicals</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">December 2016 in </span>
+				<span class="project-tags">
+					<a href="./tags/nlp" class="tag">nlp</a> <a href="./tags/machine-learning" class="tag">machine-learning</a>
+					<a href="./tools/python" class="tool">python</a> <a href="./tools/js" class="tool">js</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				<p>As an undergraduate research assistant, I ran statistical topic models on a corpus of 19th-century German-language periodicals.
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/deutsche-rundschau_thumb.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/seam-carving">Seam Carving</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">December 2014 in </span>
+				<span class="project-tags">
+					<a href="./tags/image-processing" class="tag">image-processing</a> <a href="./tags/algorithms" class="tag">algorithms</a>
+					<a href="./tools/javascript" class="tool">javascript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				Rather than scaling or cropping, the <i>seam carving</i> algorithm resizes images by removing horizontal and vertical seams, which must cross the entire image, but are allowed to zig and zag around salient regions in order to avoid too much deformation.  
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/seam-carve_thumb.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/domain-color">Complex Domain Coloring</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">February 2014 in </span>
+				<span class="project-tags">
+					<a href="./tags/math" class="tag">math</a> <a href="./tags/image-processing" class="tag">image-processing</a>
+					<a href="./tools/javascript" class="tool">javascript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				Domain coloring is a way of visualizing complex-input complex-output functions by assigning a color to each point of the complex domain.  Sampling these colors from an image produces amusing results!
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/complex-domain-coloring_thumb.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="./projects/aask">AdamBots Automated&nbsp;Scouting&nbsp;Kit</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">June 2013 in </span>
+				<span class="project-tags">
+					<a href="./tags/math" class="tag">math</a> <a href="./tags/ui" class="tag">ui</a>
+					<a href="./tools/javascript" class="tool">javascript</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				I used <i>linear algebra</i> to give my high school robotics team a competitive edge!  Since robots compete in teams of three, an individual's contribution to the final score cannot be known.  By scraping public match data and solving a linear system, I estimated an <i>offensive power rating</i> for each robot, which my team used to predict match outcomes and choose alliances.
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/aask_thumb.png" />
+		</div>
+	</div>
+
+	<div class="project ">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="https://archawn.newgrounds.com/">Flash Games</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">December 2012 in </span>
+				<span class="project-tags">
+					<a href="./tags/game-dev" class="tag">game-dev</a>
+					<a href="./tools/flash" class="tool">flash</a>
+				</span>
+			</div>
+			<div class="project-summary">
+				In middle school, my curiosity for game development led me to Newgrounds, where I made lifelong friends and published a few Flash games along the way.
+			</div>
+		</div>
+		<!-- thumbnail -->
+		<div class="project-thumb">
+			<img alt src="images/thumbnails/flash-games.png" />
+		</div>
+	</div>
+
+</div>
 
 <!-- Open Source -------------------------------------------------------------->
 <h2>Open Source</h2>
@@ -427,88 +617,11 @@ h2 {
 	</div>
 </div>
 
-<!-- Projects ----------------------------------------------------------------->
-<h2>Projects</h2>
-<div class="project-container">
+<!-- Draft Posts -->
 
-	<a class="project-box " href="./projects/noteworthy">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/noteworthy2.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Noteworthy</p>
-		</div>
-	</a>
 
-	<a class="project-box " href="./projects/prosemirror-math">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/prosemirror-math.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>ProseMirror Math</p>
-		</div>
-	</a>
+<!-- Draft Projects -->
 
-	<a class="project-box  priority-1" href="./projects/unboggler">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/boggle_thumb.jpg" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Unboggler</p>
-		</div>
-	</a>
-
-	<a class="project-box " href="./projects/dhgp">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/deutsche-rundschau_thumb.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Digital Humanities &amp; German&nbsp;Periodicals</p>
-		</div>
-	</a>
-
-	<a class="project-box " href="./projects/seam-carving">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/seam-carve_thumb.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Seam Carving</p>
-		</div>
-	</a>
-
-	<a class="project-box " href="./projects/aask">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/aask_thumb.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>AdamBots Automated&nbsp;Scouting&nbsp;Kit</p>
-		</div>
-	</a>
-
-	<a class="project-box  priority-1" href="./projects/domain-color">
-		<!-- Thumbnail -->
-		<div class="project-thumb">
-			<img alt src="images/thumbnails/complex-domain-coloring_thumb.png" />
-		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>Complex Domain Coloring</p>
-		</div>
-	</a>
-
-</div>
 
 </div>
 	</article>
@@ -520,7 +633,7 @@ h2 {
 			Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a> and <a href="https://github.com/benrbray/benrbray.github.io">hosted on GitHub</a>.
 		</span>
 		<span style="float: right">
-			Generated February 23, 2023
+			Generated September 26, 2023
 		</span>
 	</footer>
 <!--------------------------------------------------------->

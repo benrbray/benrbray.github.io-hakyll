@@ -6,7 +6,7 @@ tools: javascript
 thumb_url: images/thumbnails/seam-carve_thumb.png
 demo_url: /static/seam-carving/index.html
 github_url: https://github.com/benrbray/benrbray.github.io-source/tree/master/content/static/seam-carving
-summary: "[Seam Carving](https://en.wikipedia.org/wiki/Seam_carving) is a classic dynamic programming algorithm for content-aware image resizing.  Rather than scaling or cropping, the seam carving algorithm resizes images by removing (or copying) horizontal and vertical slices of the image.  These slices, called *seams*, must cross the entire image, but are allowed to zig and zag around salient regions in order to avoid too much deformation.  "
+summary: "Rather than scaling or cropping, the <i>seam carving</i> algorithm resizes images by removing horizontal and vertical seams, which must cross the entire image, but are allowed to zig and zag around salient regions in order to avoid too much deformation.  "
 ---
 
 <style>

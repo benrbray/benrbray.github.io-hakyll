@@ -303,10 +303,13 @@ removeExt item = do
 
 postCtx :: Context String
 postCtx =
-    dateField "date" fmt             `mappend`
-    metaDateField "date_updated" fmt `mappend`
+    dateField "date" dateFmt             `mappend`
+    dateField "year" "%Y"                `mappend`
+    dateField "month" "%B"               `mappend`
+    metaDateField "date_updated" dateFmt `mappend`
     defaultContext
-    where fmt = "%B %e, %Y"
+    where
+        dateFmt = "%B %e, %Y"
 
 ctxWithDate :: Time.UTCTime -> Context String -> Context String
 ctxWithDate time ctx =

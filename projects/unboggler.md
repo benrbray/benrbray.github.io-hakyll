@@ -1,7 +1,7 @@
 ---
 title:  Unboggler
 date: January 18, 2020
-tags: algorithms, satisfiability, games
+tags: algorithms
 tools: javascript
 thumb_url: images/thumbnails/boggle_thumb.jpg
 priority: 1

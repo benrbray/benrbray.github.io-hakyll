@@ -5,7 +5,7 @@ title: Home
 <style>
 /* About Me */
 
-#about-box {
+/* #about-box {
 	display: grid;
 	grid-row-gap: 0.5rem;
 	grid-column-gap: 1.0rem;
@@ -21,8 +21,6 @@ title: Home
 
 #about-container {
 	background-color: #dfedff;
-	/*#dedede*/
-	;
 }
 
 @media (min-width: 40rem) {
@@ -33,7 +31,7 @@ title: Home
 			"info text";
 	}
 
-	#ben-photo {
+	#about-box #ben-photo {
 		justify-self: center;
 	}
 }
@@ -50,7 +48,7 @@ title: Home
 		align-self: center;
 	}
 
-	#ben-photo {
+	#about-box #ben-photo {
 		justify-self: right;
 	}
 }
@@ -77,7 +75,7 @@ title: Home
 	vertical-align: middle;
 }
 
-#ben-photo {
+#about-box #ben-photo {
 	grid-area: img;
 	width: 140px;
 	height: 140px;
@@ -91,10 +89,10 @@ title: Home
 
 #about-text p:first-child {
 	margin-top: 0;
-}
+} */
 
 h2 {
-	font-size: 1.4em;
+	font-size: 1.8rem;
 	margin-top: 2em;
 }
 
@@ -166,132 +164,89 @@ h2 {
 	font-weight: normal;
 	font-family: var(--code-font);
 }
+
+/* ---- */
+
+#about {
+	display: flex;
+	flex-direction: row;
+	gap: 2em;
+}
+
+#about .about-portrait {
+	flex-basis: 40%;
+
+	min-width: 16rem;
+	position: relative;
+}
+
+#about .about-portrait img {
+	display: block;
+	width: 100%;
+}
+
+#about .about-description {
+	grid-area: desc;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#about .about-description p { margin: 0.6rem 0; }
+#about .about-title         { margin: 0.6rem 0; }
+
+#about .about-title {
+	font-size: 2em;
+	font-weight: bold;
+}
+
 </style>
 
 <div id="page">
 
-<!-- ABOUT ME -->
-<div id="about-container">
-	<div id="about-box">
-		<img alt="photo of me, with a blurry space needle in the background!" id="ben-photo"
-			src="/images/ben-160px.jpg" />
-		<ul id="about-info">
-			<li class="social">
-				<img alt="resume" src="/images/icons/resume-14px-black.png" />
-				<a href="/resume.html">resume</a>
-			</li>
-			<li class="social">
-				<img alt="github" src="/images/icons/github-14px-black.png" />
-				<a href="https://github.com/benrbray">github</a>
-			</li>
-			<li class="social">
-				<img alt="linkedin" src="/images/icons/linkedin-14px-black.png" />
-				<a href="https://www.linkedin.com/in/benrbray/">linkedin</a>
-			</li>
-			<li class="social">
-				<img alt="newgrounds" src="/images/icons/ng-bw.ico" />
-				<a href="https://archawn.newgrounds.com/">newgrounds</a>
-			</li>
-			<li class="social">
-				<img alt="gmail" src="/images/icons/mail-14px-black.png" />
-				<a href="mailto:benrbray@gmail.com">gmail</a>
-			</li>
-		</ul>
-		<div id="about-text">
-			<p>I work as a research engineer as part of Prof. <a href="https://group-mmm.org/~ichiro/">Ichiro Hasuo</a>'s <a href="https://group-mmm.org/eratommsd/">ERATO MMSD</a> project at <a
-					href="https://www.nii.ac.jp/en/">National Institute of Informatics</a> in Tokyo, Japan.
+<div id="about">
+	<!-- photo -->
+	<div class="about-portrait">
+		<img alt="photo of me in France, taken September 2023" src="/images/ben-france.png" />
+	</div>
+	<!-- ontro -->
+	<div class="about-description">
+		<div class="about-title">Benjamin R. Bray</div>
+		<p>
+			I work as a <b>research software engineer</b> for Prof. <a href="https://group-mmm.org/~ichiro/">Ichiro Hasuo</a> at the <a
+				href="https://www.nii.ac.jp/en/">National Institute of Informatics</a> in Tokyo, Japan, where I use <b>Haskell</b> to create domain-specific programming languages for formal verification of cyberphysical systems.
+		</p>
+		<p>
+			My ambition is to design software which makes <b>formal verification</b> more accessible to developers.  I'm particularly interested in improving the user experience of <b>dependently-typed</b> programming. 
+		</p>
+		<p>
+			In my free time, I enjoy cycling, dodgeball, <a href="/images/tokyo-walking-map.jpg">long walks</a>, and baking <a
+			href="/images/sourdough.jpg">sourdough</a>. Maybe one day I'll make more <a
+			href="http://www.newgrounds.com/portal/view/512482">games</a>. If you'd like to chat, feel free to
+		write me at <a href="mailto:benrbray@gmail.com">benrbray@gmail.com</a>.
+		</p>
 
-			<p>In my free time, I work on <a href="https://noteworthy.ink/">Noteworthy</a>, an open-source Markdown
-				editor with bidirectional links and excellent math support! I also enjoy reading about functional programming and discrete
-				differential geometry.
+		<!-- <p>In my free time, I work on <a href="https://noteworthy.ink/">Noteworthy</a>, an open-source Markdown
+			editor with bidirectional links and excellent math support!
+		</p> -->
 
-			<p>I hold a Masters in Computer Science from <b>Georgia Tech</b>, where my research advisor was <a
-					href="https://www.cc.gatech.edu/~jabernethy9/">Jacob Abernethy</a>. Previously, I studied math at
-				the University of Michigan, where I also helped with a machine learning <a
-					href="https://eecs445-f16.github.io/">class</a> and <a href="http://msail.github.io/">reading
-					group</a>.
-
-			<p>Out of the office, I enjoy biking, <a href="/images/tokyo-walking-map.jpg">long walks</a>, and baking <a
-					href="/images/sourdough.jpg">sourdough</a>. Maybe one day I'll make more <a
-					href="http://www.newgrounds.com/portal/view/512482">games</a>. If you'd like to chat, feel free to
-				write me at <a href="mailto:benrbray@gmail.com">benrbray@gmail.com</a>.
-		</div>
+		<!-- <p>I hold a Masters in Computer Science from <b>Georgia Tech</b>, where my research advisor was <a
+				href="https://www.cc.gatech.edu/~jabernethy9/">Jacob Abernethy</a>. Previously, I studied math at
+			the University of Michigan, where I also helped with a machine learning <a
+				href="https://eecs445-f16.github.io/">class</a> and <a href="http://msail.github.io/">reading
+				group</a>. -->
 	</div>
 </div>
 
-<!-- <h2>Recent Updates</h2>
-
-<table>
-	<colgroup>
-		<col style="width:4em">
-		<col>
-	</colgroup><tr>
-		<td><b>2023</b></td>
-		<td>Joined the <a href="https://group-mmm.org/~ichiro/">Hasuo Lab</a> at the <a href="National Institute of Informatics">National Institute of Informatics</a> as a <b>research engineer</b>.</td>
-	</tr><tr>
-		<td><b>2022</b></td>
-		<td>Joined Smartpay in Tokyo as a backend engineer writing <b>purely functional Scala</b></td>
-	</tr><tr>
-		<td><b>2020</b></td>
-		<td>Started full-time as a <b>Machine Learning & Graphics Engineer</b> at EmbodyMe in Tokyo</td>
-	</tr><tr>
-		<td></td>
-		<td>Teaching Assistant for ISYE 6740: Computational Data Analysis with Prof. Yao Xie</td>
-	</tr>
-	<tr>
-		<td><b>2019</b></td>
-		<td>Teaching Assistant for <a href="https://cs4540-f19.github.io/">CS 4540: Advanced Algorithms (F19)</a> with Prof. Jacob Abernethy</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><b>MS in Computer Science (High Performance Computing)</b> from Georgia Tech</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>Attended the <a href="http://www.cas.mcmaster.ca/~deza/tokyo2019progr.html">Discrete Optimization & Machine
-				Learning
-				Workshop</a> at RIKEN</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>Internship at <a href="http://www.riken.jp/en/research/labs/aip/">RIKEN AIP</a> in Tokyo on the <a
-				href="https://emtiyaz.github.io/#research">Approximate Bayesian Inference</a> team</td>
-	</tr>
-	<tr>
-		<td><b>2018</b></td>
-		<td>Teaching Assistant for <a href="https://cs4540-f18.github.io/">CS 4540: Advanced Algorithms (F18)</a> with Prof. Jacob Abernethy</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>Visited the <a href="https://www.mccormick.northwestern.edu/eecs/computer-science/online-markets.html">Data
-				Science &amp; Online
-				Markets</a> group at Northwestern</td>
-	</tr>
-</table> -->
-
-<!-- Projects ----------------------------------------------------------------->
-<h2>Recent Posts (<a href="/blog.html">View Archive</a>)</h2>
+<!-- Writing ----------------------------------------------------------------->
+<h2>Selected Writing</h2>
 $partial("templates/post-list.html")$
 
-<!-- Draft Posts -->
-$if(draftPosts)$
-<h2>Draft Posts</h2>
-$for(draftPosts)$
-<div class="post-box unpublished">
-	<a class="post-title" href="$url$">$title$</a>
-</div>
-$endfor$
-$endif$
 
-<!-- Draft Projects -->
-$if(draftProjects)$
-<h2>Draft Projects</h2>
-$for(draftProjects)$
-<div class="post-box unpublished">
-	<a class="post-title" href="$url$">$title$</a>
-</div>
-$endfor$
-$endif$
+
+<!-- Projects ----------------------------------------------------------------->
+<h2>Selected Projects</h2>
+$partial("templates/project-list.html")$
 
 <!-- Open Source -------------------------------------------------------------->
 <h2>Open Source</h2>
@@ -394,8 +349,24 @@ $endif$
 	</div>
 </div>
 
-<!-- Projects ----------------------------------------------------------------->
-<h2>Projects</h2>
-$partial("templates/project-list.html")$
+<!-- Draft Posts -->
+$if(draftPosts)$
+<h2>Draft Posts</h2>
+$for(draftPosts)$
+<div class="post-box unpublished">
+	<a class="post-title" href="$url$">$title$</a>
+</div>
+$endfor$
+$endif$
+
+<!-- Draft Projects -->
+$if(draftProjects)$
+<h2>Draft Projects</h2>
+$for(draftProjects)$
+<div class="post-box unpublished">
+	<a class="post-title" href="$url$">$title$</a>
+</div>
+$endfor$
+$endif$
 
 </div>

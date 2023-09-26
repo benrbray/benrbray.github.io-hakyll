@@ -15,7 +15,7 @@ Tags: academic
 :root {
 	/* Page Dimensions */
 	--min-width: 25rem;
-	--max-width: 46rem;
+	--max-width: 52rem;
 	/* Header */
 	--header-height: 60px;
 	--title-size: 1.3em;
@@ -504,7 +504,7 @@ ul li {
 	margin-bottom: 40px;
 }
 
-.project-container {
+.project-grid {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -515,31 +515,31 @@ ul li {
 }
 
 @media (max-width: 35rem) {
-	.project-container {
+	.project-grid {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
-.project-box {
+.project-grid .project-box {
 	display: block;
 	position: relative;
 	grid-column-end: span 2;
 }
 
-.project-box.priority-1 {
+.project-grid .project-box.priority-1 {
 	grid-column-end: span 1;
 }
 
-.project-box.unpublished {
+.project-grid .project-box.unpublished {
 	opacity: 0.5;
 	border: 2px dashed red;
 }
 
-.project-box:hover .project-title {
+.project-grid .project-box:hover .project-title {
 	text-decoration: underline;
 }
 
-.project-title {
+.project-grid .project-title {
 	display: block;
 	position: absolute;
 	bottom: 0.5em;
@@ -548,7 +548,7 @@ ul li {
 	color: white;
 }
 
-.project-title p {
+.project-grid .project-title p {
 	display: inline;
 	background-color: rgba(0, 0, 0, 0.7);
 	/* #245994;*/
@@ -568,20 +568,20 @@ ul li {
 /* (see also https://stackoverflow.com/a/20117454/1444650)
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-.project-thumb:before {
+.project-grid .project-thumb:before {
 	content: "";
 	display: block;
 	padding-top: 50%;
 }
 
-.project-thumb {
+.project-grid .project-thumb {
 	position: relative;
 	margin: 0 auto auto;
 	width: 100%;
 	height: 100%;
 }
 
-.project-thumb img {
+.project-grid .project-thumb img {
 	object-fit: cover;
 	position: absolute;
 	width: 100%;
@@ -590,9 +590,93 @@ ul li {
 	left: 0;
 }
 
-.project-box.priority-1 .project-thumb:before {
+.project-grid .project-box.priority-1 .project-thumb:before {
 	padding-top: 100%;
 }
+
+/* Project List ------------------------------------------------------------- */
+
+.project-list {
+	margin: 2rem 0;
+}
+
+.project-list .project {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 1.0rem;
+
+	width: 100%;
+	margin: 1.0rem 0;
+}
+
+.project-list .project-desc {
+	flex: 1;
+}
+
+.project-list .project-thumb {
+	flex-basis: 40%;
+	max-height: 8em;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.project-list .project-thumb img {
+	display: block;
+	min-width: 100%;
+}
+
+.project-list .project-tags {
+
+}
+
+.project-list .tag, .project-list .tool {
+	display: inline-block;
+	margin: 0 0.1em;
+	padding: 0.1em 0.3em;
+	white-space: nowrap;
+}
+
+.project-list .tag {
+	background-color: #e3e9ef;
+	color: #254298;
+}
+
+.project-list .tool {
+	background-color: #e3efe4;
+	color: darkgreen;
+}
+
+.project-list .project-title {
+	display: flex;
+	justify-content: space-between;
+
+	margin-bottom: 0.6rem;
+	font-size: 1.4rem;
+	font-weight: bold;
+}
+
+.project-list .project-subtitle {
+	margin: 0.5rem 0;
+	text-overflow: hidden;
+	overflow: hidden;
+}
+
+.project-list .project-summary p:first-child {
+	margin-top: 0;
+}
+
+.project-list .project-year {
+	font-size: 1.0rem;
+	font-weight: normal;
+	color: gray;
+	white-space: nowrap;
+}
+
+.project-list .project-title a { color: unset; }
 
 /* Posts -------------------------------------------------------------------- */
 

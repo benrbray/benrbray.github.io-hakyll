@@ -1,15 +1,27 @@
-<div class="project-container">
+<div class="project-list">
 $for(projects)$
-	<a class="project-box $if(unpublished)$ unpublished$endif$$if(priority)$ priority-$priority$$endif$"
-		href="$url$">
-		<!-- Thumbnail -->
+	<div class="project $if(unpublished)$unpublished$endif$">
+		<!-- description -->
+		<div class="project-desc">
+			<!-- title -->
+			<div class="project-title">
+				<a href="$url$">$title$</a>
+			</div>
+			<div class="project-subtitle">
+				<span class="project-year">$month$ $year$ in </span>
+				<span class="project-tags">
+					$if(tags)$$tags$$endif$
+					$if(tools)$$tools$$endif$
+				</span>
+			</div>
+			<div class="project-summary">
+				$if(summary)$$summary$$else$No summary.$endif$
+			</div>
+		</div>
+		<!-- thumbnail -->
 		<div class="project-thumb">
 			<img alt="" src="$thumb_url$" />
 		</div>
-		<!-- Title -->
-		<div class="project-title">
-			<p>$title$</p>
-		</div>
-	</a>
+	</div>
 $endfor$
 </div>
