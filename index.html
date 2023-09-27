@@ -168,25 +168,24 @@ h2 {
 /* ---- */
 
 #about {
-	display: flex;
-	flex-direction: row;
+	display: grid;
 	gap: 2em;
 }
 
 #about .about-portrait {
-	flex-basis: 40%;
-
 	min-width: 16rem;
-	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 #about .about-portrait img {
 	display: block;
-	width: 100%;
 }
 
 #about .about-description {
-	grid-area: desc;
+	grid-area: intro;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -198,6 +197,58 @@ h2 {
 #about .about-title {
 	font-size: 2em;
 	font-weight: bold;
+}
+
+@media (min-width: 52rem) {
+	#about {
+		grid-template-columns: 1fr 2fr;
+		grid-template-areas: "photo intro";
+	}
+
+	#about .about-portrait {
+		justify-self: stretch;
+		min-height: 100%;
+	}
+
+	#about .about-portrait img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+}
+
+@media (max-width: 52rem) {
+
+	h2 { text-align: center; }
+	#about .about-title { text-align: center; }
+
+	#about {
+		grid-template-areas:
+			"photo"
+			"intro";
+	}
+
+
+	#about .about-portrait {
+		position: relative;
+		max-height: min(50vh, 30em);
+		justify-self: center;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+
+	#about .about-portrait::after {
+		content: "";
+		display: block;
+		padding-bottom: 100%;
+	}
+
+	#about .about-portrait img {
+		position: absolute;
+		width: 100%;
+		object-fit: cover;
+		top: -2em;
+		/* top: 1em; */
+	}
 }
 
 </style>
