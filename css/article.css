@@ -190,7 +190,7 @@ article {
 
 /* Table of Contents ---------------------------------------------------------*/
 
-#toc {
+/* .toc {
 	display: inline-block;
 	margin: 1.5em 0;
 	padding: 1em 1em 1em 0;
@@ -198,15 +198,19 @@ article {
 	height: 0;
 	opacity: 0;
 	transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
+} */
 
-#toc a {
+/* .toc a {
 	font-weight: 200;
-}
+} */
 
-#toc>ol {
+/* .toc>ol {
 	margin-top: 0;
 	margin-bottom: 0;
+} */
+
+.toc > h2:last-child {
+	display: none;
 }
 
 /* //// SPECIAL FORMATTING ////////////////////////////////////////////////// */
